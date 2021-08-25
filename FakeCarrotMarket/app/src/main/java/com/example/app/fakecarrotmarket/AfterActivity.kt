@@ -34,6 +34,7 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_logout -> {
                 signOut()
                 finishAffinity()
+
             }
             R.id.btn_revoke -> {
                 revokeAccess()

@@ -30,4 +30,15 @@
         android:layout_below="@+id/iv_glide"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/loginButton_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="페이스북으로 로그인"
+        />
+
+
 </RelativeLayout>
