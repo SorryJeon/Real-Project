@@ -1,155 +1,114 @@
 package com.example.app.fakecarrotmarket
 
+
 import androidx.appcompat.app.AppCompatActivity
+
+import android.content.Intent
 import android.os.Bundle
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.firebase.ui.auth.util.ExtraConstants
-import com.google.android.gms.common.util.CollectionUtils.listOf
-import com.google.firebase.auth.ActionCodeSettings
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+
+import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import java.util.Collections.emptyList
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 
-abstract class MainActivity : AppCompatActivity() {
-    // [START auth_fui_create_launcher]
-    // See: https://developer.android.com/training/basics/intents/result
-    private val signInLauncher = registerForActivityResult(
-            FirebaseAuthUIActivityResultContract()
-    ) { res ->
-        this.onSignInResult(res)
-    }
-    // [END auth_fui_create_launcher]
 
+class MainActivity : AppCompatActivity() {
+    private var mAuth: FirebaseAuth? = null
+    private var mGoogleSignInClient: GoogleSignInClient? = null
+    private var signInButton: SignInButton? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
-
-    private fun createSignInIntent() {
-        // [START auth_fui_create_intent]
-        // Choose authentication providers
-        val providers = listOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.PhoneBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.FacebookBuilder().build(),
-                AuthUI.IdpConfig.TwitterBuilder().build())
-
-        // Create and launch sign-in intent
-        val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build()
-        signInLauncher.launch(signInIntent)
-        // [END auth_fui_create_intent]
-    }
-
-    // [START auth_fui_result]
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            // ...
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
+        val tvContents = findViewById<View>(R.id.tv_contents) as TextView
+        val ivGlide = findViewById<View>(R.id.iv_glide) as ImageView
+        signInButton = findViewById(R.id.signInButton)
+        Glide.with(this)
+            .load("http://goo.gl/gEgYUd")
+            .override(300, 200)
+            .fitCenter()
+            .into(ivGlide)
+        mAuth = FirebaseAuth.getInstance()
+        if (mAuth!!.currentUser != null) {
+            val intent = Intent(application, AfterActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-    }
-    // [END auth_fui_result]
-
-    private fun signOut() {
-        // [START auth_fui_signout]
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
-                    // ...
-                }
-        // [END auth_fui_signout]
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        signInButton?.setOnClickListener(View.OnClickListener { signIn() })
     }
 
-    private fun delete() {
-        // [START auth_fui_delete]
-        AuthUI.getInstance()
-                .delete(this)
-                .addOnCompleteListener {
-                    // ...
-                }
-        // [END auth_fui_delete]
+    // [START signin]
+    private fun signIn() {
+        val signInIntent = mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun themeAndLogo() {
-        val providers = emptyList<AuthUI.IdpConfig>()
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        // [START auth_fui_theme_logo]
-        val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setLogo(R.drawable.my_great_logo) // Set logo drawable
-                .setTheme(R.style.MySuperAppTheme) // Set theme
-                .build()
-        signInLauncher.launch(signInIntent)
-        // [END auth_fui_theme_logo]
-    }
-
-    private fun privacyAndTerms() {
-        val providers = emptyList<AuthUI.IdpConfig>()
-        // [START auth_fui_pp_tos]
-        val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setTosAndPrivacyPolicyUrls(
-                        "https://example.com/terms.html",
-                        "https://example.com/privacy.html")
-                .build()
-        signInLauncher.launch(signInIntent)
-        // [END auth_fui_pp_tos]
-    }
-
-    open fun emailLink() {
-        // [START auth_fui_email_link]
-        val actionCodeSettings = ActionCodeSettings.newBuilder()
-                .setAndroidPackageName( /* yourPackageName= */
-                        "...",  /* installIfNotAvailable= */
-                        true,  /* minimumVersion= */
-                        null)
-                .setHandleCodeInApp(true) // This must be set to true
-                .setUrl("https://google.com") // This URL needs to be whitelisted
-                .build()
-
-        val providers = listOf(
-                AuthUI.IdpConfig.EmailBuilder()
-                        .enableEmailLinkSignIn()
-                        .setActionCodeSettings(actionCodeSettings)
-                        .build()
-        )
-        val signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build()
-        signInLauncher.launch(signInIntent)
-        // [END auth_fui_email_link]
-    }
-
-    open fun catchEmailLink() {
-        val providers: List<AuthUI.IdpConfig> = emptyList()
-
-        // [START auth_fui_email_link_catch]
-        if (AuthUI.canHandleIntent(intent)) {
-            val extras = intent.extras ?: return
-            val link = extras.getString(ExtraConstants.EMAIL_LINK_SIGN_IN)
-            if (link != null) {
-                val signInIntent = AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setEmailLink(link)
-                        .setAvailableProviders(providers)
-                        .build()
-                signInLauncher.launch(signInIntent)
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult<ApiException>(ApiException::class.java)
+                firebaseAuthWithGoogle(account)
+            } catch (e: ApiException) {
             }
         }
-        // [END auth_fui_email_link_catch]
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth!!.signInWithCredential(credential)
+            .addOnCompleteListener(
+                this
+            ) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Snackbar.make(
+                        findViewById(R.id.layout_main),
+                        "Authentication Successed.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    val user = mAuth!!.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Snackbar.make(
+                        findViewById(R.id.layout_main),
+                        "Authentication Failed.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    updateUI(null)
+                }
+            }
+    }
+
+    private fun updateUI(user: FirebaseUser?) { //update ui code here
+        if (user != null) {
+            val intent = Intent(this, AfterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
     }
 }
