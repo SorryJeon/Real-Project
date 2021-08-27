@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.facebook.*
+import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -37,10 +38,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var facebookButton = findViewById<Button>(R.id.loginButton_facebook)
+        var facebookButton = findViewById<Button>(R.id.login_button)
         facebookButton.setOnClickListener(View.OnClickListener {
             callbackManager = CallbackManager.Factory.create()
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
@@ -50,12 +52,12 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onCancel() {
                         Log.d("MainActivity", "Facebook onCancel.")
-                        startActivity(Intent(applicationContext, AfterActivity::class.java))
+
                     }
 
                     override fun onError(error: FacebookException?) {
                         Log.d("MainActivity", "Facebook onError.")
-                        startActivity(Intent(applicationContext, AfterActivity::class.java))
+
                     }
 
                 })
@@ -78,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                     Log.e("TAGG", userPicture)
 
 
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             request.executeAsync()
 
         }
+
         val tvContents = findViewById<View>(R.id.tv_contents) as TextView
         val ivGlide = findViewById<View>(R.id.iv_glide) as ImageView
         signInButton = findViewById(R.id.signInButton)

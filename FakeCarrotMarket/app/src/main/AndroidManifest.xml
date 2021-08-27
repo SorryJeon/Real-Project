@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.app.fakecarrotmarket">
+
     <uses-permission android:name="android.permission.INTERNET" />
+<!--    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,19 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FakeCarrotMarket">
 
-        <activity android:name=".AfterActivity"></activity>
 
         <activity android:name=".MainActivity">
-            <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+<!--                <data android:scheme="@string/fb_login_protocol_scheme" />-->
             </intent-filter>
         </activity>
+        <activity android:name=".AfterActivity"></activity>
     </application>
-
-
-
 </manifest>
