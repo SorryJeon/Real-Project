@@ -24,17 +24,18 @@
         android:layout_marginTop="30dp" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/signInButton"
+        android:id="@+id/googleSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_glide"
         android:layout_centerHorizontal="true" />
 
+
     <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+        android:id="@+id/facebookSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/signInButton"
+        android:layout_below="@+id/googleSignInBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp" />
