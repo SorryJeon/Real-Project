@@ -3,9 +3,11 @@ package com.example.app.fakecarrotmarket
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
+import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
-    var callbackManager : CallbackManager? = null
+    var callbackManager: CallbackManager? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         val googleSignInBtn = findViewById<SignInButton>(R.id.googleSignInBtn)
         val facebookSignInBtn = findViewById<LoginButton>(R.id.facebookSignInBtn)
 
-        callbackManager = CallbackManager.Factory.create()
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
+        callbackManager = CallbackManager.Factory.create()
         googleSignInBtn.setOnClickListener {
             signIn()
         }
@@ -50,14 +51,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onStart() {
-        super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        if(account!==null) { // 이미 로그인 되어있을시 바로 서브 액티비티로 이동
-                val intent = Intent(this, AfterActivity::class.java)
-                startActivity(intent)
-                finish()
-        }
+//    public override fun onStart() {
+//        super.onStart()
+//        val account = GoogleSignIn.getLastSignedInAccount(this)
+//        if (account !== null) { // 이미 로그인 되어있을시 바로 서브 액티비티로 이동
+//            val intent = Intent(this, AfterActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)
+    }
+
+    private fun facebookLogin() {
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, listOf("public_profile", "email"))
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult?) {
+                    handleFBToken(result?.accessToken)
+                }
+
+                override fun onCancel() {}
+                override fun onError(error: FacebookException?) {}
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -78,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -96,21 +117,8 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun facebookLogin(){
-        LoginManager.getInstance()
-            .logInWithReadPermissions(this, listOf("public_profile","email"))
-        LoginManager.getInstance()
-            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult?) {
-                    handleFBToken(result?.accessToken)
-                }
 
-                override fun onCancel() {}
-                override fun onError(error: FacebookException?) {}
-            })
-    }
-
-    private fun handleFBToken(token : AccessToken?){
+    private fun handleFBToken(token: AccessToken?) {
         val credential = FacebookAuthProvider.getCredential(token?.token!!)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener(this) { task ->
@@ -122,11 +130,6 @@ class MainActivity : AppCompatActivity() {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
-    }
-
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)
     }
 
     private fun loginSuccess(user: FirebaseUser?) {

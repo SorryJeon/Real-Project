@@ -26,13 +26,11 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
         btnRevoke!!.setOnClickListener(this)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()
             .build()
 
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
     }
 
     private fun signOut() {
@@ -63,7 +61,7 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_logout -> {
                 signOut()
                 finishAffinity()
-            }
+    2        }
             R.id.btn_revoke -> {
                 revokeAccess()
                 finishAffinity()
