@@ -23,22 +23,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/googleSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_glide"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="구글 로그인"/>
 
 
-    <com.facebook.login.widget.LoginButton
+    <Button
         android:id="@+id/facebookSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/googleSignInBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:text="페이스북 로그인"/>
 
 
 </RelativeLayout>
