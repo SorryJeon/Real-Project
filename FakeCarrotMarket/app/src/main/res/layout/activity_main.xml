@@ -7,29 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_contents"
+    <EditText
+        android:id="@+id/edit_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="아래에는 이미지뷰가 보입니다" />
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:hint="아이디"
+        android:inputType="textPersonName" />
 
-    <ImageView
-        android:id="@+id/iv_glide"
+    <EditText
+        android:id="@+id/edit_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_contents"
+        android:layout_below="@+id/edit_id"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_pw"
+        android:layout_centerHorizontal="true"
+        android:text="로그인" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:text="회원가입" />
 
     <Button
         android:id="@+id/googleSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_glide"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/btn_register"
         android:layout_centerHorizontal="true"
-        android:text="구글 로그인"/>
+        android:text="구글 로그인" />
 
 
     <Button
@@ -38,9 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/googleSignInBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:text="페이스북 로그인"/>
+        android:text="페이스북 로그인" />
 
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.app.fakecarrotmarket
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val googleSignInBtn = findViewById<SignInButton>(R.id.googleSignInBtn)
-        val facebookSignInBtn = findViewById<LoginButton>(R.id.facebookSignInBtn)
+        val googleSignInBtn = findViewById<Button>(R.id.googleSignInBtn)
+        val facebookSignInBtn = findViewById<Button>(R.id.facebookSignInBtn)
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
