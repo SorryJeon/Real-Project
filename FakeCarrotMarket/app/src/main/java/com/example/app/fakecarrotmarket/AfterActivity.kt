@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class AfterActivity : AppCompatActivity(), View.OnClickListener {
     var btnRevoke: Button? = null
     var btnLogout: Button? = null
+    var btnexit: Button? = null
     private var mAuth: FirebaseAuth? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +22,11 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_after)
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
+        btnexit = findViewById<View>(R.id.btn_exit) as Button
         mAuth = FirebaseAuth.getInstance()
         btnLogout!!.setOnClickListener(this)
         btnRevoke!!.setOnClickListener(this)
+        btnexit!!.setOnClickListener(this)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -37,9 +40,8 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
-        if (account!==null) {
+        if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
-                //updateUI(null)
             }
         }
     }
@@ -47,10 +49,10 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         mAuth!!.currentUser!!.delete()
+        FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
-        if (account!==null) {
+        if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-
             }
         }
 
@@ -61,9 +63,12 @@ class AfterActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_logout -> {
                 signOut()
                 finishAffinity()
-    2        }
+            }
             R.id.btn_revoke -> {
                 revokeAccess()
+                finishAffinity()
+            }
+            R.id.btn_exit -> {
                 finishAffinity()
             }
         }

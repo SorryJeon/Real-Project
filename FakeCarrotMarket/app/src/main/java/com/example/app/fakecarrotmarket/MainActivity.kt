@@ -13,12 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
-import com.firebase.ui.auth.ui.email.CheckEmailFragment.TAG
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -78,15 +75,16 @@ class MainActivity : AppCompatActivity() {
                     dialog("empty")
                 } else {
                     auth = Firebase.auth
-                    auth?.signInWithEmailAndPassword(id, pw)
+                    auth?.createUserWithEmailAndPassword(id, pw)
                     dialog("success")
-                    val intent = Intent(this, AfterActivity::class.java)
-                    intent.action = Intent.ACTION_MAIN
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-
+                    Handler().postDelayed({
+                        val intent = Intent(this, AfterActivity::class.java)
+                        intent.action = Intent.ACTION_MAIN
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }, 2000L)
                 }
             } else {
                 // 로그인 실패 다이얼로그 보여주기
@@ -113,7 +111,10 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth?.currentUser
-        loginSuccess(currentUser)
+        if (currentUser != null) {
+            dialog("exist")
+            loginSuccess(currentUser)
+        }
     }
 
     private fun signIn() {
@@ -135,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException?) {
-                    dialog("fail")
                 }
             })
     }
@@ -169,11 +169,13 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "로그인 성공")
+                    dialog("success")
                     val user = auth!!.currentUser
                     loginSuccess(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    dialog("fail")
                 }
             }
     }
@@ -185,6 +187,7 @@ class MainActivity : AppCompatActivity() {
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "로그인 성공")
+                    dialog("success")
                     val user = auth!!.currentUser
                     loginSuccess(user)
                 } else {
@@ -198,14 +201,13 @@ class MainActivity : AppCompatActivity() {
     private fun loginSuccess(user: FirebaseUser?) {
         if (user != null) {
             Handler().postDelayed({
-            val intent = Intent(this, AfterActivity::class.java)
-            intent.action = Intent.ACTION_MAIN
-            intent.addCategory(Intent.CATEGORY_LAUNCHER)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            dialog("success")
-            startActivity(intent)
-            finish()
-        }, 2000L)
+                val intent = Intent(this, AfterActivity::class.java)
+                intent.action = Intent.ACTION_MAIN
+                intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }, 2000L)
         }
     }
 
@@ -220,11 +222,14 @@ class MainActivity : AppCompatActivity() {
             dialog.setTitle("로그인 실패")
             dialog.setMessage("아이디와 비밀번호를 확인해주세요")
         } else if (type.equals("clear")) {
-            dialog.setTitle("초기화 되었습니다!")
+            dialog.setTitle("회원정보 초기화")
             dialog.setTitle("초기화 되었습니다!")
         } else if (type.equals("empty")) {
+            dialog.setTitle("회원정보 존재하지 않음")
             dialog.setTitle("아이디 비밀번호를 만들어주세요!")
-            dialog.setTitle("아이디 비밀번호를 만들어주세요!")
+        } else if (type.equals("exist")) {
+            dialog.setTitle("이미 로그인된 상태")
+            dialog.setTitle("잠시후 다음 화면으로 넘어갑니다!")
         }
 
 
