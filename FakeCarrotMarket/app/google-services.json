@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "846185572928",
+    "project_id": "first-project-df1fb",
+    "storage_bucket": "first-project-df1fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846185572928:android:7c551c8149809f3aa48da5",
+        "android_client_info": {
+          "package_name": "com.example.app.fakecarrotmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846185572928-k7an4tosbqhc7irqbv721ale33p75bmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPJ8CoHEo5FnNeBHCkJciBTLJ5m1nnMlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846185572928-k7an4tosbqhc7irqbv721ale33p75bmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
