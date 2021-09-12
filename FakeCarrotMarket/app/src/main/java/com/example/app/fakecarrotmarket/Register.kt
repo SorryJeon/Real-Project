@@ -32,6 +32,9 @@ class Register : AppCompatActivity() {
             val id = edit_id.text.toString()
             val pw = edit_pw.text.toString()
             val pw_re = edit_pw_re.text.toString()
+            val email1 = "@naver.com"
+            val email2 = "@gmail.com"
+            val email3 = "@hanmail.net"
 
             // 유저가 항목을 다 채우지 않았을 경우
             if (id.isEmpty() || pw.isEmpty() || pw_re.isEmpty()) {
@@ -39,6 +42,10 @@ class Register : AppCompatActivity() {
             } else {
                 if (pw == pw_re) {
                     isPWSame = true
+                    if (id.contains(email1) || id.contains(email2) || id.contains(email3)) {
+                        isExistBlank = false
+                    } else
+                        isExistBlank = true
                 }
             }
 
@@ -62,8 +69,21 @@ class Register : AppCompatActivity() {
 
                 // 상태에 따라 다른 다이얼로그 띄워주기
                 if (isExistBlank) {   // 작성 안한 항목이 있을 경우
+                    val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+                    val editor = sharedPreference.edit()
+                    editor.putString("id", id)
+                    editor.putString("pw", pw)
+                    editor.clear()
+                    editor.apply()
                     dialog("blank")
-                } else if (!isPWSame) { // 입력한 비밀번호가 다를 경우
+                }
+                else if (!isPWSame) { // 입력한 비밀번호가 다를 경우
+                    val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+                    val editor = sharedPreference.edit()
+                    editor.putString("id", id)
+                    editor.putString("pw", pw)
+                    editor.clear()
+                    editor.apply()
                     dialog("not same")
                 }
             }

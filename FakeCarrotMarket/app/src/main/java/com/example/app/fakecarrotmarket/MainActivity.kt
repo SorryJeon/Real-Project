@@ -1,15 +1,20 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.firebase.ui.auth.ui.email.CheckEmailFragment.TAG
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,6 +24,9 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
     var callbackManager: CallbackManager? = null
+
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +59,54 @@ class MainActivity : AppCompatActivity() {
         facebookSignInBtn.setOnClickListener {
             facebookLogin()
         }
+        // 로그인 버튼
+        btn_login.setOnClickListener {
+            //editText로부터 입력된 값을 받아온다
+            var id = edit_id.text.toString()
+            var pw = edit_pw.text.toString()
+
+            // 쉐어드로부터 저장된 id, pw 가져오기
+            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+            val savedId = sharedPreference.getString("id", "")
+            val savedPw = sharedPreference.getString("pw", "")
+
+            // 유저가 입력한 id, pw값과 쉐어드로 불러온 id, pw값 비교
+            if (id == savedId && pw == savedPw) {
+                // 로그인 성공 다이얼로그 보여주기
+                if (id == "" && pw == "") {
+                    // 아이디와 비밀번호 없을 때 다이얼로그 보여주기
+                    dialog("empty")
+                } else {
+                    auth = Firebase.auth
+                    auth?.signInWithEmailAndPassword(id, pw)
+                    dialog("success")
+                    val intent = Intent(this, AfterActivity::class.java)
+                    intent.action = Intent.ACTION_MAIN
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+
+                }
+            } else {
+                // 로그인 실패 다이얼로그 보여주기
+                dialog("fail")
+            }
+        }
+
+        // 회원가입 버튼
+        btn_register.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
+        }
+
+        btn_clear.setOnClickListener {
+            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+            val editor = sharedPreference.edit()
+            editor.clear()
+            editor.apply()
+            dialog("clear")
+        }
     }
 
     override fun onStart() {
@@ -73,8 +130,13 @@ class MainActivity : AppCompatActivity() {
                     handleFBToken(result?.accessToken)
                 }
 
-                override fun onCancel() {}
-                override fun onError(error: FacebookException?) {}
+                override fun onCancel() {
+                    dialog("fail")
+                }
+
+                override fun onError(error: FacebookException?) {
+                    dialog("fail")
+                }
             })
     }
 
@@ -92,6 +154,7 @@ class MainActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
+                dialog("fail")
                 Log.w(TAG, "Google sign in failed", e)
                 Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
@@ -126,76 +189,56 @@ class MainActivity : AppCompatActivity() {
                     loginSuccess(user)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    dialog("fail")
                 }
             }
     }
 
+
     private fun loginSuccess(user: FirebaseUser?) {
         if (user != null) {
+            Handler().postDelayed({
             val intent = Intent(this, AfterActivity::class.java)
             intent.action = Intent.ACTION_MAIN
             intent.addCategory(Intent.CATEGORY_LAUNCHER)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
+            dialog("success")
             startActivity(intent)
             finish()
+        }, 2000L)
         }
     }
-// 로그인 버튼
-    //     btn_login.setOnClickListener {
 
-    //         //editText로부터 입력된 값을 받아온다
-    //         var id = edit_id.text.toString()
-    //         var pw = edit_pw.text.toString()
+    // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
+    fun dialog(type: String) {
+        var dialog = AlertDialog.Builder(this)
 
-    //         // 쉐어드로부터 저장된 id, pw 가져오기
-    //         val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
-    //         val savedId = sharedPreference.getString("id", "")
-    //         val savedPw = sharedPreference.getString("pw", "")
+        if (type.equals("success")) {
+            dialog.setTitle("로그인 성공")
+            dialog.setMessage("로그인 성공!")
+        } else if (type.equals("fail")) {
+            dialog.setTitle("로그인 실패")
+            dialog.setMessage("아이디와 비밀번호를 확인해주세요")
+        } else if (type.equals("clear")) {
+            dialog.setTitle("초기화 되었습니다!")
+            dialog.setTitle("초기화 되었습니다!")
+        } else if (type.equals("empty")) {
+            dialog.setTitle("아이디 비밀번호를 만들어주세요!")
+            dialog.setTitle("아이디 비밀번호를 만들어주세요!")
+        }
 
-    //         // 유저가 입력한 id, pw값과 쉐어드로 불러온 id, pw값 비교
-    //         if(id == savedId && pw == savedPw){
-    //             // 로그인 성공 다이얼로그 보여주기
-    //             dialog("success")
-    //         }
-    //         else{
-    //             // 로그인 실패 다이얼로그 보여주기
-    //             dialog("fail")
-    //         }
-    //     }
 
-    //     // 회원가입 버튼
-    //     btn_register.setOnClickListener {
-    //         val intent = Intent(this, Register::class.java)
-    //         startActivity(intent)
-    //     }
+        var dialog_listener = object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE ->
+                        Log.d(TAG, "")
+                }
+            }
+        }
 
-    // }
-
-    // // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
-    // fun dialog(type: String){
-    //     var dialog = AlertDialog.Builder(this)
-
-    //     if(type.equals("success")){
-    //         dialog.setTitle("로그인 성공")
-    //         dialog.setMessage("로그인 성공!")
-    //     }
-    //     else if(type.equals("fail")){
-    //         dialog.setTitle("로그인 실패")
-    //         dialog.setMessage("아이디와 비밀번호를 확인해주세요")
-    //     }
-
-    //     var dialog_listener = object: DialogInterface.OnClickListener{
-    //         override fun onClick(dialog: DialogInterface?, which: Int) {
-    //             when(which){
-    //                 DialogInterface.BUTTON_POSITIVE ->
-    //                     Log.d(TAG, "")
-    //             }
-    //         }
-    //     }
-
-    //     dialog.setPositiveButton("확인",dialog_listener)
-    //     dialog.show()
-    // }
+        dialog.setPositiveButton("확인", dialog_listener)
+        dialog.show()
+    }
 
 }
