@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">FakeCarrotMarket</string>
-    <string name="web_client_id">846185572928-k7an4tosbqhc7irqbv721ale33p75bmn.apps.googleusercontent.com</string>
-    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-    <string name="facebook_app_id">361089315380254</string>
-    <string name="fb_login_protocol_scheme">fb361089315380254</string>
-
-
-</resources>
