@@ -11,15 +11,18 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 
 class Register : AppCompatActivity() {
 
+    private var auth: FirebaseAuth? = null
     val TAG: String = "Register"
     var isExistBlank = false
     var isPWSame = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_register)
         val btn_register = findViewById<Button>(R.id.btn_register)
         val edit_id = findViewById<EditText>(R.id.edit_id)
@@ -61,9 +64,22 @@ class Register : AppCompatActivity() {
                 editor.putString("pw", pw)
                 editor.apply()
 
-                // 로그인 화면으로 이동
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                auth?.createUserWithEmailAndPassword(id, pw)
+                    ?.addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                this, "계정 생성 완료.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent) // 가입창 종료, 로그인 화면으로 이동
+                        } else {
+                            Toast.makeText(
+                                this, "계정 생성 실패",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
 
             } else {
 
@@ -76,8 +92,7 @@ class Register : AppCompatActivity() {
                     editor.clear()
                     editor.apply()
                     dialog("blank")
-                }
-                else if (!isPWSame) { // 입력한 비밀번호가 다를 경우
+                } else if (!isPWSame) { // 입력한 비밀번호가 다를 경우
                     val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
                     val editor = sharedPreference.edit()
                     editor.putString("id", id)

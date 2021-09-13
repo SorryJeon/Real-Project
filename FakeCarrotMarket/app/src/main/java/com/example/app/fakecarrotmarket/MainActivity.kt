@@ -74,23 +74,14 @@ class MainActivity : AppCompatActivity() {
                     // 아이디와 비밀번호 없을 때 다이얼로그 보여주기
                     dialog("empty")
                 } else {
-                    auth = Firebase.auth
-                    auth?.createUserWithEmailAndPassword(id, pw)
-                    dialog("success")
-                    Handler().postDelayed({
-                        val intent = Intent(this, AfterActivity::class.java)
-                        intent.action = Intent.ACTION_MAIN
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }, 2000L)
+                    signIn(id, pw)
                 }
             } else {
                 // 로그인 실패 다이얼로그 보여주기
                 dialog("fail")
             }
         }
+
 
         // 회원가입 버튼
         btn_register.setOnClickListener {
@@ -120,6 +111,29 @@ class MainActivity : AppCompatActivity() {
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)
+    }
+
+    private fun signIn(email: String, password: String) {
+
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth?.signInWithEmailAndPassword(email, password)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            baseContext, "로그인에 성공 하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog("success")
+                        val user = auth!!.currentUser
+                        loginSuccess(user)
+                    } else {
+                        Toast.makeText(
+                            baseContext, "로그인에 실패 하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
     }
 
     private fun facebookLogin() {
