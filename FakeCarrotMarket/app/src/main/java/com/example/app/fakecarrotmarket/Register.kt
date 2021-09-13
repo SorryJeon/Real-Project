@@ -44,11 +44,18 @@ class Register : AppCompatActivity() {
                 isExistBlank = true
             } else {
                 if (pw == pw_re) {
-                    isPWSame = true
-                    if (id.contains(email1) || id.contains(email2) || id.contains(email3)) {
-                        isExistBlank = false
-                    } else
-                        isExistBlank = true
+                    if (isPasswordFormat(pw)) {
+                        isPWSame = true
+
+                        if (id.contains(email1) || id.contains(email2) || id.contains(email3)) {
+                            isExistBlank = false
+                        } else {
+                            isExistBlank = true
+                        }
+                    }
+                    else {
+                        isPWSame = false
+                    }
                 }
             }
 
@@ -104,6 +111,10 @@ class Register : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun isPasswordFormat(password: String): Boolean {
+        return password.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{6,15}\$".toRegex())
     }
 
     // 회원가입 실패시 다이얼로그를 띄워주는 메소드
