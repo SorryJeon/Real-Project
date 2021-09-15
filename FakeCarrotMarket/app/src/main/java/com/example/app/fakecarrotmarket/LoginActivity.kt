@@ -59,27 +59,7 @@ class LoginActivity : AppCompatActivity() {
         // 로그인 버튼
         btn_login.setOnClickListener {
             //editText로부터 입력된 값을 받아온다
-            var id = edit_id.text.toString()
-            var pw = edit_pw.text.toString()
-
-            // 쉐어드로부터 저장된 id, pw 가져오기
-            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
-            val savedId = sharedPreference.getString("id", "")
-            val savedPw = sharedPreference.getString("pw", "")
-
-            // 유저가 입력한 id, pw값과 쉐어드로 불러온 id, pw값 비교
-            if (id == savedId && pw == savedPw) {
-                // 로그인 성공 다이얼로그 보여주기
-                if (id == "" && pw == "") {
-                    // 아이디와 비밀번호 없을 때 다이얼로그 보여주기
-                    dialog("empty")
-                } else {
-                    signIn(id, pw)
-                }
-            } else {
-                // 로그인 실패 다이얼로그 보여주기
-                dialog("fail")
-            }
+            signIn(edit_id.text.toString(), edit_pw.text.toString())
         }
 
 
@@ -240,18 +220,24 @@ class LoginActivity : AppCompatActivity() {
                         Log.d(TAG, "Email sent.")
                     }
                 }
-        }
-        else {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-
+        } else {
             Toast.makeText(
                 baseContext, "비밀번호 재설정에 실패했습니다.",
                 Toast.LENGTH_SHORT
             ).show()
-
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
+    }
+
+    private fun verifyEmail() {
+        auth?.currentUser?.sendEmailVerification()
+            ?.addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+
+                }
+            }
     }
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
