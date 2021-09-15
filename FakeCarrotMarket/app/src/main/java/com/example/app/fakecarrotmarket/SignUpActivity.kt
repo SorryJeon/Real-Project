@@ -35,9 +35,7 @@ class SignUpActivity : AppCompatActivity() {
             val id = edit_id.text.toString()
             val pw = edit_pw.text.toString()
             val pw_re = edit_pw_re.text.toString()
-            val email1 = "@naver.com"
-            val email2 = "@gmail.com"
-            val email3 = "@hanmail.net"
+            val pattern = android.util.Patterns.EMAIL_ADDRESS
 
             // 유저가 항목을 다 채우지 않았을 경우
             if (id.isEmpty() || pw.isEmpty() || pw_re.isEmpty()) {
@@ -47,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (isPasswordFormat(pw)) {
                         isPWSame = true
 
-                        if (id.contains(email1) || id.contains(email2) || id.contains(email3)) {
+                        if (pattern.matcher(id).matches()) {
                             isExistBlank = false
                         } else {
                             isExistBlank = true

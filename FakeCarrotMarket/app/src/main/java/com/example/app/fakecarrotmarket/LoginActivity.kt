@@ -21,6 +21,8 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -85,6 +87,10 @@ class LoginActivity : AppCompatActivity() {
         btn_register.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
+        }
+
+        btn_passReset.setOnClickListener {
+            sendPasswordReset()
         }
 
 //        btn_clear.setOnClickListener {
@@ -220,6 +226,31 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }, 2000L)
+        }
+    }
+
+    private fun sendPasswordReset() {
+        val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+        val savedId = sharedPreference.getString("id", "")
+
+        if (savedId != null) {
+            Firebase.auth.sendPasswordResetEmail(savedId)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                    }
+                }
+        }
+        else {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+
+            Toast.makeText(
+                baseContext, "비밀번호 재설정에 실패했습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
+
         }
     }
 
