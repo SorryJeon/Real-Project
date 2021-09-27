@@ -9,13 +9,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var btnRevoke: Button? = null
     var btnLogout: Button? = null
     var btnexit: Button? = null
-    private var mAuth: FirebaseAuth? = null
+    var auth: FirebaseAuth? = null
+    var fbFireStore: FirebaseFirestore? = null
+
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +27,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btnexit = findViewById<View>(R.id.btn_exit) as Button
-        mAuth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
+        fbFireStore = FirebaseFirestore.getInstance()
+
         btnLogout!!.setOnClickListener(this)
         btnRevoke!!.setOnClickListener(this)
         btnexit!!.setOnClickListener(this)
+
+        if (auth!!.currentUser != null) {
+
+            var userInfo = ModelUsers()
+
+            userInfo.uid = auth?.uid
+            userInfo.userId = auth?.currentUser?.email
+            fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
+        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -48,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        mAuth!!.currentUser!!.delete()
+        auth!!.currentUser!!.delete()
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
         if (account !== null) {

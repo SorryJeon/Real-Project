@@ -110,11 +110,21 @@ class LoginActivity : AppCompatActivity() {
                         dialog("success")
                         val user = auth!!.currentUser
                         loginSuccess(user)
+                        val sharedPreference =
+                            getSharedPreferences("file name", Context.MODE_PRIVATE)
+                        val editor = sharedPreference.edit()
+                        editor.putString("id", email)
+                        editor.apply()
                     } else {
                         Toast.makeText(
                             baseContext, "로그인에 실패 하였습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
+                        val sharedPreference =
+                            getSharedPreferences("file name", Context.MODE_PRIVATE)
+                        val editor = sharedPreference.edit()
+                        editor.putString("id", email)
+                        editor.apply()
                     }
                 }
         }
@@ -231,14 +241,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun verifyEmail() {
-        auth?.currentUser?.sendEmailVerification()
-            ?.addOnCompleteListener(this) {
-                if (it.isSuccessful) {
-
-                }
-            }
-    }
+//    private fun verifyEmail() {
+//        auth?.currentUser?.sendEmailVerification()
+//            ?.addOnCompleteListener(this) {
+//                if (it.isSuccessful) {
+//
+//                }
+//            }
+//    }
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
     fun dialog(type: String) {
