@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,6 +34,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnLogout!!.setOnClickListener(this)
         btnRevoke!!.setOnClickListener(this)
         btnexit!!.setOnClickListener(this)
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+            1
+        )
 
         if (auth!!.currentUser != null) {
 

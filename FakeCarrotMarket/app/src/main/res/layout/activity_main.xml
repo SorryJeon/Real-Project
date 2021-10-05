@@ -37,5 +37,20 @@
         android:layout_gravity="center_horizontal"
         android:text="프로그램 종료" />
 
+    <ImageView
+        android:id="@+id/xml_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btn_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="업로드" />
+
 
 </LinearLayout>
