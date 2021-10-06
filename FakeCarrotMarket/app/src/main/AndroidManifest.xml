@@ -15,6 +15,9 @@
         android:theme="@style/Theme.FakeCarrotMarket">
 
         <activity
+            android:name=".Test"
+            android:exported="true" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="true" />
 
@@ -23,7 +26,9 @@
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
 
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
