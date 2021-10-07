@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FakeCarrotMarket">
-
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true" />
         <activity
             android:name=".Test"
             android:exported="true" />

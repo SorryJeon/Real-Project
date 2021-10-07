@@ -285,4 +285,7 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

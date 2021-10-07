@@ -21,16 +21,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ImageFragment : Fragment() {
-    //    var fbAuth: FirebaseAuth? = null
-//    var fbFirestore: FirebaseFirestore? = null
+    var fbAuth: FirebaseAuth? = null
+    var fbFirestore: FirebaseFirestore? = null
     var fbStorage: FirebaseStorage? = null
     var uriPhoto: Uri? = null
     var pickImageFromAlbum = 0
     private var viewProfile: View? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +35,8 @@ class ImageFragment : Fragment() {
     ): View? {
         viewProfile = inflater.inflate(R.layout.activity_main, container, false)
         fbStorage = FirebaseStorage.getInstance()
-//        fbAuth = FirebaseAuth.getInstance()
-//        fbFirestore = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+        fbFirestore = FirebaseFirestore.getInstance()
 
         viewProfile!!.btn_image.setOnClickListener {
             // open Album
@@ -79,6 +75,13 @@ class ImageFragment : Fragment() {
 
         storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
             Toast.makeText(view.context, "Image Uploaded", Toast.LENGTH_SHORT).show()
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                var userInfo = ModelUsers()
+                userInfo.imageUrl = uri.toString()
+
+                fbFirestore?.collection("users")?.document(fbAuth?.uid.toString())
+                    ?.update("imageUrl", userInfo.imageUrl.toString())
+            }
         }
     }
 }

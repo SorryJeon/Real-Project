@@ -1,6 +1,7 @@
 package com.example.app.fakecarrotmarket
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
             1
         )
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, ImageFragment())
+            .commit()
 
         if (auth!!.currentUser != null) {
 
@@ -93,6 +98,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 finishAffinity()
             }
             R.id.btn_exit -> {
+                finishAffinity()
+            }
+
+            R.id.btn_image -> {
+                ImageFragment()
                 finishAffinity()
             }
         }
