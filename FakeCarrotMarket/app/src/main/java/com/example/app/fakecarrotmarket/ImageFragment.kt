@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -44,6 +45,7 @@ class ImageFragment : Fragment() {
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, pickImageFromAlbum)
         }
+
         return viewProfile
     }
 

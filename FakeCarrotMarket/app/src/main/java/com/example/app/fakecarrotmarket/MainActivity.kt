@@ -1,12 +1,18 @@
 package com.example.app.fakecarrotmarket
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,13 +23,15 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
     var btnRevoke: Button? = null
     var btnLogout: Button? = null
     var btnexit: Button? = null
+    var btnimage: Button? = null
     var auth: FirebaseAuth? = null
     var fbFireStore: FirebaseFirestore? = null
 
+    private var selectedUri: Uri? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,22 +39,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btnexit = findViewById<View>(R.id.btn_exit) as Button
+        btnimage = findViewById<View>(R.id.btn_image) as Button
         auth = FirebaseAuth.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
 
-        btnLogout!!.setOnClickListener(this)
-        btnRevoke!!.setOnClickListener(this)
-        btnexit!!.setOnClickListener(this)
-
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-            1
-        )
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, ImageFragment())
-            .commit()
+        btnLogout!!.setOnClickListener {
+            signOut()
+            finishAffinity()
+        }
+        btnRevoke!!.setOnClickListener {
+            revokeAccess()
+            finishAffinity()
+        }
+        btnexit!!.setOnClickListener {
+            finishAffinity()
+        }
+        btnimage!!.setOnClickListener {
+            ImageFragment()
+        }
 
         if (auth!!.currentUser != null) {
 
@@ -82,28 +92,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         LoginManager.getInstance().logOut()
         if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-            }
-        }
-
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btn_logout -> {
-                signOut()
-                finishAffinity()
-            }
-            R.id.btn_revoke -> {
-                revokeAccess()
-                finishAffinity()
-            }
-            R.id.btn_exit -> {
-                finishAffinity()
-            }
-
-            R.id.btn_image -> {
-                ImageFragment()
-                finishAffinity()
             }
         }
     }
