@@ -49,26 +49,26 @@ class ImageFragment : Fragment() {
         return viewProfile
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == pickImageFromAlbum) {
-            if (resultCode == Activity.RESULT_OK) {
-                uriPhoto = data?.data
-                xml_image.setImageURI(uriPhoto)
-
-                if (ContextCompat.checkSelfPermission(
-                        viewProfile!!.context,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    funImageUpload(viewProfile!!)
-                }
-            } else {
-
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == pickImageFromAlbum) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                uriPhoto = data?.data
+//                xml_image.setImageURI(uriPhoto)
+//
+//                if (ContextCompat.checkSelfPermission(
+//                        viewProfile!!.context,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE
+//                    ) == PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    funImageUpload(viewProfile!!)
+//                }
+//            } else {
+//
+//            }
+//        }
+//    }
 
     private fun funImageUpload(view: View) {
         var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
