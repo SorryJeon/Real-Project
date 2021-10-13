@@ -87,7 +87,10 @@ class LoginActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth?.currentUser
         if (currentUser != null) {
-            dialog("exist")
+            Toast.makeText(
+                baseContext, "잠시후 다음 화면으로 넘어갑니다!",
+                Toast.LENGTH_SHORT
+            ).show()
             loginSuccess(currentUser)
         }
     }

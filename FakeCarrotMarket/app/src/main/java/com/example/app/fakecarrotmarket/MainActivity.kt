@@ -17,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
-
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
     var btnRevoke: Button? = null
@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     var btnexit: Button? = null
     var btnimage: Button? = null
     var btnupload: Button? = null
+    var btndb: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
     var imgUri: Uri? = null
-    var bitUri: Bitmap? = null
     var fbFirestore: FirebaseFirestore? = null
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         btnexit = findViewById<View>(R.id.btn_exit) as Button
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
+        btndb = findViewById<View>(R.id.btn_db) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
@@ -60,12 +61,16 @@ class MainActivity : AppCompatActivity() {
             finishAffinity()
         }
 
+        btndb!!.setOnClickListener {
+            clickLoad()
+        }
+
         btnimage!!.setOnClickListener {
-            clickSelect(this)
+            clickSelect()
         }
 
         btnupload!!.setOnClickListener {
-            clickUpload(this)
+            clickUpload()
         }
 
         if (auth!!.currentUser != null) {
@@ -107,32 +112,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    fun clickLoad(view: View?) {
-//
-//        //Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
-//
-//        //1. Firebase Storeage관리 객체 얻어오기
-//        val firebaseStorage = FirebaseStorage.getInstance()
-//
-//        //2. 최상위노드 참조 객체 얻어오기
-//        val rootRef = firebaseStorage.reference
-//
-//        //읽어오길 원하는 파일의 참조객체 얻어오기
-//        //예제에서는 자식노드 이름은 monkey.png
-//        var imgRef = rootRef.child("monkey.png")
-//        //하위 폴더가 있다면 폴더명까지 포함하여
-//        imgRef = rootRef.child("photo/bazzi.png")
-//        if (imgRef != null) {
-//            //참조객체로 부터 이미지의 다운로드 URL을 얻어오기
-//            imgRef.downloadUrl.addOnSuccessListener { uri -> //다운로드 URL이 파라미터로 전달되어 옴.
-//                Glide.with(this@MainActivity).load(uri)
-//                    .into(iv!!)
-//            }
-//        }
-//    }
+    fun clickLoad() {
+        //Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
 
-    fun clickSelect(view: MainActivity) {
-        //사진을 선탣할 수 있는 Gallery앱 실행
+        //1. Firebase Storeage관리 객체 얻어오기
+        val firebaseStorage = FirebaseStorage.getInstance()
+
+        //2. 최상위노드 참조 객체 얻어오기
+        val rootRef = firebaseStorage.reference
+
+        //3. 하위 폴더가 있다면 폴더명까지 포함하여 읽어오길 원하는 파일의 참조객체 얻어오기
+
+        var imgRef = rootRef.child("images/대단하다 발암의나라!.PNG")
+
+        //4. 참조객체로 부터 이미지의 다운로드 URL을 얻어오기
+        imgRef.downloadUrl.addOnSuccessListener { imgUri -> //다운로드 URL이 파라미터로 전달되어 옴.
+            Glide.with(this@MainActivity).load(imgUri)
+                .into(iv!!)
+            Toast.makeText(
+                baseContext, "파일 DB에서 가져오기 성공!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    fun clickSelect() {
+        //사진을 선택할 수 있는 Gallery앱 실행
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, 10)
@@ -145,26 +150,37 @@ class MainActivity : AppCompatActivity() {
                 //선택한 이미지의 경로 얻어오기
                 imgUri = data?.data
                 iv?.setImageURI(imgUri)
+                Toast.makeText(
+                    baseContext, "파일 로컬에서 가져오기 성공!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
 
-    fun clickUpload(view: MainActivity) {
+    fun clickUpload() {
 
         var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imgFileName = "IMAGE_" + timeStamp + "_.png"
         var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
 
-        storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
-            Toast.makeText(view.baseContext, "Image Uploaded", Toast.LENGTH_SHORT).show()
-            storageRef.downloadUrl.addOnSuccessListener { uri ->
-                var userInfo = ModelUsers()
-                userInfo.imageUrl = uri.toString()
+        if (imgUri != null) {
+            storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
+                Toast.makeText(baseContext, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    var userInfo = ModelUsers()
+                    userInfo.imageUrl = uri.toString()
 
-                fbFirestore?.collection("users")?.document(auth?.uid.toString())
-                    ?.update("imageUrl", userInfo.imageUrl.toString())
+                    fbFirestore?.collection("users")?.document(auth?.uid.toString())
+                        ?.update("imageUrl", userInfo.imageUrl.toString())
+                }
             }
+        } else {
+            Toast.makeText(
+                baseContext, "이미지 업로드 실패!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
