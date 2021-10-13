@@ -1,7 +1,6 @@
 package com.example.app.fakecarrotmarket
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun clickLoad() {
+    private fun clickLoad() {
         //Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
 
         //1. Firebase Storeage관리 객체 얻어오기
@@ -122,12 +121,12 @@ class MainActivity : AppCompatActivity() {
         val rootRef = firebaseStorage.reference
 
         //3. 하위 폴더가 있다면 폴더명까지 포함하여 읽어오길 원하는 파일의 참조객체 얻어오기
-
         var imgRef = rootRef.child("images/대단하다 발암의나라!.PNG")
 
         //4. 참조객체로 부터 이미지의 다운로드 URL을 얻어오기
         imgRef.downloadUrl.addOnSuccessListener { imgUri -> //다운로드 URL이 파라미터로 전달되어 옴.
-            Glide.with(this@MainActivity).load(imgUri)
+            Glide.with(this@MainActivity)
+                .load(imgUri)
                 .into(iv!!)
             Toast.makeText(
                 baseContext, "파일 DB에서 가져오기 성공!",
@@ -136,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun clickSelect() {
+    private fun clickSelect() {
         //사진을 선택할 수 있는 Gallery앱 실행
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -159,7 +158,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun clickUpload() {
+    private fun clickUpload() {
 
         var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imgFileName = "IMAGE_" + timeStamp + "_.png"
