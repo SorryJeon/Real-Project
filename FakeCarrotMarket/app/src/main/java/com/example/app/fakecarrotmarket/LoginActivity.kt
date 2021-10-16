@@ -231,6 +231,15 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+//    private fun verifyEmail(){
+//        auth?.currentUser?.sendEmailVerification()
+//            ?.addOnCompleteListener(this){
+//                if(it.isSuccessful){
+//
+//                }
+//            }
+//    }
+
     private fun sendPasswordReset() {
         val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
         val savedId = sharedPreference.getString("id", "")
