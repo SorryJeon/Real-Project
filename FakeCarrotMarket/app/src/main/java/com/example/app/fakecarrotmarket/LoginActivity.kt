@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import bolts.Task.delay
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -27,6 +28,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
+    var first_time: Long = 0
+    var second_time: Long = 0
     var auth: FirebaseAuth? = null
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
@@ -84,15 +87,16 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth?.currentUser
-        if (currentUser != null) {
-            Toast.makeText(
-                baseContext, "잠시후 다음 화면으로 넘어갑니다!",
-                Toast.LENGTH_SHORT
-            ).show()
-            loginSuccess(currentUser)
-        }
+        val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.clear()
+        editor.apply()
+//        val currentUser = auth?.currentUser
+//        if (currentUser != null) {
+//            dialog("exist")
+//            delay(2000)
+//            loginSuccess(currentUser)
+//        }
     }
 
     private fun signIn() {
@@ -110,11 +114,10 @@ class LoginActivity : AppCompatActivity() {
                             baseContext, "로그인에 성공 하였습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
-                        dialog("success")
                         val user = auth!!.currentUser
                         loginSuccess(user)
                         val sharedPreference =
-                            getSharedPreferences("file name", Context.MODE_PRIVATE)
+                            getSharedPreferences("file name", MODE_PRIVATE)
                         val editor = sharedPreference.edit()
                         editor.putString("id", email)
                         editor.apply()
@@ -124,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         val sharedPreference =
-                            getSharedPreferences("file name", Context.MODE_PRIVATE)
+                            getSharedPreferences("file name", MODE_PRIVATE)
                         val editor = sharedPreference.edit()
                         editor.putString("id", email)
                         editor.apply()
@@ -180,7 +183,10 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "로그인 성공")
-                    dialog("success")
+                    Toast.makeText(
+                        baseContext, "로그인에 성공 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val user = auth!!.currentUser
                     loginSuccess(user)
                 } else {
@@ -198,7 +204,10 @@ class LoginActivity : AppCompatActivity() {
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "로그인 성공")
-                    dialog("success")
+                    Toast.makeText(
+                        baseContext, "로그인에 성공 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val user = auth!!.currentUser
                     loginSuccess(user)
                 } else {
@@ -226,53 +235,40 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
         val savedId = sharedPreference.getString("id", "")
 
-        if (savedId != null) {
-            Firebase.auth.sendPasswordResetEmail(savedId)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
+        if (savedId != "") {
+            if (savedId != null) {
+                Firebase.auth.sendPasswordResetEmail(savedId)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "Email sent.")
+                        } else {
+                            Log.d(TAG, "Email is not sent.")
+                        }
                     }
-                }
+            }
         } else {
             Toast.makeText(
                 baseContext, "비밀번호 재설정에 실패했습니다.",
                 Toast.LENGTH_SHORT
             ).show()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
         }
     }
-
-//    private fun verifyEmail() {
-//        auth?.currentUser?.sendEmailVerification()
-//            ?.addOnCompleteListener(this) {
-//                if (it.isSuccessful) {
-//
-//                }
-//            }
-//    }
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
     fun dialog(type: String) {
         var dialog = AlertDialog.Builder(this)
 
-        if (type.equals("success")) {
-            dialog.setTitle("로그인 성공")
-            dialog.setMessage("로그인 성공!")
-        } else if (type.equals("fail")) {
+        if (type.equals("fail")) {
             dialog.setTitle("로그인 실패")
             dialog.setMessage("아이디와 비밀번호를 확인해주세요")
-        } else if (type.equals("clear")) {
-            dialog.setTitle("회원정보 초기화")
-            dialog.setTitle("초기화 되었습니다!")
         } else if (type.equals("empty")) {
             dialog.setTitle("회원정보 존재하지 않음")
             dialog.setTitle("아이디 비밀번호를 만들어주세요!")
-        } else if (type.equals("exist")) {
-            dialog.setTitle("이미 로그인된 상태")
-            dialog.setTitle("잠시후 다음 화면으로 넘어갑니다!")
         }
+//        else if (type.equals("exist")) {
+//            dialog.setTitle("이미 로그인된 상태")
+//            dialog.setTitle("잠시후 다음 화면으로 넘어갑니다!")
+//        }
 
 
         var dialog_listener = object : DialogInterface.OnClickListener {
@@ -286,5 +282,16 @@ class LoginActivity : AppCompatActivity() {
 
         dialog.setPositiveButton("확인", dialog_listener)
         dialog.show()
+    }
+
+    override fun onBackPressed() {
+        second_time = System.currentTimeMillis()
+        if (second_time - first_time < 2000) {
+            super.onBackPressed()
+            finishAffinity()
+        } else {
+            Toast.makeText(this@LoginActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+        first_time = System.currentTimeMillis()
     }
 }

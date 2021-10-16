@@ -91,16 +91,12 @@ class SignUpActivity : AppCompatActivity() {
                 if (isExistBlank) {   // 작성 안한 항목이 있을 경우
                     val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
                     val editor = sharedPreference.edit()
-                    editor.putString("id", id)
-                    editor.putString("pw", pw)
                     editor.clear()
                     editor.apply()
                     dialog("blank")
                 } else if (!isPWSame) { // 입력한 비밀번호가 다를 경우
                     val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
                     val editor = sharedPreference.edit()
-                    editor.putString("id", id)
-                    editor.putString("pw", pw)
                     editor.clear()
                     editor.apply()
                     dialog("not same")
@@ -118,7 +114,6 @@ class SignUpActivity : AppCompatActivity() {
                 this, "이전 화면으로 돌아갑니다.",
                 Toast.LENGTH_SHORT
             ).show()
-            finishAffinity()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
@@ -155,5 +150,13 @@ class SignUpActivity : AppCompatActivity() {
 
         dialog.setPositiveButton("확인", dialog_listener)
         dialog.show()
+    }
+
+    override fun onBackPressed() {
+        Toast.makeText(
+            this, "이전 화면으로 돌아갑니다.",
+            Toast.LENGTH_SHORT
+        ).show()
+        super.onBackPressed()
     }
 }

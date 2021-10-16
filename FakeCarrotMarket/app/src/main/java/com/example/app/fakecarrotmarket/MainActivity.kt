@@ -19,9 +19,10 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
+    var first_time: Long = 0
+    var second_time: Long = 0
     var btnRevoke: Button? = null
     var btnLogout: Button? = null
-    var btnexit: Button? = null
     var btnimage: Button? = null
     var btnupload: Button? = null
     var btndb: Button? = null
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
 
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
-        btnexit = findViewById<View>(R.id.btn_exit) as Button
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
@@ -54,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
         btnRevoke!!.setOnClickListener {
             revokeAccess()
-            finishAffinity()
-        }
-        btnexit!!.setOnClickListener {
             finishAffinity()
         }
 
@@ -181,5 +178,17 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    override fun onBackPressed() {
+        second_time = System.currentTimeMillis()
+        if (second_time - first_time < 2000) {
+            super.onBackPressed()
+            signOut()
+            finishAffinity()
+        } else {
+            Toast.makeText(this@MainActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+        first_time = System.currentTimeMillis()
     }
 }
