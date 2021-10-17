@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
 
-    private var auth: FirebaseAuth? = null
+    lateinit var auth: FirebaseAuth
     val TAG: String = "Register"
     var isExistBlank = false
     var isPWSame = false
@@ -28,6 +28,7 @@ class SignUpActivity : AppCompatActivity() {
         val edit_id = findViewById<EditText>(R.id.edit_id)
         val edit_pw = findViewById<EditText>(R.id.edit_pw)
         val edit_pw_re = findViewById<EditText>(R.id.edit_pw_re)
+
 
         btn_register.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
@@ -58,28 +59,36 @@ class SignUpActivity : AppCompatActivity() {
 
             if (!isExistBlank && isPWSame) {
 
-                // 회원가입 성공 토스트 메세지 띄우기
-                Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-
                 // 유저가 입력한 id, pw를 쉐어드에 저장한다.
                 val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
                 val editor = sharedPreference.edit()
+
                 editor.putString("id", id)
                 editor.putString("pw", pw)
                 editor.apply()
 
-                auth?.createUserWithEmailAndPassword(id, pw)
-                    ?.addOnCompleteListener(this) { task ->
+                auth.createUserWithEmailAndPassword(id, pw)
+                    .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                this, "계정 생성 완료.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this, LoginActivity::class.java)
-                            startActivity(intent) // 가입창 종료, 로그인 화면으로 이동
+                            auth.currentUser!!.sendEmailVerification()
+                                .addOnCompleteListener { sendTask ->
+                                    if (sendTask.isSuccessful) {
+                                        Toast.makeText(
+                                            baseContext, " 전송된 메일을 확인해주세요.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        val intent = Intent(this, LoginActivity::class.java)
+                                        startActivity(intent)
+                                    } else {
+                                        Toast.makeText(
+                                            baseContext, "메일이 유효한지 확인해주세요.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
                         } else {
                             Toast.makeText(
-                                this, "계정 생성 실패",
+                                baseContext, "이미 생성된 계정입니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

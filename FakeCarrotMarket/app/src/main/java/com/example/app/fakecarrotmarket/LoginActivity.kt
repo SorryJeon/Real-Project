@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
+    var email: String? = null
     var callbackManager: CallbackManager? = null
 
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -85,19 +86,15 @@ class LoginActivity : AppCompatActivity() {
 //        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
-        val editor = sharedPreference.edit()
-        editor.clear()
-        editor.apply()
-//        val currentUser = auth?.currentUser
+//    override fun onStart() {
+//        super.onStart()
+//        v al currentUser = auth?.currentUser
 //        if (currentUser != null) {
 //            dialog("exist")
 //            delay(2000)
 //            loginSuccess(currentUser)
 //        }
-    }
+//    }
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
@@ -110,17 +107,23 @@ class LoginActivity : AppCompatActivity() {
             auth?.signInWithEmailAndPassword(email, password)
                 ?.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(
-                            baseContext, "로그인에 성공 하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val user = auth!!.currentUser
-                        loginSuccess(user)
-                        val sharedPreference =
-                            getSharedPreferences("file name", MODE_PRIVATE)
-                        val editor = sharedPreference.edit()
-                        editor.putString("id", email)
-                        editor.apply()
+                        if (checkAuth()) {
+                            Toast.makeText(
+                                baseContext, "로그인에 성공 하였습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            val user = auth!!.currentUser
+                            loginSuccess(user)
+                            val sharedPreference =
+                                getSharedPreferences("file name", MODE_PRIVATE)
+                            val editor = sharedPreference.edit()
+                            editor.putString("id", email)
+                            editor.apply()
+                        } else {
+                            Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.",
+                                Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         Toast.makeText(
                             baseContext, "로그인에 실패 하였습니다.",
@@ -228,6 +231,20 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }, 2000L)
+        }
+    }
+
+    private fun checkAuth(): Boolean {
+        val currentUser = auth?.currentUser
+        return currentUser?.let {
+            email = currentUser.email
+            if (currentUser.isEmailVerified) {
+                true
+            } else {
+                false
+            }
+        } ?: let {
+            false
         }
     }
 
