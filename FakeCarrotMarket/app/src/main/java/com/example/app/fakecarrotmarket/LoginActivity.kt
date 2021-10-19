@@ -266,8 +266,16 @@ class LoginActivity : AppCompatActivity() {
                 Firebase.auth.sendPasswordResetEmail(savedId)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            Toast.makeText(
+                                baseContext, "비밀번호 재설정 이메일이 전송되었습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             Log.d(TAG, "Email sent.")
                         } else {
+                            Toast.makeText(
+                                baseContext, "비밀번호 재설정 이메일 전송이 실패했습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             Log.d(TAG, "Email is not sent.")
                         }
                     }
