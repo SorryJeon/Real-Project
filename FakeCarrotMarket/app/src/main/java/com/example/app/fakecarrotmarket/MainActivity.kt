@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_main.*
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     var first_time: Long = 0
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     var btndb: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
+    var tvafter: TextView? = null
     var imgUri: Uri? = null
     var fbFirestore: FirebaseFirestore? = null
     var fbStorage: FirebaseStorage? = null
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
+        tvafter = findViewById<View>(R.id.tv_after) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
@@ -129,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                 baseContext, "파일 DB에서 가져오기 성공!",
                 Toast.LENGTH_SHORT
             ).show()
+            tvafter!!.text = "파일 DB에서 가져오기 성공!"
         }
     }
 
@@ -150,6 +155,7 @@ class MainActivity : AppCompatActivity() {
                     baseContext, "파일 로컬에서 가져오기 성공!",
                     Toast.LENGTH_SHORT
                 ).show()
+                tvafter!!.text = "파일 로컬에서 가져오기 성공!"
             }
         }
     }
@@ -164,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         if (imgUri != null) {
             storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
                 Toast.makeText(baseContext, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
+                tvafter!!.text = "이미지 업로드 성공!"
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
                     var userInfo = ModelUsers()
                     userInfo.imageUrl = uri.toString()
@@ -177,6 +184,7 @@ class MainActivity : AppCompatActivity() {
                 baseContext, "이미지 업로드 실패!",
                 Toast.LENGTH_SHORT
             ).show()
+            tvafter!!.text = "이미지 업로드 실패!"
         }
     }
 
