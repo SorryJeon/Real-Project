@@ -17,8 +17,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.facebook.AccessToken
+import com.facebook.GraphRequest
+import com.facebook.HttpMethod
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     var first_time: Long = 0
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
@@ -94,22 +97,32 @@ class MainActivity : AppCompatActivity() {
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
+        GraphRequest(AccessToken.getCurrentAccessToken(),
+            "/me/permissions/", null, HttpMethod.DELETE,
+            GraphRequest.Callback {
+                AccessToken.setCurrentAccessToken(null)
+                LoginManager.getInstance().logOut()
+            }).executeAsync()
     }
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         auth!!.currentUser!!.delete()
         FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
         if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             }
         }
+        GraphRequest(AccessToken.getCurrentAccessToken(),
+            "/me/permissions/", null, HttpMethod.DELETE,
+            GraphRequest.Callback {
+                AccessToken.setCurrentAccessToken(null)
+                LoginManager.getInstance().logOut()
+            }).executeAsync()
     }
 
     private fun clickLoad() {
