@@ -98,15 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         FirebaseAuth.getInstance().signOut()
-        if (AccessToken.getCurrentAccessToken() != null) {
-            GraphRequest(
-                AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE,
-                GraphRequest.Callback {
-                    AccessToken.setCurrentAccessToken(null)
-                    LoginManager.getInstance().logOut()
-                }
-            ).executeAsync()
-        }
+        LoginManager.getInstance().logOut()
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }

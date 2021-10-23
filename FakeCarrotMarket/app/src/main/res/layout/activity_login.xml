@@ -78,5 +78,29 @@
         android:layout_centerHorizontal="true"
         android:text="페이스북 로그인" />
 
+    <Button
+        android:id="@+id/kakaoSignInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/facebookSignInBtn"
+        android:layout_centerHorizontal="true"
+        android:text="카카오 로그인" />
+
+    <Button
+        android:id="@+id/twitterSignInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kakaoSignInBtn"
+        android:layout_centerHorizontal="true"
+        android:text="트위터 로그인" />
+
+    <Button
+        android:id="@+id/githubSignInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/twitterSignInBtn"
+        android:layout_centerHorizontal="true"
+        android:text="깃허브 로그인" />
+
 
 </RelativeLayout>
