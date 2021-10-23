@@ -18,6 +18,7 @@ import java.util.*
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
+import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        FacebookSdk.sdkInitialize(getApplicationContext())
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btnimage = findViewById<View>(R.id.btn_image) as Button
@@ -97,32 +98,38 @@ class MainActivity : AppCompatActivity() {
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         FirebaseAuth.getInstance().signOut()
+        if (AccessToken.getCurrentAccessToken() != null) {
+            GraphRequest(
+                AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE,
+                GraphRequest.Callback {
+                    AccessToken.setCurrentAccessToken(null)
+                    LoginManager.getInstance().logOut()
+                }
+            ).executeAsync()
+        }
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
-        GraphRequest(AccessToken.getCurrentAccessToken(),
-            "/me/permissions/", null, HttpMethod.DELETE,
-            GraphRequest.Callback {
-                AccessToken.setCurrentAccessToken(null)
-                LoginManager.getInstance().logOut()
-            }).executeAsync()
     }
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         auth!!.currentUser!!.delete()
         FirebaseAuth.getInstance().signOut()
+        if (AccessToken.getCurrentAccessToken() != null) {
+            GraphRequest(
+                AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE,
+                GraphRequest.Callback {
+                    AccessToken.setCurrentAccessToken(null)
+                    LoginManager.getInstance().logOut()
+                }
+            ).executeAsync()
+        }
         if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             }
         }
-        GraphRequest(AccessToken.getCurrentAccessToken(),
-            "/me/permissions/", null, HttpMethod.DELETE,
-            GraphRequest.Callback {
-                AccessToken.setCurrentAccessToken(null)
-                LoginManager.getInstance().logOut()
-            }).executeAsync()
     }
 
     private fun clickLoad() {
