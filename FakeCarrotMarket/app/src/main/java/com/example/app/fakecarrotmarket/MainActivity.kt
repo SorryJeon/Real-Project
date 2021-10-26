@@ -209,5 +209,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this@MainActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
+        first_time = System.currentTimeMillis()
     }
 }
