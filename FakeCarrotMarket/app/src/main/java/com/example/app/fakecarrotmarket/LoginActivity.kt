@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.app.Application
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.common.KakaoSdk
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -325,5 +327,15 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this@LoginActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
         first_time = System.currentTimeMillis()
+    }
+
+    class GlobalApplication : Application() {
+        override fun onCreate() {
+            super.onCreate()
+            // 다른 초기화 코드들
+
+            // Kakao SDK 초기화
+            KakaoSdk.init(this, "{8915659582e1a43e1eafef8ada1211fb}")
+        }
     }
 }
