@@ -1,3 +1,5 @@
 https://github.com/firebase/firebaseui-android - 외국인이 만든 안드로이드 코드
 https://firebase.google.com/docs/auth/android/firebaseui?hl=ko - 파이어베이스 안드로이드 문서
 https://developers.kakao.com/docs/latest/ko/kakaologin/android - 카카오 개발자 안드로이드 문서
+https://stack07142.tistory.com/255 - 깃허브 파이어베이스 로그인 가이드
+https://beomseok95.tistory.com/111 - 트위터 파이어베이스 로그인 가이드
