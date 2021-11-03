@@ -328,14 +328,4 @@ class LoginActivity : AppCompatActivity() {
         }
         first_time = System.currentTimeMillis()
     }
-
-//    class GlobalApplication : Application() {
-//        override fun onCreate() {
-//            super.onCreate()
-//            // 다른 초기화 코드들
-//
-//            // Kakao SDK 초기화
-//            KakaoSdk.init(this, "{8915659582e1a43e1eafef8ada1211fb}")
-//        }
-//    }
 }
