@@ -21,6 +21,8 @@ import com.facebook.AccessToken
 import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
+import com.firebase.ui.auth.data.model.User
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -99,6 +101,13 @@ class MainActivity : AppCompatActivity() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
+        UserApiClient.instance.logout { error ->
+            if (error != null) {
+                Toast.makeText(this, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+            }
+        }
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
@@ -107,11 +116,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        auth!!.currentUser!!.delete()
+        if(auth!!.currentUser != null) {
+            auth!!.currentUser!!.delete()
+        }
         FirebaseAuth.getInstance().signOut()
+        UserApiClient.instance.unlink { error ->
+            if (error != null) {
+                Toast.makeText(this, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         if (AccessToken.getCurrentAccessToken() != null) {
             GraphRequest(
-                AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE,
+                AccessToken.getCurrentAccessToken(),
+                "/me/permissions/",
+                null,
+                HttpMethod.DELETE,
                 GraphRequest.Callback {
                     AccessToken.setCurrentAccessToken(null)
                     LoginManager.getInstance().logOut()
@@ -207,7 +229,8 @@ class MainActivity : AppCompatActivity() {
             signOut()
             finishAffinity()
         } else {
-            Toast.makeText(this@MainActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)
+                .show()
         }
         first_time = System.currentTimeMillis()
     }
