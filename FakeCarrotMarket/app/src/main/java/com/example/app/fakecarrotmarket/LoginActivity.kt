@@ -17,19 +17,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.twitter.sdk.android.core.*
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlin.Result
+import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
+    lateinit var twitterAuthClient: TwitterAuthClient
+    var loginstate = false
     var first_time: Long = 0
     var second_time: Long = 0
     var auth: FirebaseAuth? = null
@@ -43,11 +46,23 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val authConfig = TwitterAuthConfig(
+            getString(R.string.twitter_consumer_key),
+            getString(R.string.twitter_consumer_secret)
+        )
+
+        val twitterConfig = TwitterConfig.Builder(this)
+            .twitterAuthConfig(authConfig)
+            .build()
+
+        Twitter.initialize(twitterConfig)
+
+        twitterAuthClient = TwitterAuthClient()
+
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
-                Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
+
             } else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
@@ -98,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
         val googleSignInBtn = findViewById<Button>(R.id.googleSignInBtn)
         val facebookSignInBtn = findViewById<Button>(R.id.facebookSignInBtn)
         val kakaoSignInBtn = findViewById<Button>(R.id.kakaoSignInBtn)
+        val twitterSignInBtn = findViewById<Button>(R.id.twitterSignInBtn)
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -119,6 +135,15 @@ class LoginActivity : AppCompatActivity() {
                 UserApiClient.instance.loginWithKakaoTalk(baseContext, callback = callback)
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(baseContext, callback = callback)
+            }
+        }
+        twitterSignInBtn.setOnClickListener {
+            if (!loginstate) {
+                twitterLogin()
+            } else {
+                loginstate = !loginstate
+                twitterSignInBtn.text = "트위터로그인"
+                signOut()
             }
         }
         // 로그인 버튼
@@ -221,9 +246,58 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
+    private fun twitterLogin() {
+        twitterAuthClient.authorize(this, object : Callback<TwitterSession>() {
+            override fun success(result: com.twitter.sdk.android.core.Result<TwitterSession>?) {
+                if (result != null) {
+                    handleTwitterSession(result.data)
+                    twitterSignInBtn.text = "로그아웃"
+                    loginstate = !loginstate
+                }
+            }
+
+            override fun failure(exception: TwitterException?) {
+                Toast.makeText(baseContext, "트위터 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun handleTwitterSession(session: TwitterSession) {
+        Log.d("MainActivity", "handleTwitterSession:$session")
+        val credential = TwitterAuthProvider.getCredential(
+            session.authToken.token,
+            session.authToken.secret
+        )
+
+        auth?.signInWithCredential(credential)
+            ?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("MainActivity", "signInWithCredential:success")
+                    Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                    val user = auth!!.currentUser
+                    loginSuccess(user)
+                    loginInfo.text = "id : ${user?.displayName}"
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("MainActivity", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun signOut() {
+        auth?.signOut()
+        TwitterCore.getInstance().sessionManager.clearActiveSession()
+        loginInfo.text = "info"
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager?.onActivityResult(requestCode, resultCode, data)
+        twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == GOOGLE_REQUEST_CODE) {

@@ -108,4 +108,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="깃허브 로그인" />
+
+    <TextView
+        android:id="@+id/loginInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:text="SignOut" />
 </LinearLayout>

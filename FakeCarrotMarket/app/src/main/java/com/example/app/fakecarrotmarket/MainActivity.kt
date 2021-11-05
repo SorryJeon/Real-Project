@@ -23,6 +23,7 @@ import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.firebase.ui.auth.data.model.User
 import com.kakao.sdk.user.UserApiClient
+import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -99,13 +100,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
+        TwitterCore.getInstance().sessionManager.clearActiveSession()
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
         UserApiClient.instance.logout { error ->
             if (error != null) {
-                Toast.makeText(this, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+
             } else {
-                Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+
             }
         }
         if (account !== null) {
@@ -116,15 +118,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        if(auth!!.currentUser != null) {
+        TwitterCore.getInstance().sessionManager.clearActiveSession()
+        if (auth!!.currentUser != null) {
             auth!!.currentUser!!.delete()
         }
         FirebaseAuth.getInstance().signOut()
         UserApiClient.instance.unlink { error ->
             if (error != null) {
-                Toast.makeText(this, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
+
             } else {
-                Toast.makeText(this, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
+
             }
         }
 
