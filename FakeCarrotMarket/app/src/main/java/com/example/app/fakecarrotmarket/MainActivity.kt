@@ -123,6 +123,7 @@ class MainActivity : AppCompatActivity() {
             auth!!.currentUser!!.delete()
         }
         FirebaseAuth.getInstance().signOut()
+        LoginManager.getInstance().logOut()
         UserApiClient.instance.unlink { error ->
             if (error != null) {
 
@@ -131,18 +132,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me/permissions/",
-                null,
-                HttpMethod.DELETE,
-                GraphRequest.Callback {
-                    AccessToken.setCurrentAccessToken(null)
-                    LoginManager.getInstance().logOut()
-                }
-            ).executeAsync()
-        }
         if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             }
