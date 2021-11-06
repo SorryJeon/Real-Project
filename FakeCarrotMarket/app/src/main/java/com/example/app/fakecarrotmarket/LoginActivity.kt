@@ -162,25 +162,6 @@ class LoginActivity : AppCompatActivity() {
         btn_passReset.setOnClickListener {
             sendPasswordReset()
         }
-
-//        btn_clear.setOnClickListener {
-//            val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
-//            val editor = sharedPreference.edit()
-//            editor.clear()
-//            editor.apply()
-//            dialog("clear")
-//        }
-
-
-//    override fun onStart() {
-//        super.onStart()
-//        v al currentUser = auth?.currentUser
-//        if (currentUser != null) {
-//            dialog("exist")
-//            delay(2000)
-//            loginSuccess(currentUser)
-//        }
-//    }
     }
 
     private fun signIn() {
@@ -386,15 +367,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    private fun verifyEmail(){
-//        auth?.currentUser?.sendEmailVerification()
-//            ?.addOnCompleteListener(this){
-//                if(it.isSuccessful){
-//
-//                }
-//            }
-//    }
-
     private fun sendPasswordReset() {
         val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
         val savedId = sharedPreference.getString("id", "")
@@ -437,12 +409,7 @@ class LoginActivity : AppCompatActivity() {
             dialog.setTitle("회원정보 존재하지 않음")
             dialog.setTitle("아이디 비밀번호를 만들어주세요!")
         }
-//        else if (type.equals("exist")) {
-//            dialog.setTitle("이미 로그인된 상태")
-//            dialog.setTitle("잠시후 다음 화면으로 넘어갑니다!")
-//        }
-
-
+        
         var dialog_listener = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 when (which) {
