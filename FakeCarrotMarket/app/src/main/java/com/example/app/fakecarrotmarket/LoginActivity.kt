@@ -409,7 +409,7 @@ class LoginActivity : AppCompatActivity() {
             dialog.setTitle("회원정보 존재하지 않음")
             dialog.setTitle("아이디 비밀번호를 만들어주세요!")
         }
-        
+
         var dialog_listener = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 when (which) {
