@@ -33,6 +33,11 @@
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_native_key"
+            tools:replace="android:value"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -28,6 +28,16 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlin.Result
 import kotlin.math.log
+import com.google.firebase.auth.OAuthProvider
+import androidx.annotation.NonNull
+
+import com.google.android.gms.tasks.OnFailureListener
+
+import com.google.firebase.auth.AuthResult
+
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.ktx.oAuthProvider
+import com.google.firebase.auth.FirebaseUser
 
 
 class LoginActivity : AppCompatActivity() {
@@ -114,6 +124,7 @@ class LoginActivity : AppCompatActivity() {
         val facebookSignInBtn = findViewById<Button>(R.id.facebookSignInBtn)
         val kakaoSignInBtn = findViewById<Button>(R.id.kakaoSignInBtn)
         val twitterSignInBtn = findViewById<Button>(R.id.twitterSignInBtn)
+        val githubSignInBtn = findViewById<Button>(R.id.githubSignInBtn)
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -127,9 +138,11 @@ class LoginActivity : AppCompatActivity() {
         googleSignInBtn.setOnClickListener {
             signIn()
         }
+
         facebookSignInBtn.setOnClickListener {
             facebookLogin()
         }
+
         kakaoSignInBtn.setOnClickListener {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(baseContext)) {
                 UserApiClient.instance.loginWithKakaoTalk(baseContext, callback = callback)
@@ -137,6 +150,7 @@ class LoginActivity : AppCompatActivity() {
                 UserApiClient.instance.loginWithKakaoAccount(baseContext, callback = callback)
             }
         }
+
         twitterSignInBtn.setOnClickListener {
             if (!loginstate) {
                 twitterLogin()
@@ -146,6 +160,11 @@ class LoginActivity : AppCompatActivity() {
                 signOut()
             }
         }
+
+        githubSignInBtn.setOnClickListener {
+            githubLogin()
+        }
+
         // 로그인 버튼
         btn_login.setOnClickListener {
             //editText로부터 입력된 값을 받아온다
@@ -241,6 +260,30 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "트위터 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun githubLogin() {
+
+        val provider = OAuthProvider.newBuilder("github.com")
+        provider.addCustomParameter("login", "your-email@gmail.com")
+        auth!!
+            .startActivityForSignInWithProvider( /* activity= */this, provider.build())
+            .addOnSuccessListener(
+                OnSuccessListener<AuthResult?> {
+                    Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                    val user = auth!!.currentUser
+                    loginSuccess(user)
+                    // User is signed in.
+                    // IdP data available in
+                    // authResult.getAdditionalUserInfo().getProfile().
+                    // The OAuth access token can also be retrieved:
+                    // authResult.getCredential().getAccessToken().
+                })
+            .addOnFailureListener(
+                OnFailureListener {
+                    Toast.makeText(baseContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    // Handle failure.
+                })
     }
 
     private fun handleTwitterSession(session: TwitterSession) {
@@ -397,6 +440,8 @@ class LoginActivity : AppCompatActivity() {
             ).show()
         }
     }
+
+
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
     fun dialog(type: String) {

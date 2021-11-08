@@ -15,6 +15,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="kakao_native_key">8915659582e1a43e1eafef8ada1211fb</string>
     <string name="twitter_consumer_key">jSQZ39pOIJqD5idifYmTgrc4F </string>
     <string name="twitter_consumer_secret">o4S8jGh3CGbzNxLoBuR5WVVguY6wux58G851SVKlvRjyIOSNW5</string>
 
