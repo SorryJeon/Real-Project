@@ -183,6 +183,16 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
+        val sharedPreference =
+            getSharedPreferences("file name", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.clear()
+        editor.apply()
+        super.onStart()
+    }
+
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)
@@ -440,7 +450,6 @@ class LoginActivity : AppCompatActivity() {
             ).show()
         }
     }
-
 
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
