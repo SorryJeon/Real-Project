@@ -157,7 +157,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 loginstate = !loginstate
                 twitterSignInBtn.text = "트위터로그인"
-                signOut()
             }
         }
 
@@ -311,7 +310,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                     val user = auth!!.currentUser
                     loginSuccess(user)
-                    loginInfo.text = "id : ${user?.displayName}"
 
                 } else {
                     // If sign in fails, display a message to the user.
@@ -320,13 +318,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
-    private fun signOut() {
-        auth?.signOut()
-        TwitterCore.getInstance().sessionManager.clearActiveSession()
-        loginInfo.text = "info"
-    }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
