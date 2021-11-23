@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,17 +26,10 @@ import com.kakao.sdk.user.UserApiClient
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlin.Result
-import kotlin.math.log
 import com.google.firebase.auth.OAuthProvider
-import androidx.annotation.NonNull
-
 import com.google.android.gms.tasks.OnFailureListener
-
 import com.google.firebase.auth.AuthResult
-
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.ktx.oAuthProvider
 import com.google.firebase.auth.FirebaseUser
 
 

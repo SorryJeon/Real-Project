@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background1_design"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/maplestory_bold"
-        android:text="SorryJeon의 당근마켓"
-        android:textColor="@color/white"
-        android:textSize="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/maplestory_bold"
+            android:text="SorryJeon의 당근마켓"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
 
     <EditText
         android:id="@+id/edit_id"
@@ -72,82 +71,98 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/googleSignInBtn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:backgroundTint="@color/google"
             android:drawableLeft="@drawable/google_logo_design"
             android:fontFamily="@font/maplestory_otf_light"
             android:paddingLeft="8dp"
-            android:text="Google 계정으로 로그인"
+            android:text="  Google  "
+            android:layout_marginStart="20dp"
             android:textAllCaps="false" />
 
 
         <Button
             android:id="@+id/facebookSignInBtn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/facebook"
             android:drawableLeft="@drawable/facebook_logo_design"
             android:fontFamily="@font/maplestory_otf_light"
             android:paddingLeft="8dp"
-            android:text="Facebook 계정으로 로그인"
+            android:text="Facebook"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textAllCaps="false" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/kakaoSignInBtn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/kakao"
             android:drawableLeft="@drawable/kakao_logo_design"
             android:fontFamily="@font/maplestory_otf_light"
             android:paddingLeft="8dp"
-            android:text="카카오 계정으로 로그인"
+            android:text="카카오"
             android:textAllCaps="false"
+            android:layout_marginStart="20dp"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/twitterSignInBtn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/twitter"
             android:drawableLeft="@drawable/twitter_logo_design"
             android:fontFamily="@font/maplestory_otf_light"
             android:paddingLeft="8dp"
-            android:text="트위터 계정으로 로그인" />
-
-        <Button
-            android:id="@+id/githubSignInBtn"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/github_logo_design"
-            android:fontFamily="@font/maplestory_otf_light"
-            android:paddingLeft="8dp"
-            android:text="GitHub 계정으로 로그인"
-            android:textAllCaps="false"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/loginInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="SignOut"
-            android:visibility="gone" />
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="트위터" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/githubSignInBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/github_logo_design"
+        android:fontFamily="@font/maplestory_otf_light"
+        android:paddingLeft="8dp"
+        android:text="GitHub"
+        android:textAllCaps="false"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/loginInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="SignOut"
+        android:visibility="gone" />
 </LinearLayout>
