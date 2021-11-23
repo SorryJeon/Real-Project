@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3_design"
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
@@ -14,8 +15,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
         android:ems="12"
-        android:hint="아이디 (이메일 포함)"
-        android:inputType="textPersonName" />
+        android:fontFamily="@font/maplestory_otf_light"
+        android:hint="아이디 (이메일 포함 필수)"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/edit_pw"
@@ -24,8 +27,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:ems="12"
+        android:fontFamily="@font/maplestory_otf_light"
         android:hint="비밀번호 (6~15자리)"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/edit_pw_re"
@@ -34,8 +39,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:ems="12"
+        android:fontFamily="@font/maplestory_otf_light"
         android:hint="비밀번호 확인"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="@color/white" />
 
     <TextView
         android:id="@+id/edit_pw_check"
@@ -43,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="숫자, 문자, 특수문자 중 2가지 포함(6~15자)"
+        android:fontFamily="@font/maplestory_otf_light"
+        android:text="조건 : 숫자, 문자, 특수문자 중 2가지 포함(6~15자)"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -62,6 +70,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:fontFamily="@font/maplestory_otf_light"
             android:text="회원가입" />
 
         <Button
@@ -72,6 +82,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:fontFamily="@font/maplestory_otf_light"
             android:text="취소" />
 
     </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -234,6 +235,12 @@ class LoginActivity : AppCompatActivity() {
                         editor.apply()
                     }
                 }
+        }
+        else {
+            Toast.makeText(
+                baseContext, "로그인 항목에 빈칸이 존재합니다.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
