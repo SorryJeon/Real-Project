@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/maplestory_light"
         android:text="SorryJeon의 당근마켓"
         android:textColor="@color/white"
         android:textSize="30dp" />
@@ -24,7 +23,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:ems="12"
-        android:fontFamily="@font/maplestory_light"
         android:hint="아이디"
         android:inputType="textPersonName"
         android:textColorHint="@color/white" />
@@ -35,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="12"
-        android:fontFamily="@font/maplestory_light"
         android:hint="비밀번호"
         android:inputType="textPassword"
         android:textColorHint="@color/white" />
@@ -47,7 +44,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/teal_700"
-        android:fontFamily="@font/maplestory_light"
         android:text="로그인" />
 
     <Button
@@ -56,7 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/teal_700"
-        android:fontFamily="@font/maplestory_light"
         android:text="회원가입" />
 
     <Button
@@ -65,13 +60,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/teal_700"
-        android:fontFamily="@font/maplestory_light"
         android:text="비밀번호 재설정" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <!--        <Button-->
@@ -126,9 +121,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/kakao"
             android:padding="0dp"
             android:src="@drawable/kakao_logo_design2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/twitterSignInBtn"
@@ -149,46 +154,39 @@
             android:background="@color/white"
             android:padding="0dp"
             android:src="@drawable/github_logo_design2" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/kakaoSignInBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:backgroundTint="@color/kakao"-->
+        <!--            android:drawableLeft="@drawable/kakao_logo_design"-->
+        <!--            android:fontFamily="@font/maplestory_light"-->
+        <!--            android:paddingLeft="8dp"-->
+        <!--            android:text="카카오"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/black" />-->
+
+        <!--        <Button-->
+        <!--            android:id="@+id/twitterSignInBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_marginEnd="20dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:backgroundTint="@color/twitter"-->
+        <!--            android:drawableLeft="@drawable/twitter_logo_design"-->
+        <!--            android:fontFamily="@font/maplestory_light"-->
+        <!--            android:paddingLeft="8dp"-->
+        <!--            android:text="트위터" />-->
+
     </LinearLayout>
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        android:orientation="horizontal">-->
-
-    <!--        <Button-->
-    <!--            android:id="@+id/kakaoSignInBtn"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center_horizontal"-->
-    <!--            android:layout_marginStart="20dp"-->
-    <!--            android:layout_marginTop="5dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:backgroundTint="@color/kakao"-->
-    <!--            android:drawableLeft="@drawable/kakao_logo_design"-->
-    <!--            android:fontFamily="@font/maplestory_light"-->
-    <!--            android:paddingLeft="8dp"-->
-    <!--            android:text="카카오"-->
-    <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/black" />-->
-
-    <!--        <Button-->
-    <!--            android:id="@+id/twitterSignInBtn"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center_horizontal"-->
-    <!--            android:layout_marginStart="20dp"-->
-    <!--            android:layout_marginTop="5dp"-->
-    <!--            android:layout_marginEnd="20dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:backgroundTint="@color/twitter"-->
-    <!--            android:drawableLeft="@drawable/twitter_logo_design"-->
-    <!--            android:fontFamily="@font/maplestory_light"-->
-    <!--            android:paddingLeft="8dp"-->
-    <!--            android:text="트위터" />-->
-
-    <!--    </LinearLayout>-->
 
     <!--    <Button-->
     <!--        android:id="@+id/githubSignInBtn"-->
