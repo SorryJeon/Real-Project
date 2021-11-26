@@ -71,92 +71,138 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <Button
+        <!--        <Button-->
+        <!--            android:id="@+id/googleSignInBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:backgroundTint="@color/google"-->
+        <!--            android:drawableLeft="@drawable/google_logo_design"-->
+        <!--            android:fontFamily="@font/maplestory_light"-->
+        <!--            android:paddingLeft="8dp"-->
+        <!--            android:text="  Google  "-->
+        <!--            android:textAllCaps="false" />-->
+
+        <ImageButton
             android:id="@+id/googleSignInBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/google"
-            android:drawableLeft="@drawable/google_logo_design"
-            android:fontFamily="@font/maplestory_light"
-            android:paddingLeft="8dp"
-            android:text="  Google  "
-            android:textAllCaps="false" />
+            android:layout_marginStart="10dp"
+            android:padding="0dp"
+            android:src="@drawable/google_logo_design2" />
 
 
-        <Button
+        <!--        <Button-->
+        <!--            android:id="@+id/facebookSignInBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_marginEnd="20dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:backgroundTint="@color/facebook"-->
+        <!--            android:drawableLeft="@drawable/facebook_logo_design"-->
+        <!--            android:fontFamily="@font/maplestory_light"-->
+        <!--            android:paddingLeft="8dp"-->
+        <!--            android:text="Facebook"-->
+        <!--            android:textAllCaps="false" />-->
+
+        <ImageButton
             android:id="@+id/facebookSignInBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/facebook"
-            android:drawableLeft="@drawable/facebook_logo_design"
-            android:fontFamily="@font/maplestory_light"
-            android:paddingLeft="8dp"
-            android:text="Facebook"
-            android:textAllCaps="false" />
-    </LinearLayout>
+            android:layout_marginStart="10dp"
+            android:padding="0dp"
+            android:src="@drawable/facebook_logo_design2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <Button
+        <ImageButton
             android:id="@+id/kakaoSignInBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/kakao"
-            android:drawableLeft="@drawable/kakao_logo_design"
-            android:fontFamily="@font/maplestory_light"
-            android:paddingLeft="8dp"
-            android:text="카카오"
-            android:textAllCaps="false"
-            android:textColor="@color/black" />
+            android:layout_marginStart="10dp"
+            android:background="@color/kakao"
+            android:padding="0dp"
+            android:src="@drawable/kakao_logo_design2" />
 
-        <Button
+        <ImageButton
             android:id="@+id/twitterSignInBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@color/twitter"
+            android:padding="0dp"
+            android:src="@drawable/twitter_logo_design2" />
+
+        <ImageButton
+            android:id="@+id/githubSignInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/twitter"
-            android:drawableLeft="@drawable/twitter_logo_design"
-            android:fontFamily="@font/maplestory_light"
-            android:paddingLeft="8dp"
-            android:text="트위터" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            android:padding="0dp"
+            android:src="@drawable/github_logo_design2" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/githubSignInBtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/github_logo_design"
-        android:fontFamily="@font/maplestory_light"
-        android:paddingLeft="8dp"
-        android:text="GitHub"
-        android:textAllCaps="false"
-        android:textColor="@color/black" />
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/kakaoSignInBtn"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center_horizontal"-->
+    <!--            android:layout_marginStart="20dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:backgroundTint="@color/kakao"-->
+    <!--            android:drawableLeft="@drawable/kakao_logo_design"-->
+    <!--            android:fontFamily="@font/maplestory_light"-->
+    <!--            android:paddingLeft="8dp"-->
+    <!--            android:text="카카오"-->
+    <!--            android:textAllCaps="false"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/twitterSignInBtn"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center_horizontal"-->
+    <!--            android:layout_marginStart="20dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginEnd="20dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:backgroundTint="@color/twitter"-->
+    <!--            android:drawableLeft="@drawable/twitter_logo_design"-->
+    <!--            android:fontFamily="@font/maplestory_light"-->
+    <!--            android:paddingLeft="8dp"-->
+    <!--            android:text="트위터" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/githubSignInBtn"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:backgroundTint="@color/white"-->
+    <!--        android:drawableLeft="@drawable/github_logo_design"-->
+    <!--        android:fontFamily="@font/maplestory_light"-->
+    <!--        android:paddingLeft="8dp"-->
+    <!--        android:text="GitHub"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/black" />-->
 
     <TextView
         android:id="@+id/loginInfo"

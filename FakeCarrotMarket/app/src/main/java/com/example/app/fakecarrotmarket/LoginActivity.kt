@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -113,11 +114,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val googleSignInBtn = findViewById<Button>(R.id.googleSignInBtn)
-        val facebookSignInBtn = findViewById<Button>(R.id.facebookSignInBtn)
-        val kakaoSignInBtn = findViewById<Button>(R.id.kakaoSignInBtn)
-        val twitterSignInBtn = findViewById<Button>(R.id.twitterSignInBtn)
-        val githubSignInBtn = findViewById<Button>(R.id.githubSignInBtn)
+        val googleSignInBtn = findViewById<ImageButton>(R.id.googleSignInBtn)
+        val facebookSignInBtn = findViewById<ImageButton>(R.id.facebookSignInBtn)
+        val kakaoSignInBtn = findViewById<ImageButton>(R.id.kakaoSignInBtn)
+        val twitterSignInBtn = findViewById<ImageButton>(R.id.twitterSignInBtn)
+        val githubSignInBtn = findViewById<ImageButton>(R.id.githubSignInBtn)
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -149,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
                 twitterLogin()
             } else {
                 loginstate = !loginstate
-                twitterSignInBtn.text = "트위터로그인"
+//                twitterSignInBtn.text = "트위터로그인"
             }
         }
 
@@ -259,7 +260,7 @@ class LoginActivity : AppCompatActivity() {
             override fun success(result: com.twitter.sdk.android.core.Result<TwitterSession>?) {
                 if (result != null) {
                     handleTwitterSession(result.data)
-                    twitterSignInBtn.text = "로그아웃"
+//                    twitterSignInBtn.text = "로그아웃"
                     loginstate = !loginstate
                 }
             }
