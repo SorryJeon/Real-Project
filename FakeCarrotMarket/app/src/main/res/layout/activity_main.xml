@@ -26,6 +26,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:text="로그인에 성공하셨습니다."
+            android:fontFamily="@font/nexon_gothic"
             android:textColor="@color/white"
             android:textSize="30dp" />
 
@@ -51,6 +52,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
             android:text="DB" />
 
@@ -61,6 +63,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
             android:text="로컬" />
 
@@ -72,6 +75,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
             android:text="업로드" />
 
@@ -90,6 +94,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="45dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/teal_700"
             android:text="로그아웃" />
 
@@ -101,6 +106,7 @@
             android:layout_marginStart="45dp"
             android:layout_marginEnd="45dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/teal_700"
             android:text="회원탈퇴" />
 

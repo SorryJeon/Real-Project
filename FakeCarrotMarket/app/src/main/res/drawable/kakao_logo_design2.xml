@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:width="80dp"
-        android:height="80dp"
+        android:width="55dp"
+        android:height="55dp"
         android:drawable="@drawable/kakao_icon" />
 </layer-list>
