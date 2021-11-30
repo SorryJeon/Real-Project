@@ -3,70 +3,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1_design"
+    android:background="#E3AB6B"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/nexon_gothic"
-        android:text="SorryJeon의 당근마켓"
+        android:text="Welcome to CarrotMarket"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="30dp" />
+        android:textSize="25dp" />
 
     <EditText
         android:id="@+id/edit_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="30dp"
+        android:background="#AAAAAA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
-        android:hint="아이디"
+        android:hint=" 아이디"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:textColorHint="@color/white" />
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/edit_pw"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:background="#AAAAAA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
-        android:hint="비밀번호"
+        android:hint=" 비밀번호"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textColorHint="@color/white" />
+        android:textColorHint="@color/black" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/teal_700"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#308F4C"
         android:fontFamily="@font/nexon_gothic"
         android:text="로그인" />
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/teal_700"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#3F6DC8"
         android:fontFamily="@font/nexon_gothic"
         android:text="회원가입" />
 
     <Button
         android:id="@+id/btn_passReset"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/teal_700"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#8FFEE500"
         android:fontFamily="@font/nexon_gothic"
         android:text="비밀번호 재설정" />
 
@@ -95,7 +113,9 @@
             android:id="@+id/googleSignInBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:background="@color/white"
             android:padding="0dp"
             android:src="@drawable/google_logo_design2" />
 
@@ -121,6 +141,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@color/white"
             android:padding="0dp"
             android:src="@drawable/facebook_logo_design2" />
 
@@ -129,6 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@color/kakao"
             android:padding="0dp"
             android:src="@drawable/kakao_logo_design2" />
@@ -138,6 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@color/twitter"
             android:padding="0dp"
             android:src="@drawable/twitter_logo_design2" />
@@ -148,7 +172,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_weight="1"
             android:background="@color/white"
             android:padding="0dp"
             android:src="@drawable/github_logo_design2" />
