@@ -17,24 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/nexon_gothic"
-            android:text="로그인에 성공하셨습니다."
+            android:text="Welcome to CarrotMarket"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30dp" />
+            android:textSize="23dp" />
 
 
         <ImageView
             android:id="@+id/iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginRight="20dp"
             android:adjustViewBounds="true" />
     </LinearLayout>
 
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:backgroundTint="@color/google"
             android:fontFamily="@font/nexon_gothic"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:backgroundTint="@color/google"
             android:fontFamily="@font/nexon_gothic"
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="@font/nexon_gothic"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="@font/nexon_gothic"
