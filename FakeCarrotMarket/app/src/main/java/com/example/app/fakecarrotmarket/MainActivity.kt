@@ -22,6 +22,7 @@ import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.firebase.ui.auth.data.model.User
+import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -62,12 +63,15 @@ class MainActivity : AppCompatActivity() {
         fbStorage = FirebaseStorage.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
 
+
         UserApiClient.instance.me { user, error ->
             nickname!!.text = "닉네임 : ${user?.kakaoAccount?.profile?.nickname}"
-            Toast.makeText(
-                baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
-                Toast.LENGTH_SHORT
-            ).show()
+            if (user?.kakaoAccount?.profile?.nickname != null) {
+                Toast.makeText(
+                    baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         btnLogout!!.setOnClickListener {
