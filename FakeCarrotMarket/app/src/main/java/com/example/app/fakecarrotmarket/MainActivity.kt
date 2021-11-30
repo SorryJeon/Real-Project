@@ -25,6 +25,7 @@ import com.firebase.ui.auth.data.model.User
 import com.kakao.sdk.user.UserApiClient
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     var first_time: Long = 0
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     var fbFirestore: FirebaseFirestore? = null
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
+    var nickname: TextView? = null
 
     private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +57,18 @@ class MainActivity : AppCompatActivity() {
         btndb = findViewById<View>(R.id.btn_db) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
         tvafter = findViewById<View>(R.id.tv_after) as TextView
+        nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
+
+        UserApiClient.instance.me { user, error ->
+            nickname!!.text = "닉네임 : ${user?.kakaoAccount?.profile?.nickname}"
+            Toast.makeText(
+                baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         btnLogout!!.setOnClickListener {
             signOut()

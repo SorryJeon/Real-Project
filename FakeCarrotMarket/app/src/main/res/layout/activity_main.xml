@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:text="로그인에 성공하셨습니다."
             android:fontFamily="@font/nexon_gothic"
+            android:text="로그인에 성공하셨습니다."
             android:textColor="@color/white"
             android:textSize="30dp" />
 
@@ -45,8 +45,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
+            android:fontFamily="@font/nexon_gothic"
             android:text="DB" />
 
         <Button
@@ -56,8 +56,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
+            android:fontFamily="@font/nexon_gothic"
             android:text="로컬" />
 
         <Button
@@ -68,8 +68,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/google"
+            android:fontFamily="@font/nexon_gothic"
             android:text="업로드" />
 
     </LinearLayout>
@@ -87,8 +87,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="45dp"
             android:layout_weight="1"
-            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/teal_700"
+            android:fontFamily="@font/nexon_gothic"
             android:text="로그아웃" />
 
         <Button
@@ -99,9 +99,25 @@
             android:layout_marginStart="45dp"
             android:layout_marginEnd="45dp"
             android:layout_weight="1"
-            android:fontFamily="@font/nexon_gothic"
             android:backgroundTint="@color/teal_700"
+            android:fontFamily="@font/nexon_gothic"
             android:text="회원탈퇴" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="닉네임 : "
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
