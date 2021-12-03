@@ -3,5 +3,7 @@
     <item
         android:width="60dp"
         android:height="60dp"
-        android:drawable="@drawable/google_logo" />
+        android:drawable="@drawable/google_logo">
+    </item>
+
 </layer-list>

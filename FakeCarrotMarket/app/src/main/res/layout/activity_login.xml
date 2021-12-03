@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@drawable/radius_settings"
             android:padding="0dp"
             android:src="@drawable/google_logo_design2" />
 
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@drawable/radius_settings"
             android:padding="0dp"
             android:src="@drawable/facebook_logo_design2" />
 
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@color/kakao"
+            android:background="@drawable/radius_settings2"
             android:padding="0dp"
             android:src="@drawable/kakao_logo_design2" />
 
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:background="@color/twitter"
+            android:background="@drawable/radius_settings3"
             android:padding="0dp"
             android:src="@drawable/twitter_logo_design2" />
 
@@ -174,7 +174,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@drawable/radius_settings"
             android:padding="0dp"
             android:src="@drawable/github_logo_design2" />
 
