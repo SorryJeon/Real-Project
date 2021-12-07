@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignUpActivity : AppCompatActivity() {
@@ -31,10 +33,14 @@ class SignUpActivity : AppCompatActivity() {
         val allCheckBtn = findViewById<CheckBox>(R.id.allcheckbtn)
         val firstCheckBtn = findViewById<CheckBox>(R.id.firstcheckbtn)
         val secondCheckBtn = findViewById<CheckBox>(R.id.secondcheckbtn)
+        val button1 = findViewById<Button>(R.id.button1)
+        val button2 = findViewById<Button>(R.id.button2)
 
         allCheckBtn.setOnClickListener { onCheckChanged(allCheckBtn) }
         firstCheckBtn.setOnClickListener { onCheckChanged(firstCheckBtn) }
         secondCheckBtn.setOnClickListener { onCheckChanged(secondCheckBtn) }
+        button1.setOnClickListener { clickButton() }
+        button2.setOnClickListener { clickButton() }
 
         btn_register.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
@@ -150,6 +156,18 @@ class SignUpActivity : AppCompatActivity() {
                         firstcheckbtn.isChecked
                                 && secondcheckbtn.isChecked)
             }
+        }
+    }
+
+    private fun clickButton() {
+        val firebaseStorage = FirebaseStorage.getInstance()
+        val rootRef = firebaseStorage.reference
+        val txtref = rootRef.child("texts/약관동의서.txt")
+        txtref.downloadUrl.addOnSuccessListener { uri -> //다운로드 URL이 파라미터로 전달되어 옴.
+            Toast.makeText(
+                baseContext, "파일 DB에서 가져오기 성공!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
