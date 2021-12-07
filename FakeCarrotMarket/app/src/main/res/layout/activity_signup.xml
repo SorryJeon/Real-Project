@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="122dp"
-            android:backgroundTint="#DCC600"
+            android:backgroundTint="@color/kakao"
             android:padding="0dp"
             android:text="약관보기"
             android:textColor="@color/black" />
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
-            android:backgroundTint="#DCC600"
+            android:backgroundTint="@color/kakao"
             android:padding="0dp"
             android:text="약관보기"
             android:textColor="@color/black" />

@@ -3,6 +3,8 @@ package com.example.app.fakecarrotmarket
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignUpActivity : AppCompatActivity() {
@@ -39,8 +42,8 @@ class SignUpActivity : AppCompatActivity() {
         allCheckBtn.setOnClickListener { onCheckChanged(allCheckBtn) }
         firstCheckBtn.setOnClickListener { onCheckChanged(firstCheckBtn) }
         secondCheckBtn.setOnClickListener { onCheckChanged(secondCheckBtn) }
-        button1.setOnClickListener { clickButton() }
-        button2.setOnClickListener { clickButton() }
+        button1.setOnClickListener { clickButton1() }
+        button2.setOnClickListener { clickButton2() }
 
         btn_register.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
@@ -159,16 +162,21 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun clickButton() {
-        val firebaseStorage = FirebaseStorage.getInstance()
-        val rootRef = firebaseStorage.reference
-        val txtref = rootRef.child("texts/약관동의서.txt")
-        txtref.downloadUrl.addOnSuccessListener { uri -> //다운로드 URL이 파라미터로 전달되어 옴.
-            Toast.makeText(
-                baseContext, "파일 DB에서 가져오기 성공!",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+    private fun clickButton1() {
+        val intent = Intent(
+            ACTION_VIEW,
+            Uri.parse("https://firebasestorage.googleapis.com/v0/b/first-project-df1fb.appspot.com/o/texts%2F%EC%95%BD%EA%B4%80%EB%8F%99%EC%9D%98%EC%84%9C.txt?alt=media&token=44fa86c4-4369-455e-aed4-de3a4f48fad8")
+        )
+        startActivity(intent)
+
+    }
+
+    private fun clickButton2() {
+        val intent = Intent(
+            ACTION_VIEW,
+            Uri.parse("https://firebasestorage.googleapis.com/v0/b/first-project-df1fb.appspot.com/o/texts%2F%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B7%A8%EA%B8%89%EB%B0%A9%EC%B9%A8.txt?alt=media&token=426ef5c5-fab7-4a0b-a45f-7aaa996f3006")
+        )
+        startActivity(intent)
     }
 
     fun isPasswordFormat(password: String): Boolean {
