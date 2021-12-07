@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="#AAAAAA"
         android:ems="12"
@@ -76,12 +76,33 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/nexon_gothic"
         android:text="숫자, 문자, 특수문자 중 2가지 포함(6~15자)"
         android:textAlignment="center"
         android:textColorHint="@color/black"
         android:textSize="16dp" />
 
+    <CheckBox
+        android:id="@+id/firstcheckbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="[필수] 이용약관동의" />
+
+    <CheckBox
+        android:id="@+id/secondcheckbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="[필수] 개인정보취급약관동의" />
+
+    <CheckBox
+        android:id="@+id/allcheckbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="모두 동의" />
 
     <Button
         android:id="@+id/btn_register"

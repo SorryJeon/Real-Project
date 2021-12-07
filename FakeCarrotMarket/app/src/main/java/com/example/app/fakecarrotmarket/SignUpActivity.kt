@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -23,12 +22,19 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_signup)
+
         val btn_register = findViewById<Button>(R.id.btn_register)
         val btn_cancel = findViewById<Button>(R.id.btn_cancel)
         val edit_id = findViewById<EditText>(R.id.edit_id)
         val edit_pw = findViewById<EditText>(R.id.edit_pw)
         val edit_pw_re = findViewById<EditText>(R.id.edit_pw_re)
+        val allCheckBtn = findViewById<CheckBox>(R.id.allcheckbtn)
+        val firstCheckBtn = findViewById<CheckBox>(R.id.firstcheckbtn)
+        val secondCheckBtn = findViewById<CheckBox>(R.id.secondcheckbtn)
 
+        allCheckBtn.setOnClickListener { onCheckChanged(allCheckBtn) }
+        firstCheckBtn.setOnClickListener { onCheckChanged(firstCheckBtn) }
+        secondCheckBtn.setOnClickListener { onCheckChanged(secondCheckBtn) }
 
         btn_register.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
@@ -128,6 +134,24 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    private fun onCheckChanged(compoundButton: CompoundButton) {
+        when (compoundButton.id) {
+            R.id.allcheckbtn -> {
+                if (allcheckbtn.isChecked) {
+                    firstcheckbtn.isChecked = true
+                    secondcheckbtn.isChecked = true
+                } else {
+                    firstcheckbtn.isChecked = false
+                    secondcheckbtn.isChecked = false
+                }
+            }
+            else -> {
+                allcheckbtn.isChecked = (
+                        firstcheckbtn.isChecked
+                                && secondcheckbtn.isChecked)
+            }
+        }
+    }
 
     fun isPasswordFormat(password: String): Boolean {
         return password.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{6,15}\$".toRegex())
