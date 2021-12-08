@@ -74,41 +74,44 @@ class SignUpActivity : AppCompatActivity() {
 
             if (!isExistBlank && isPWSame) {
 
-                // 유저가 입력한 id, pw를 쉐어드에 저장한다.
-                val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
-                val editor = sharedPreference.edit()
+                if (allcheckbtn.isChecked) {
+                    // 유저가 입력한 id, pw를 쉐어드에 저장한다.
+                    val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
+                    val editor = sharedPreference.edit()
 
-                editor.putString("id", id)
-                editor.putString("pw", pw)
-                editor.apply()
+                    editor.putString("id", id)
+                    editor.putString("pw", pw)
+                    editor.apply()
 
-                auth.createUserWithEmailAndPassword(id, pw)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            auth.currentUser!!.sendEmailVerification()
-                                .addOnCompleteListener { sendTask ->
-                                    if (sendTask.isSuccessful) {
-                                        Toast.makeText(
-                                            baseContext, " 전송된 메일을 확인해주세요.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        val intent = Intent(this, LoginActivity::class.java)
-                                        startActivity(intent)
-                                    } else {
-                                        Toast.makeText(
-                                            baseContext, "메일이 유효한지 확인해주세요.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                    auth.createUserWithEmailAndPassword(id, pw)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                auth.currentUser!!.sendEmailVerification()
+                                    .addOnCompleteListener { sendTask ->
+                                        if (sendTask.isSuccessful) {
+                                            Toast.makeText(
+                                                baseContext, " 전송된 메일을 확인해주세요.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            val intent = Intent(this, LoginActivity::class.java)
+                                            startActivity(intent)
+                                        } else {
+                                            Toast.makeText(
+                                                baseContext, "메일이 유효한지 확인해주세요.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
-                                }
-                        } else {
-                            Toast.makeText(
-                                baseContext, "이미 생성된 계정입니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            } else {
+                                Toast.makeText(
+                                    baseContext, "이미 생성된 계정입니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
-
+                } else {
+                    dialog("not check")
+                }
             } else {
 
                 // 상태에 따라 다른 다이얼로그 띄워주기
@@ -196,6 +199,9 @@ class SignUpActivity : AppCompatActivity() {
         else if (type.equals("not same")) {
             dialog.setTitle("회원가입 실패")
             dialog.setMessage("비밀번호가 다릅니다")
+        } else if (type.equals("not check")) {
+            dialog.setTitle("약관동의 미체크")
+            dialog.setMessage("약관동의 체크를 해주세요")
         }
 
         val dialog_listener = object : DialogInterface.OnClickListener {
