@@ -445,7 +445,7 @@ class LoginActivity : AppCompatActivity() {
         Log.d(TAG, "LoginActivity - getFirebaseJwt() called")
         val source = TaskCompletionSource<String>()
         val queue = Volley.newRequestQueue(this)
-        val url = "http://현재 사용하고 있는 IP:8000/verifyToken" // validation server
+        val url = "http://로컬 IP:8000/verifyToken" // validation server
         val validationObject: HashMap<String?, String?> = HashMap()
         validationObject["token"] = kakaoAccessToken
         val request: JsonObjectRequest = object : JsonObjectRequest(

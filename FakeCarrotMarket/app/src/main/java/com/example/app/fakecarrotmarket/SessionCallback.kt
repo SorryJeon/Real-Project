@@ -16,7 +16,7 @@ class SessionCallback(val context: LoginActivity) : ISessionCallback {
     override fun onSessionOpened() {
         Toast.makeText(
             GlobalApplication.instance,
-            "카카오 로그인에 성공하셨습니다. 다음 화면으로 넘어갑니다.",
+            "카카오 로그인이 진행중입니다. 잠시만 기다려주세요.",
             Toast.LENGTH_LONG
         ).show()
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {
@@ -30,6 +30,11 @@ class SessionCallback(val context: LoginActivity) : ISessionCallback {
                         auth.signInWithCustomToken(firebaseToken!!)
                     }.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            Toast.makeText(
+                                GlobalApplication.instance,
+                                "카카오 로그인에 성공하셨습니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
                             Log.d(
                                 TAG,
                                 "Successfully created a Firebase user"
@@ -38,7 +43,7 @@ class SessionCallback(val context: LoginActivity) : ISessionCallback {
                         } else {
                             Toast.makeText(
                                 GlobalApplication.instance,
-                                "Failed to create a Firebase user.",
+                                "카카오 로그인에 실패하셨습니다.",
                                 Toast.LENGTH_LONG
                             ).show()
                             if (task.exception != null) {

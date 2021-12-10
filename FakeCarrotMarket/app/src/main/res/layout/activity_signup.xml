@@ -7,18 +7,18 @@
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/nexon_gothic"
-        android:text="Registeration Page"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25dp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:fontFamily="@font/nexon_gothic"-->
+<!--        android:text="Registeration Page"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="25dp" />-->
 
     <EditText
         android:id="@+id/edit_id"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
         android:background="#AAAAAA"
         android:ems="12"
@@ -99,7 +99,8 @@
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="122dp"
+            android:layout_marginStart="102dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/kakao"
             android:padding="0dp"
             android:text="약관보기"
@@ -122,7 +123,8 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/kakao"
             android:padding="0dp"
             android:text="약관보기"
