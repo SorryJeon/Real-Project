@@ -5,12 +5,14 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Base64
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -31,7 +33,15 @@ import com.google.firebase.auth.OAuthProvider
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.AuthResult
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.FirebaseUser
+import org.json.JSONObject
+import com.android.volley.Response
+import com.android.volley.Request
+import com.kakao.auth.AuthType
+import com.kakao.auth.Session
+import com.kakao.sdk.common.util.Utility
 
 
 class LoginActivity : AppCompatActivity() {
@@ -46,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
     var callbackManager: CallbackManager? = null
 
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var callback: SessionCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -63,15 +74,17 @@ class LoginActivity : AppCompatActivity() {
 
         twitterAuthClient = TwitterAuthClient()
 
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
+        callback = SessionCallback(this)
 
-            } else if (tokenInfo != null) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
+//        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+//            if (error != null) {
+//
+//            } else if (tokenInfo != null) {
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                finish()
+//            }
+//        }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
@@ -138,11 +151,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         kakaoSignInBtn.setOnClickListener {
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(baseContext)) {
-                UserApiClient.instance.loginWithKakaoTalk(baseContext, callback = callback)
-            } else {
-                UserApiClient.instance.loginWithKakaoAccount(baseContext, callback = callback)
-            }
+            kakaoLoginStart()
+//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(baseContext)) {
+//                UserApiClient.instance.loginWithKakaoTalk(baseContext, callback = callback)
+//            } else {
+//                UserApiClient.instance.loginWithKakaoAccount(baseContext, callback = callback)
+//            }
         }
 
         twitterSignInBtn.setOnClickListener {
@@ -176,14 +190,38 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
+//    override fun onStart() {
+//        // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
+//        val sharedPreference =
+//            getSharedPreferences("file name", MODE_PRIVATE)
+//        val editor = sharedPreference.edit()
+//        editor.clear()
+//        editor.apply()
+//        super.onStart()
+//    }
+
+    public override fun onStart() {
+        super.onStart()
         val sharedPreference =
             getSharedPreferences("file name", MODE_PRIVATE)
         val editor = sharedPreference.edit()
         editor.clear()
         editor.apply()
-        super.onStart()
+        Log.d(TAG, "LoginActivity - onStart() called")
+        updateUI()
+    }
+
+    fun updateUI() {
+        Log.d(TAG, "LoginActivity - updateUI() called")
+
+        val user = auth?.currentUser
+        if (user != null) {
+//            binding.btnStart.visibility = View.VISIBLE
+//            binding.btnKakaoLogin.visibility = View.GONE
+        } else {
+//            binding.btnStart.visibility = View.GONE
+//            binding.btnKakaoLogin.visibility = View.VISIBLE
+        }
     }
 
     private fun signIn() {
@@ -228,8 +266,7 @@ class LoginActivity : AppCompatActivity() {
                         editor.apply()
                     }
                 }
-        }
-        else {
+        } else {
             Toast.makeText(
                 baseContext, "로그인 항목에 빈칸이 존재합니다.",
                 Toast.LENGTH_SHORT
@@ -270,6 +307,23 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun startMainActivity() {
+        Log.d(TAG, "LoginActivity - startMainActivity() called")
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun kakaoLoginStart() {
+        Log.d(TAG, "LoginActivity - kakaoLoginStart() called")
+        val keyHash = Utility.getKeyHash(this)
+        // keyHash 발급
+        Log.d(TAG, "KEY_HASH : $keyHash")
+        Session.getCurrentSession().addCallback(callback)
+        Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this)
+    }
+
 
     private fun githubLogin() {
 
@@ -320,7 +374,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         callbackManager?.onActivityResult(requestCode, resultCode, data)
         twitterAuthClient?.onActivityResult(requestCode, resultCode, data)
 
@@ -340,6 +393,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            Log.i(TAG, "Session get current session")
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -381,6 +439,47 @@ class LoginActivity : AppCompatActivity() {
                     dialog("fail")
                 }
             }
+    }
+
+    open fun getFirebaseJwt(kakaoAccessToken: String): Task<String> {
+        Log.d(TAG, "LoginActivity - getFirebaseJwt() called")
+        val source = TaskCompletionSource<String>()
+        val queue = Volley.newRequestQueue(this)
+        val url = "http://현재 사용하고 있는 IP:8000/verifyToken" // validation server
+        val validationObject: HashMap<String?, String?> = HashMap()
+        validationObject["token"] = kakaoAccessToken
+        val request: JsonObjectRequest = object : JsonObjectRequest(
+            Request.Method.POST, url,
+            JSONObject(validationObject as Map<*, *>),
+            Response.Listener { response ->
+                try {
+                    val firebaseToken = response.getString("firebase_token")
+                    source.setResult(firebaseToken)
+                } catch (e: Exception) {
+                    source.setException(e)
+                }
+            },
+            Response.ErrorListener { error ->
+                Log.e(
+                    TAG,
+                    error.toString()
+                )
+                source.setException(error)
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = String.format(
+                    "Basic %s",
+                    Base64.encodeToString(
+                        String.format("%s:%s", "token", kakaoAccessToken).toByteArray(),
+                        Base64.DEFAULT
+                    )
+                )
+                return params
+            }
+        }
+        queue.add(request)
+        return source.task
     }
 
 
@@ -474,8 +573,14 @@ class LoginActivity : AppCompatActivity() {
             super.onBackPressed()
             finishAffinity()
         } else {
-            Toast.makeText(this@LoginActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@LoginActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)
+                .show()
         }
         first_time = System.currentTimeMillis()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Session.getCurrentSession().removeCallback(callback)
     }
 }

@@ -22,6 +22,7 @@ import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.firebase.ui.auth.data.model.User
+import com.kakao.auth.Session
 import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import com.twitter.sdk.android.core.TwitterCore
@@ -64,15 +65,15 @@ class MainActivity : AppCompatActivity() {
         fbFirestore = FirebaseFirestore.getInstance()
 
 
-        UserApiClient.instance.me { user, error ->
-            nickname!!.text = "닉네임 : ${user?.kakaoAccount?.profile?.nickname}"
-            if (user?.kakaoAccount?.profile?.nickname != null) {
-                Toast.makeText(
-                    baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+//        UserApiClient.instance.me { user, error ->
+//            nickname!!.text = "닉네임 : ${user?.kakaoAccount?.profile?.nickname}"
+//            if (user?.kakaoAccount?.profile?.nickname != null) {
+//                Toast.makeText(
+//                    baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
 
         btnLogout!!.setOnClickListener {
             signOut()
@@ -118,13 +119,14 @@ class MainActivity : AppCompatActivity() {
         TwitterCore.getInstance().sessionManager.clearActiveSession()
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
-        UserApiClient.instance.logout { error ->
-            if (error != null) {
-
-            } else {
-
-            }
-        }
+        Session.getCurrentSession().close()
+//        UserApiClient.instance.logout { error ->
+//            if (error != null) {
+//
+//            } else {
+//
+//            }
+//        }
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
@@ -139,13 +141,14 @@ class MainActivity : AppCompatActivity() {
         }
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
-        UserApiClient.instance.unlink { error ->
-            if (error != null) {
-
-            } else {
-
-            }
-        }
+        Session.getCurrentSession().close()
+//        UserApiClient.instance.unlink { error ->
+//            if (error != null) {
+//
+//            } else {
+//
+//            }
+//        }
 
         if (account !== null) {
             googleSignInClient.revokeAccess().addOnCompleteListener(this) {

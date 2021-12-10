@@ -1,14 +1,30 @@
 package com.example.app.fakecarrotmarket
 
 import android.app.Application
+import com.kakao.auth.KakaoSDK
 import com.kakao.sdk.common.KakaoSdk
 
 class GlobalApplication : Application() {
+
+    companion object {
+        var instance: GlobalApplication? = null
+    }
+
     override fun onCreate() {
         super.onCreate()
-        // 다른 초기화 코드들
+        instance = this
+        if (KakaoSDK.getAdapter() == null) {
+            KakaoSDK.init(KakaoSDKAdapter(getAppContext()))
+        }
+    }
 
-        // Kakao SDK 초기화
-        KakaoSdk.init(this, "8915659582e1a43e1eafef8ada1211fb")
+    override fun onTerminate() {
+        super.onTerminate()
+        instance = null
+    }
+
+    fun getAppContext(): GlobalApplication {
+        checkNotNull(instance) { "This Application does not inherit com.example.App" }
+        return instance!!
     }
 }
