@@ -96,6 +96,10 @@ class MainActivity : AppCompatActivity() {
             clickUpload()
         }
 
+        Glide.with(this@MainActivity)
+            .load(R.drawable.background3_design)
+            .into(iv!!)
+
         if (auth!!.currentUser != null) {
 
             var userInfo = ModelUsers()

@@ -84,7 +84,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#DCC600"
+        android:backgroundTint="#CAB601"
         android:fontFamily="@font/nexon_gothic"
         android:text="비밀번호 재설정" />
 
