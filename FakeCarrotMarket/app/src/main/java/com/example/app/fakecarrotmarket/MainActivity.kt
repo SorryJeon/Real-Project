@@ -1,8 +1,11 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Layout
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.FacebookSdk
@@ -77,11 +81,9 @@ class MainActivity : AppCompatActivity() {
 
         btnLogout!!.setOnClickListener {
             signOut()
-            finishAffinity()
         }
         btnRevoke!!.setOnClickListener {
             revokeAccess()
-            finishAffinity()
         }
 
         btndb!!.setOnClickListener {
@@ -120,10 +122,44 @@ class MainActivity : AppCompatActivity() {
 
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        TwitterCore.getInstance().sessionManager.clearActiveSession()
-        FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
-        Session.getCurrentSession().close()
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.alert_popup, null)
+        val textView: TextView = view.findViewById(R.id.textView)
+        textView.text = "로그아웃을 하시겠습니까?"
+        val alertdialog = AlertDialog.Builder(this)
+            .setTitle("로그아웃 페이지")
+            .setPositiveButton("Yes") { dialog, which ->
+
+//                UserApiClient.instance.logout { error ->
+//                    if (error != null) {
+//
+//                    } else {
+//
+//                    }
+//                }
+                TwitterCore.getInstance().sessionManager.clearActiveSession()
+                FirebaseAuth.getInstance().signOut()
+                LoginManager.getInstance().logOut()
+                Session.getCurrentSession().close()
+                if (account !== null) {
+                    googleSignInClient.signOut().addOnCompleteListener(this) {
+                    }
+                }
+                Toast.makeText(applicationContext, "로그아웃이 정상적으로 완료되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                finishAffinity()
+            }
+            .setNegativeButton("No", null)
+            .create()
+
+        alertdialog.setView(view)
+        alertdialog.show()
+
+    }
+
+    private fun signOut2() {
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+
 //        UserApiClient.instance.logout { error ->
 //            if (error != null) {
 //
@@ -131,6 +167,10 @@ class MainActivity : AppCompatActivity() {
 //
 //            }
 //        }
+        TwitterCore.getInstance().sessionManager.clearActiveSession()
+        FirebaseAuth.getInstance().signOut()
+        LoginManager.getInstance().logOut()
+        Session.getCurrentSession().close()
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
@@ -139,25 +179,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun revokeAccess() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        TwitterCore.getInstance().sessionManager.clearActiveSession()
-        if (auth!!.currentUser != null) {
-            auth!!.currentUser!!.delete()
-        }
-        FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
-        Session.getCurrentSession().close()
-//        UserApiClient.instance.unlink { error ->
-//            if (error != null) {
-//
-//            } else {
-//
-//            }
-//        }
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.alert_popup, null)
+        val textView: TextView = view.findViewById(R.id.textView)
+        textView.text = "회원탈퇴를 하시겠습니까?"
+        val alertdialog = AlertDialog.Builder(this)
+            .setTitle("회원탈퇴 페이지")
+            .setPositiveButton("Yes") { dialog, which ->
 
-        if (account !== null) {
-            googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+                TwitterCore.getInstance().sessionManager.clearActiveSession()
+                if (auth!!.currentUser != null) {
+                    auth!!.currentUser!!.delete()
+                }
+//                UserApiClient.instance.unlink { error ->
+//                    if (error != null) {
+//
+//                    } else {
+//
+//                    }
+//                }
+                FirebaseAuth.getInstance().signOut()
+                LoginManager.getInstance().logOut()
+                Session.getCurrentSession().close()
+                if (account !== null) {
+                    googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+                    }
+                }
+                Toast.makeText(applicationContext, "회원탈퇴가 정상적으로 완료되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                finishAffinity()
             }
-        }
+
+            .setNegativeButton("No", null)
+            .create()
+
+        alertdialog.setView(view)
+        alertdialog.show()
+
     }
 
     private fun clickLoad() {
@@ -240,7 +298,7 @@ class MainActivity : AppCompatActivity() {
         second_time = System.currentTimeMillis()
         if (second_time - first_time < 2000) {
             super.onBackPressed()
-            signOut()
+            signOut2()
             finishAffinity()
         } else {
             Toast.makeText(this@MainActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)
