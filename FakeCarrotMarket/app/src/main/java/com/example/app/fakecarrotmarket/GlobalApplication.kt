@@ -2,7 +2,6 @@ package com.example.app.fakecarrotmarket
 
 import android.app.Application
 import com.kakao.auth.KakaoSDK
-import com.kakao.sdk.common.KakaoSdk
 
 class GlobalApplication : Application() {
 

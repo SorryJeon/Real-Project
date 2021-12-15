@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -21,17 +20,10 @@ import java.util.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.facebook.AccessToken
 import com.facebook.FacebookSdk
-import com.facebook.GraphRequest
-import com.facebook.HttpMethod
-import com.firebase.ui.auth.data.model.User
 import com.kakao.auth.Session
-import com.kakao.sdk.user.UserApi
-import com.kakao.sdk.user.UserApiClient
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     var first_time: Long = 0
@@ -45,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     var iv: ImageView? = null
     var tvafter: TextView? = null
     var imgUri: Uri? = null
-    var fbFirestore: FirebaseFirestore? = null
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
     var nickname: TextView? = null
@@ -66,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
-        fbFirestore = FirebaseFirestore.getInstance()
+        fbFireStore = FirebaseFirestore.getInstance()
 
 
 //        UserApiClient.instance.me { user, error ->
@@ -102,15 +93,6 @@ class MainActivity : AppCompatActivity() {
             .load(R.drawable.background3_design)
             .into(iv!!)
 
-        if (auth!!.currentUser != null) {
-
-            var userInfo = ModelUsers()
-
-            userInfo.uid = auth?.uid
-            userInfo.userId = auth?.currentUser?.email
-            fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
-        }
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()
@@ -118,7 +100,17 @@ class MainActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        if (auth!!.currentUser != null) {
+
+            val userInfo = ModelUsers()
+
+            userInfo.uid = auth?.uid
+            userInfo.userId = auth?.currentUser?.email
+            fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
+
+        }
     }
+
 
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
@@ -171,6 +163,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
         Session.getCurrentSession().close()
+
         if (account !== null) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
@@ -198,9 +191,11 @@ class MainActivity : AppCompatActivity() {
 //
 //                    }
 //                }
+                fbFireStore?.collection("users")?.document(auth?.uid.toString())?.delete()
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
                 Session.getCurrentSession().close()
+
                 if (account !== null) {
                     googleSignInClient.revokeAccess().addOnCompleteListener(this) {
                     }
@@ -281,7 +276,7 @@ class MainActivity : AppCompatActivity() {
                     var userInfo = ModelUsers()
                     userInfo.imageUrl = uri.toString()
 
-                    fbFirestore?.collection("users")?.document(auth?.uid.toString())
+                    fbFireStore?.collection("users")?.document(auth?.uid.toString())
                         ?.update("imageUrl", userInfo.imageUrl.toString())
                 }
             }

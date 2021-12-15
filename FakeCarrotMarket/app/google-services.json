@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "846185572928",
+    "firebase_url": "https://first-project-df1fb-default-rtdb.firebaseio.com",
     "project_id": "first-project-df1fb",
     "storage_bucket": "first-project-df1fb.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "846185572928-29tanrmk4cldvm50401afc42254prq9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app.fakecarrotmarket",
+            "certificate_hash": "56837f22241e7034030e11480c1dc5b0dd00b0f8"
+          }
+        },
+        {
+          "client_id": "846185572928-d2l2etlh0lsf208aoqdtl52l9771m4ub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app.fakecarrotmarket",
+            "certificate_hash": "a41b1b051fba81ed27905972fb0f5e8ec9d4bf97"
+          }
+        },
         {
           "client_id": "846185572928-k7an4tosbqhc7irqbv721ale33p75bmn.apps.googleusercontent.com",
           "client_type": 3
