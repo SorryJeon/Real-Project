@@ -85,46 +85,46 @@ class LoginActivity : AppCompatActivity() {
 //            }
 //        }
 
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if (error != null) {
-                when {
-                    error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                        Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
-                    }
-                    error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                        Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
-                    }
-                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                        Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
-                    }
-                    error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                        Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
-                    }
-                    error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    error.toString() == AuthErrorCause.ServerError.toString() -> {
-                        Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
-                    }
-                    error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                        Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
-                    }
-                    else -> { // Unknown
-                        Toast.makeText(this, "카카오 로그인 실패", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else if (token != null) {
-                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
+//        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+//            if (error != null) {
+//                when {
+//                    error.toString() == AuthErrorCause.AccessDenied.toString() -> {
+//                        Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
+//                    }
+//                    error.toString() == AuthErrorCause.InvalidClient.toString() -> {
+//                        Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
+//                    }
+//                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
+//                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
+//                        Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
+//                    }
+//                    error.toString() == AuthErrorCause.InvalidScope.toString() -> {
+//                        Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
+//                    }
+//                    error.toString() == AuthErrorCause.Misconfigured.toString() -> {
+//                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                    error.toString() == AuthErrorCause.ServerError.toString() -> {
+//                        Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
+//                    }
+//                    error.toString() == AuthErrorCause.Unauthorized.toString() -> {
+//                        Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
+//                    }
+//                    else -> { // Unknown
+//                        Toast.makeText(this, "카카오 로그인 실패", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            } else if (token != null) {
+//                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                finish()
+//            }
+//        }
 
         val googleSignInBtn = findViewById<ImageButton>(R.id.googleSignInBtn)
         val facebookSignInBtn = findViewById<ImageButton>(R.id.facebookSignInBtn)
@@ -189,17 +189,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onStart() {
-//        // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
-//        val sharedPreference =
-//            getSharedPreferences("file name", MODE_PRIVATE)
-//        val editor = sharedPreference.edit()
-//        editor.clear()
-//        editor.apply()
-//        super.onStart()
-//    }
-
     public override fun onStart() {
+        // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
         super.onStart()
         val sharedPreference =
             getSharedPreferences("file name", MODE_PRIVATE)
@@ -207,21 +198,8 @@ class LoginActivity : AppCompatActivity() {
         editor.clear()
         editor.apply()
         Log.d(TAG, "LoginActivity - onStart() called")
-        updateUI()
     }
 
-    fun updateUI() {
-        Log.d(TAG, "LoginActivity - updateUI() called")
-
-        val user = auth?.currentUser
-        if (user != null) {
-//            binding.btnStart.visibility = View.VISIBLE
-//            binding.btnKakaoLogin.visibility = View.GONE
-        } else {
-//            binding.btnStart.visibility = View.GONE
-//            binding.btnKakaoLogin.visibility = View.VISIBLE
-        }
-    }
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
@@ -440,11 +418,11 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    open fun getFirebaseJwt(kakaoAccessToken: String): Task<String> {
+    fun getFirebaseJwt(kakaoAccessToken: String): Task<String> {
         Log.d(TAG, "LoginActivity - getFirebaseJwt() called")
         val source = TaskCompletionSource<String>()
         val queue = Volley.newRequestQueue(this)
-        val url = "http://로컬 IP:8000/verifyToken" // validation server
+        val url = "http://192.168.219.100:8000/verifyToken" // validation server
         val validationObject: HashMap<String?, String?> = HashMap()
         validationObject["token"] = kakaoAccessToken
         val request: JsonObjectRequest = object : JsonObjectRequest(
