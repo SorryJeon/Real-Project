@@ -49,7 +49,6 @@ class SessionCallback(val context: LoginActivity) : ISessionCallback {
                             if (task.exception != null) {
                                 Log.e(TAG, task.exception.toString())
                             }
-                            context.updateUI()
                         }
                     }
                 }
