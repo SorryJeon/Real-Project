@@ -59,17 +59,6 @@ class MainActivity : AppCompatActivity() {
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
 
-
-//        UserApiClient.instance.me { user, error ->
-//            nickname!!.text = "닉네임 : ${user?.kakaoAccount?.profile?.nickname}"
-//            if (user?.kakaoAccount?.profile?.nickname != null) {
-//                Toast.makeText(
-//                    baseContext, "안녕하세요. ${user?.kakaoAccount?.profile?.nickname}님!",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
-
         btnLogout!!.setOnClickListener {
             signOut()
         }
@@ -122,13 +111,6 @@ class MainActivity : AppCompatActivity() {
             .setTitle("로그아웃 페이지")
             .setPositiveButton("Yes") { dialog, which ->
 
-//                UserApiClient.instance.logout { error ->
-//                    if (error != null) {
-//
-//                    } else {
-//
-//                    }
-//                }
                 TwitterCore.getInstance().sessionManager.clearActiveSession()
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
@@ -152,13 +134,6 @@ class MainActivity : AppCompatActivity() {
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
 
-//        UserApiClient.instance.logout { error ->
-//            if (error != null) {
-//
-//            } else {
-//
-//            }
-//        }
         TwitterCore.getInstance().sessionManager.clearActiveSession()
         FirebaseAuth.getInstance().signOut()
         LoginManager.getInstance().logOut()
@@ -184,13 +159,7 @@ class MainActivity : AppCompatActivity() {
                 if (auth!!.currentUser != null) {
                     auth!!.currentUser!!.delete()
                 }
-//                UserApiClient.instance.unlink { error ->
-//                    if (error != null) {
-//
-//                    } else {
-//
-//                    }
-//                }
+
                 fbFireStore?.collection("users")?.document(auth?.uid.toString())?.delete()
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
