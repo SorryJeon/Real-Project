@@ -19,11 +19,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.facebook.FacebookSdk
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     var first_time: Long = 0
@@ -119,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                     googleSignInClient.signOut().addOnCompleteListener(this) {
                     }
                 }
-                Toast.makeText(applicationContext, "로그아웃이 정상적으로 완료되었습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
                 finishAffinity()
             }
@@ -169,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                     googleSignInClient.revokeAccess().addOnCompleteListener(this) {
                     }
                 }
-                Toast.makeText(applicationContext, "회원탈퇴가 정상적으로 완료되었습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
                 finishAffinity()
             }
@@ -183,27 +185,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickLoad() {
-        //Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
+        // Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
 
-        //1. Firebase Storeage관리 객체 얻어오기
+        // Firebase Storeage 관리 객체 얻어오기
         val firebaseStorage = FirebaseStorage.getInstance()
 
-        //2. 최상위노드 참조 객체 얻어오기
+        // 최상위노드 참조 객체 얻어오기
         val rootRef = firebaseStorage.reference
 
-        //3. 하위 폴더가 있다면 폴더명까지 포함하여 읽어오길 원하는 파일의 참조객체 얻어오기
-        var imgRef = rootRef.child("images/대단하다 발암의나라!.PNG")
+        // 하위 폴더가 있다면 폴더명까지 포함하여 읽어오길 원하는 파일의 참조객체 얻어오기
+        val imgRef = rootRef.child("images/대단하다 발암의나라!.PNG")
 
-        //4. 참조객체로 부터 이미지의 다운로드 URL을 얻어오기
-        imgRef.downloadUrl.addOnSuccessListener { imgUri -> //다운로드 URL이 파라미터로 전달되어 옴.
+        // 오프라인 상태에서도 접근을 허용하기 위해 로컬파일 상수 설정
+        val localfile = File.createTempFile("images", "png")
+
+        // 참조객체로 부터 이미지의 다운로드 URL을 얻어오기
+        imgRef.downloadUrl.addOnSuccessListener { uri -> //다운로드 URL이 파라미터로 전달되어 옴.
             Glide.with(this@MainActivity)
-                .load(imgUri)
+                .load(uri)
                 .into(iv!!)
             Toast.makeText(
                 baseContext, "파일 DB에서 가져오기 성공!",
                 Toast.LENGTH_SHORT
             ).show()
             tvafter!!.text = "파일 DB에서 가져오기 성공!"
+        }
+
+        imgRef.getFile(localfile).addOnSuccessListener {
+             imgUri = localfile.toUri()
         }
     }
 
@@ -233,16 +242,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun clickUpload() {
 
-        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imgFileName = "IMAGE_" + timeStamp + "_.png"
-        var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imgFileName = "IMAGE_" + timeStamp + "_.png"
+        val storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
 
         if (imgUri != null) {
             storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
                 Toast.makeText(baseContext, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
                 tvafter!!.text = "이미지 업로드 성공!"
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    var userInfo = ModelUsers()
+                    val userInfo = ModelUsers()
                     userInfo.imageUrl = uri.toString()
 
                     fbFireStore?.collection("users")?.document(auth?.uid.toString())

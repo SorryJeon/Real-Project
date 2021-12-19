@@ -23,8 +23,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.AuthErrorCause
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
@@ -464,7 +462,7 @@ class LoginActivity : AppCompatActivity() {
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
     fun dialog(type: String) {
-        var dialog = AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
 
         if (type.equals("fail")) {
             dialog.setTitle("로그인 실패")
@@ -474,7 +472,7 @@ class LoginActivity : AppCompatActivity() {
             dialog.setTitle("아이디 비밀번호를 만들어주세요!")
         }
 
-        var dialog_listener = object : DialogInterface.OnClickListener {
+        val dialog_listener = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE ->

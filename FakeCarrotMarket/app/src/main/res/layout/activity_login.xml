@@ -33,7 +33,7 @@
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 아이디"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
+        android:minHeight="40dp"
         android:textColorHint="@color/black" />
 
     <EditText
@@ -49,7 +49,7 @@
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 비밀번호"
         android:inputType="textPassword"
-        android:minHeight="48dp"
+        android:minHeight="40dp"
         android:textColorHint="@color/black" />
 
     <Button
@@ -70,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#3F6DC8"
         android:fontFamily="@font/nexon_gothic"
@@ -82,7 +81,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#CAB601"
         android:fontFamily="@font/nexon_gothic"

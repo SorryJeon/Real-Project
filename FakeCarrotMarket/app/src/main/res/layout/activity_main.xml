@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/nexon_gothic"
             android:text="Welcome to CarrotMarket"
