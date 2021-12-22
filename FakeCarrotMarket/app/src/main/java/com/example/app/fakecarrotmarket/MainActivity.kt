@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Glide.with(this@MainActivity)
-            .load(R.drawable.background3_design)
+            .load(R.drawable.background_image_size)
             .into(iv!!)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

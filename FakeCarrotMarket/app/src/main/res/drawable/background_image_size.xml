@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:adjustViewBounds="true"
-        android:drawable="@drawable/background3" />
+        android:width="1335px"
+        android:height="725px"
+        android:drawable="@drawable/background_image" />
 </layer-list>

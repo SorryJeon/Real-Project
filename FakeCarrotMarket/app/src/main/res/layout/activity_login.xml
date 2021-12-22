@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EB8401"
+    android:background="#E49024"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/nexon_gothic"
         android:text="CarrotMarket LoginPage"
@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
@@ -82,7 +82,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#CAB601"
+        android:backgroundTint="#CFBE1E"
         android:fontFamily="@font/nexon_gothic"
         android:text="비밀번호 재설정" />
 
