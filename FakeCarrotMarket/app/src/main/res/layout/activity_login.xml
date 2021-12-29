@@ -34,6 +34,7 @@
         android:hint=" 아이디"
         android:inputType="textPersonName"
         android:minHeight="40dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
@@ -50,11 +51,12 @@
         android:hint=" 비밀번호"
         android:inputType="textPassword"
         android:minHeight="40dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
@@ -154,4 +156,5 @@
         android:layout_gravity="center_horizontal"
         android:text="SignOut"
         android:visibility="gone" />
+
 </LinearLayout>

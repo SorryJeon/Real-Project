@@ -120,8 +120,8 @@
             android:id="@+id/btn_token"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="토큰 조회"/>
+            android:text="토큰 조회"
+            android:visibility="gone" />
 
 
         <TextView
@@ -134,4 +134,5 @@
             android:textSize="20dp"
             android:visibility="gone" />
     </LinearLayout>
+
 </LinearLayout>

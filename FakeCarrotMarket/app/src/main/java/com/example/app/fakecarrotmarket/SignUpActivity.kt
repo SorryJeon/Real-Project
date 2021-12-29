@@ -3,8 +3,6 @@ package com.example.app.fakecarrotmarket
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.Intent.ACTION_VIEW
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -163,19 +161,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun clickButton1() {
-        val intent = Intent(
-            ACTION_VIEW,
-            Uri.parse("https://firebasestorage.googleapis.com/v0/b/first-project-df1fb.appspot.com/o/texts%2F%EC%95%BD%EA%B4%80%EB%8F%99%EC%9D%98%EC%84%9C.txt?alt=media&token=44fa86c4-4369-455e-aed4-de3a4f48fad8")
-        )
+        val intent = Intent(this, SignUpWebView::class.java)
         startActivity(intent)
 
     }
 
     private fun clickButton2() {
-        val intent = Intent(
-            ACTION_VIEW,
-            Uri.parse("https://firebasestorage.googleapis.com/v0/b/first-project-df1fb.appspot.com/o/texts%2F%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B7%A8%EA%B8%89%EB%B0%A9%EC%B9%A8.txt?alt=media&token=426ef5c5-fab7-4a0b-a45f-7aaa996f3006")
-        )
+        val intent = Intent(this, SignUpSecondWebView::class.java)
         startActivity(intent)
     }
 
