@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FakeCarrotMarket</string>
+    <string name="app_name">GoguMarket</string>
     <string name="web_client_id">846185572928-k7an4tosbqhc7irqbv721ale33p75bmn.apps.googleusercontent.com</string>
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_app_id">361089315380254</string>
@@ -18,6 +18,9 @@
     <string name="kakao_native_key">8915659582e1a43e1eafef8ada1211fb</string>
     <string name="twitter_consumer_key">jSQZ39pOIJqD5idifYmTgrc4F </string>
     <string name="twitter_consumer_secret">o4S8jGh3CGbzNxLoBuR5WVVguY6wux58G851SVKlvRjyIOSNW5</string>
+    <string name="default_notification_channel_id">FakeCarrotMarket</string>
+    <string name="fcm_message">Login Success</string>
+    <string name="msg_token_fmt" translatable="false">토큰 : %s</string>
 
 
 </resources>

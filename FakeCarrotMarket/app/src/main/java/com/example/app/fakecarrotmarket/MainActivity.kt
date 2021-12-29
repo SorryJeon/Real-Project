@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     var btnimage: Button? = null
     var btnupload: Button? = null
     var btndb: Button? = null
+    var btntoken: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
     var tvafter: TextView? = null
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     var nickname: TextView? = null
 
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
+        btntoken = findViewById<View>(R.id.btn_token) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
@@ -83,6 +88,20 @@ class MainActivity : AppCompatActivity() {
         btnupload!!.setOnClickListener {
             clickUpload()
         }
+        btntoken!!.setOnClickListener {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val token = task.result
+
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d(TAG, msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            })
+        }
 
         Glide.with(this@MainActivity)
             .load(R.drawable.background_image_size)
@@ -104,19 +123,6 @@ class MainActivity : AppCompatActivity() {
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            val token = task.result
-
-            val msg = getString(R.string.msg_token_fmt, token)
-            Log.d(TAG, msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-        })
     }
 
 
@@ -229,7 +235,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         imgRef.getFile(localfile).addOnSuccessListener {
-             imgUri = localfile.toUri()
+            imgUri = localfile.toUri()
         }
     }
 

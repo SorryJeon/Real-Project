@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E49024"
+    android:background="@drawable/app_background_settings"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -15,9 +15,9 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/nexon_gothic"
-        android:text="CarrotMarket LoginPage"
+        android:text="GoguMarket 고구마켓"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="25dp" />
 
     <EditText
@@ -28,7 +28,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
-        android:background="#AAAAAA"
+        android:background="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 아이디"
@@ -44,7 +44,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:background="#AAAAAA"
+        android:background="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 비밀번호"

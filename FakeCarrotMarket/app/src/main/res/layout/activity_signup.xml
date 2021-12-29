@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E49024"
+    android:background="@drawable/app_background_settings"
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
@@ -15,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
-        android:background="#AAAAAA"
+        android:background="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 아이디 (이메일 포함 필수)"
@@ -31,7 +31,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:background="#AAAAAA"
+        android:background="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 비밀번호 (6~15자리)"
@@ -47,7 +47,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:background="#AAAAAA"
+        android:background="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 비밀번호 확인"
@@ -67,7 +67,7 @@
         android:fontFamily="@font/nexon_gothic"
         android:text="숫자, 문자, 특수문자 중 2가지 포함(6~15자)"
         android:textAlignment="center"
-        android:textColorHint="@color/black"
+        android:textColor="@color/black"
         android:textSize="16dp" />
 
     <LinearLayout
@@ -80,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:buttonTint="@color/black"
             android:text="[필수] 이용약관동의"
             android:textColor="@color/black" />
 
@@ -105,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:buttonTint="@color/black"
             android:text="[필수] 개인정보취급약관동의"
             android:textColor="@color/black" />
 
@@ -130,6 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:buttonTint="@color/black"
             android:text="모두 동의"
             android:textColor="@color/black" />
 
