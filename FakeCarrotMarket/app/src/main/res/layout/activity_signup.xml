@@ -162,7 +162,8 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#3F6DC8"
         android:fontFamily="@font/nexon_gothic"
-        android:text="회원가입" />
+        android:text="회원가입"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_cancel"
@@ -173,6 +174,7 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#308F4C"
         android:fontFamily="@font/nexon_gothic"
-        android:text="취소" />
+        android:text="취소"
+        android:textColor="@color/white" />
 
 </LinearLayout>

@@ -64,7 +64,8 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#308F4C"
         android:fontFamily="@font/nexon_gothic"
-        android:text="로그인" />
+        android:text="로그인"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_register"
@@ -75,7 +76,8 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#3F6DC8"
         android:fontFamily="@font/nexon_gothic"
-        android:text="회원가입" />
+        android:text="회원가입"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_passReset"
@@ -86,7 +88,8 @@
         android:layout_marginEnd="20dp"
         android:backgroundTint="#CFBE1E"
         android:fontFamily="@font/nexon_gothic"
-        android:text="비밀번호 재설정" />
+        android:text="비밀번호 재설정"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"

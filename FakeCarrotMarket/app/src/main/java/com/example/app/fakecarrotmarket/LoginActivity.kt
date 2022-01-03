@@ -9,6 +9,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.JsonObjectRequest
@@ -57,6 +58,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        var actionBar : ActionBar? = supportActionBar
+        actionBar?.hide()
 
         val authConfig = TwitterAuthConfig(
             getString(R.string.twitter_consumer_key),

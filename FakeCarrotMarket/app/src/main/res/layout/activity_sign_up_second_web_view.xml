@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/android_button_padding"
-        android:text="뒤로가기" />
+        android:text="뒤로가기"
+        android:textColor="@color/white" />
 
 </LinearLayout>

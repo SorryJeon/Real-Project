@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_signup.*
 
@@ -22,6 +23,9 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_signup)
+
+        var actionBar : ActionBar? = supportActionBar
+        actionBar?.hide()
 
         val btn_register = findViewById<Button>(R.id.btn_register)
         val btn_cancel = findViewById<Button>(R.id.btn_cancel)

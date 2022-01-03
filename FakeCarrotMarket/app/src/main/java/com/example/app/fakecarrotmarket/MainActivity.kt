@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
@@ -57,6 +58,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var actionBar : ActionBar? = supportActionBar
+        actionBar?.hide()
 
         FacebookSdk.sdkInitialize(getApplicationContext())
         btnLogout = findViewById<View>(R.id.btn_logout) as Button

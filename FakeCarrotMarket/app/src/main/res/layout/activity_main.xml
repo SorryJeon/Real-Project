@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background_settings"
@@ -10,8 +9,9 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -61,7 +61,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="DB" />
+                android:text="DB"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_image"
@@ -72,7 +73,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="로컬" />
+                android:text="로컬"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_upload"
@@ -84,13 +86,14 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="업로드" />
+                android:text="업로드"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
@@ -103,7 +106,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="로그아웃" />
+                android:text="로그아웃"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_revoke"
@@ -115,7 +119,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="회원탈퇴" />
+                android:text="회원탈퇴"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -126,9 +131,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemBackground="@android:color/white"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
     <LinearLayout
@@ -142,7 +144,6 @@
             android:layout_height="wrap_content"
             android:text="토큰 조회"
             android:visibility="gone" />
-
 
         <TextView
             android:id="@+id/nickname"

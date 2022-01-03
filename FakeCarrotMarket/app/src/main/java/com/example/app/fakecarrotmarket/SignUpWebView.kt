@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import androidx.appcompat.app.ActionBar
 
 class SignUpWebView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_web_view)
+
+        var actionBar : ActionBar? = supportActionBar
+        actionBar?.hide()
 
         val backButton = findViewById<Button>(R.id.goBack)
         val webView = findViewById<WebView>(R.id.signup_webView)
