@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/page_home"
+        android:enabled="true"
+        android:icon="@drawable/icon_home"
+        android:title="메인"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/page_chat"
+        android:enabled="true"
+        android:icon="@drawable/icon_chat"
+        android:title="채팅"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/page_account"
+        android:enabled="true"
+        android:icon="@drawable/icon_account"
+        android:title="계정"
+        app:showAsAction="always" />
+</menu>

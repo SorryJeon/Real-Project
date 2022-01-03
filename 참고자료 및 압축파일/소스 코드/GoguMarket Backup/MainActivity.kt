@@ -33,7 +33,7 @@ import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     val TAG: String = "안녕"
     var first_time: Long = 0
     var second_time: Long = 0
@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         btnupload!!.setOnClickListener {
             clickUpload()
         }
+
         btntoken!!.setOnClickListener {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -125,10 +126,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(this)
-
-        supportFragmentManager.beginTransaction().add(R.id.linearLayout, HomeFragment()).commit()
     }
 
 
@@ -174,6 +171,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
+
     }
 
     private fun revokeAccess() {
@@ -266,26 +264,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 tvafter!!.text = "파일 로컬에서 가져오기 성공!"
             }
         }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId) {
-            R.id.page_home -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout , HomeFragment()).commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_chat -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout, ChatFragment()).commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_account -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout, AccountFragment()).commitAllowingStateLoss()
-                return true
-            }
-        }
-
-        return false
     }
 
     private fun clickUpload() {
