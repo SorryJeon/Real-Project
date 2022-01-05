@@ -16,11 +16,20 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SettingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AccountActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignUpSecondWebView"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SignUpWebView"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -30,10 +39,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".MainActivity2"
-            android:exported="true"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".Test"
             android:exported="true"

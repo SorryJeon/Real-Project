@@ -41,7 +41,6 @@ import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import com.kakao.sdk.common.util.Utility
 
-
 class LoginActivity : AppCompatActivity() {
     lateinit var twitterAuthClient: TwitterAuthClient
     var loginstate = false

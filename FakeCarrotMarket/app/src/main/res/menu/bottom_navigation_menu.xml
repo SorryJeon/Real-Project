@@ -16,10 +16,17 @@
         android:title="채팅"
         app:showAsAction="always" />
 
+<!--    <item-->
+<!--        android:id="@+id/page_account"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/icon_account"-->
+<!--        android:title="계정"-->
+<!--        app:showAsAction="always" />-->
+
     <item
-        android:id="@+id/page_account"
+        android:id="@+id/page_setting"
         android:enabled="true"
-        android:icon="@drawable/icon_account"
-        android:title="계정"
+        android:icon="@drawable/icon_setting"
+        android:title="설정"
         app:showAsAction="always" />
 </menu>

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -25,6 +26,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.app.fakecarrotmarket.BottomNavigationViewHelper.enableNavigation
 import com.facebook.FacebookSdk
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,8 +36,10 @@ import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     val TAG: String = "안녕"
+    private val mContext: Context = this@MainActivity
+    private val ACTIVITY_NUM = 0
     var first_time: Long = 0
     var second_time: Long = 0
     var btnRevoke: Button? = null
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var actionBar : ActionBar? = supportActionBar
+        var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         FacebookSdk.sdkInitialize(getApplicationContext())
@@ -94,6 +98,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         btnupload!!.setOnClickListener {
             clickUpload()
         }
+
         btntoken!!.setOnClickListener {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -129,10 +134,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
+        setupBottomNavigationView()
+    }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(this)
-
-        supportFragmentManager.beginTransaction().add(R.id.linearLayout, HomeFragment()).commit()
+    private fun setupBottomNavigationView() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        enableNavigation(mContext, bottomNavigationView)
+        val menu: Menu = bottomNavigationView.menu
+        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
+        menuItem.isChecked = true
     }
 
 
@@ -163,7 +173,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         alertdialog.setView(view)
         alertdialog.show()
-
     }
 
     private fun signOut2() {
@@ -214,7 +223,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         alertdialog.setView(view)
         alertdialog.show()
-
     }
 
     private fun clickLoad() {
@@ -272,28 +280,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId) {
-            R.id.page_home -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout , HomeFragment()).commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_chat -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout, ChatFragment()).commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_account -> {
-                supportFragmentManager.beginTransaction().replace(R.id.linearLayout, AccountFragment()).commitAllowingStateLoss()
-                return true
-            }
-        }
-
-        return false
-    }
-
     private fun clickUpload() {
-
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imgFileName = "IMAGE_" + timeStamp + "_.png"
         val storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
