@@ -26,7 +26,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
-import com.example.app.fakecarrotmarket.BottomNavigationViewHelper.enableNavigation
 import com.facebook.FacebookSdk
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,9 +36,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
     val TAG: String = "안녕"
     private val mContext: Context = this@MainActivity
     private val ACTIVITY_NUM = 0
+
     var first_time: Long = 0
     var second_time: Long = 0
     var btnRevoke: Button? = null
@@ -145,6 +146,27 @@ class MainActivity : AppCompatActivity() {
         menuItem.isChecked = true
     }
 
+    private fun enableNavigation(context: Context, view: BottomNavigationView) {
+        view.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.page_home -> {
+                    if (this@MainActivity != this@MainActivity) {
+                        val intent1 = Intent(context, MainActivity::class.java) // 0
+                        context.startActivity(intent1)
+                    }
+                }
+                R.id.page_chat -> {
+                    val intent2 = Intent(context, ChatActivity::class.java) // 1
+                    context.startActivity(intent2)
+                }
+                R.id.page_setting -> {
+                    val intent3 = Intent(context, SettingActivity::class.java) // 2
+                    context.startActivity(intent3)
+                }
+            }
+            false
+        }
+    }
 
     private fun signOut() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
