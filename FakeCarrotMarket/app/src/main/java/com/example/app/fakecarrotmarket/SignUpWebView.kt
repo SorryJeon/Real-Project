@@ -12,7 +12,7 @@ class SignUpWebView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_web_view)
 
-        var actionBar : ActionBar? = supportActionBar
+        val actionBar : ActionBar? = supportActionBar
         actionBar?.hide()
 
         val backButton = findViewById<Button>(R.id.goBack)

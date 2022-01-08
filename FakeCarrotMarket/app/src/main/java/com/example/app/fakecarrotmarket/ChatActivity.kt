@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.appcompat.app.ActionBar
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,11 +16,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ChatActivity : AppCompatActivity() {
+public class ChatActivity : AppCompatActivity() {
 
     private val mContext: Context = this@ChatActivity
     private val ACTIVITY_NUM = 1
@@ -30,7 +33,42 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        var actionBar: ActionBar? = supportActionBar
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("message")
+
+        val chat: ChatData = ChatData()
+        chat.setNickName("SorryJeon")
+        chat.setMsg("Hello")
+        myRef.setValue(chat)
+
+        myRef.addChildEventListener(object : ChildEventListener {
+
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chat: ChatData? = snapshot.getValue(ChatData::class.java)
+                val mAdapter: ChatAdapter? = null
+                (mAdapter as ChatAdapter).addChat(chat)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            public override fun onChildRemoved(@NonNull dataSnapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+        val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

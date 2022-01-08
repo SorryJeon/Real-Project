@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var actionBar: ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         FacebookSdk.sdkInitialize(getApplicationContext())

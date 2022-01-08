@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var actionBar : ActionBar? = supportActionBar
+        val actionBar : ActionBar? = supportActionBar
         actionBar?.hide()
 
         val authConfig = TwitterAuthConfig(
