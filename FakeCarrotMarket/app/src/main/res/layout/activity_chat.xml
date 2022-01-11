@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background_settings"
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -15,20 +14,38 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/TextView_NickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/EditText_Chat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:minHeight="32dp"
+                android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/TextView_Msg"
+            <Button
+                android:id="@+id/Button_Send"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#308F4C"
+                android:text="전송" />
 
         </LinearLayout>
 

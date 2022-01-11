@@ -1,28 +1,24 @@
 package com.example.app.fakecarrotmarket
 
-import java.io.Serializable
-
-public class ChatData : Serializable {
+class ChatData {
 
     private var msg: String? = null
     private var nickname: String? = null
 
-    public fun getMsg(): String? {
+    fun getMsg(): String? {
         return msg
     }
 
-    public fun setMsg(msg: String): String? {
+    fun setMsg(msg: String) {
         this.msg = msg
-        return msg
     }
 
-    public fun getNickName(): String? {
+    fun getNickName(): String? {
         return nickname
     }
 
-    public fun setNickName(nickname: String): String? {
+    fun setNickName(nickname: String) {
         this.nickname = nickname
-        return nickname
     }
 
 }

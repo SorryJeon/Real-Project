@@ -1,6 +1,5 @@
 package com.example.app.fakecarrotmarket
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -8,70 +7,65 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.LinearLayout
 
-public abstract class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {
+class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {
 
-    private var mDataset: List<ChatData>? = null
-    private var myNickName: String? = null
+    var mDataset: List<ChatData>? = null
+    var myNickName: String? = null
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var TextView_NickName: TextView? = null
-        var TextView_Msg: TextView? = null
-        var rootView: View? = null
+    class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        // each data item is just a string in this case
+        var TextView_nickname: TextView
+        var TextView_msg: TextView
+        var rootView: View
 
-        public fun MyViewHolder(v: View) {
-            TextView_NickName = v.findViewById(R.id.TextView_NickName)
-            TextView_Msg = v.findViewById(R.id.TextView_Msg)
+        init {
+            TextView_nickname = v.findViewById(R.id.TextView_NickName)
+            TextView_msg = v.findViewById(R.id.TextView_Msg)
             rootView = v
-
-            v.setClickable(true)
-            v.setEnabled(true)
-
         }
     }
 
-    public fun ChatAdapter(myDataset: List<ChatData>, context: Context, myNickname: String) {
+    fun ChatAdapter(myDataset: List<ChatData>, chatActivity: ChatActivity, nick: String) {
         mDataset = myDataset
-        this.myNickName = myNickname
+        this.myNickName = myNickName
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolder {
+        // create a new view
+        val v = LayoutInflater.from(parent.context)
+            .inflate(R.layout.row_chat, parent, false) as LinearLayout
+        return MyViewHolder(v)
     }
 
     @Override
-    public fun onCreateViewHolder(parent: ViewGroup?, Viewtype: Int): ChatAdapter.MyViewHolder {
-        val v: LinearLayout =
-            LayoutInflater.from(parent?.getContext())
-                .inflate(R.layout.activity_chat, parent, false) as LinearLayout
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val chat: ChatData = mDataset!![position]
 
-        val vh: MyViewHolder = MyViewHolder(v)
-        return vh
-    }
-
-    @Override
-    public override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val chat: ChatData = mDataset!!.get(position)
-
-        holder.TextView_NickName?.setText(chat.getNickName())
-        holder.TextView_Msg?.setText(chat.getMsg())
+        holder.TextView_nickname.setText(chat.getNickName())
+        holder.TextView_msg.setText(chat.getMsg())
 
         if (chat.getNickName().equals(this.myNickName)) {
-            holder.TextView_Msg?.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END)
+            holder.TextView_msg.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+            holder.TextView_nickname.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
         } else {
-
+            holder.TextView_msg.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+            holder.TextView_nickname.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         }
     }
 
-    public override fun getItemCount(): Int {
-        if (mDataset == null) {
-            return 0
-        } else {
-            return mDataset!!.size
-        }
+    override fun getItemCount(): Int {
+        return if (mDataset == null) 0 else mDataset!!.size
     }
 
-    public fun getChat(position: Int): ChatData? {
+    fun getChat(position: Int): ChatData? {
         return if (mDataset != null) mDataset!![position] else null
     }
 
-    public fun addChat(chat: ChatData?) {
+    fun addChat(chat: ChatData) {
         mDataset?.plus(chat)
-        notifyItemInserted(mDataset!!.size - 1)
+        notifyItemInserted(mDataset!!.count() - 1)
     }
 }
