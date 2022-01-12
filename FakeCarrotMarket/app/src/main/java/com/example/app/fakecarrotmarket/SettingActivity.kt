@@ -30,7 +30,7 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        var actionBar: ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

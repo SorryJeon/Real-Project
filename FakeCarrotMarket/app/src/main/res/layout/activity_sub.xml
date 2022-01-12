@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background_settings"
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    tools:context=".SubActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical" />
 

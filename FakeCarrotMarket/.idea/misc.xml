@@ -43,29 +43,34 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/font/new_font.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_account.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_after.xml" value="0.276268115942029" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_chat.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_chat.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_home.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_image_view.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_login2.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_main2.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_message.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_register.xml" value="0.276268115942029" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_setting.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_sign_up_second_web_view.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_sign_up_web_view.xml" value="0.2" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_signup.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_sub.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_test.xml" value="0.2046875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/activity_upload.xml" value="0.3515625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/alert_popup.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/content_test.xml" value="0.2046875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_blank.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_chat.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_first.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_home.xml" value="0.22282608695652173" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_second.xml" value="0.2046875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/fragment_setting.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/item_chat.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/item_home.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/item_message.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/registration_webview.xml" value="0.190625" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/layout/row_chat.xml" value="0.14266304347826086" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/FakeCarrotMarket/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21302083333333333" />

@@ -4,102 +4,31 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBar
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import com.google.firebase.database.FirebaseDatabase
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
-import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
     private val mContext: Context = this@ChatActivity
     private val ACTIVITY_NUM = 1
-    private val nick: String = "SorryJeon"
-
     var first_time: Long = 0
     var second_time: Long = 0
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        val myRef: DatabaseReference = database.getReference("messages")
-
-        val mRecyclerView: RecyclerView = findViewById(R.id.my_recycler_view)
-        mRecyclerView.setHasFixedSize(true)
-        val mLayoutManager: RecyclerView.LayoutManager
-        mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = mLayoutManager
-
-        val chatList: List<ChatData>
-        chatList = ArrayList<ChatData>()
-        val mAdapter: RecyclerView.Adapter<*>
-        mAdapter = ChatAdapter(chatList, this@ChatActivity, nick)
-        mRecyclerView.adapter = mAdapter
-
-        val sendButton = findViewById<Button>(R.id.Button_Send)
-        val chatEdit = findViewById<EditText>(R.id.EditText_Chat)
-
-        sendButton.setOnClickListener {
-            val msg: String = chatEdit.text.toString()
-
-            if (msg != "") {
-                val chat = ChatData()
-                chat.setNickName(nick)
-                chat.setMsg(msg)
-                myRef.push().setValue(chat)
-            }
-        }
-
-        myRef.addChildEventListener(object : ChildEventListener {
-
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("CHATCHAT", snapshot.value.toString())
-
-                val chat: ChatData = snapshot.getValue(ChatData::class.java)!!
-                (mAdapter as ChatAdapter).addChat(chat)
-
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-
-            override fun onChildRemoved(@NonNull dataSnapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()

@@ -7,8 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +26,6 @@ import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.facebook.FacebookSdk
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
@@ -38,9 +35,6 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
     val TAG: String = "안녕"
-    private val mContext: Context = this@MainActivity
-    private val ACTIVITY_NUM = 0
-
     var first_time: Long = 0
     var second_time: Long = 0
     var btnRevoke: Button? = null
@@ -49,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     var btnupload: Button? = null
     var btndb: Button? = null
     var btntoken: Button? = null
+    var btnaccess: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
     var tvafter: TextView? = null
@@ -74,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
         btntoken = findViewById<View>(R.id.btn_token) as Button
+        btnaccess = findViewById<View>(R.id.btn_access) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
@@ -115,6 +111,10 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        btnaccess!!.setOnClickListener {
+            clickAccess()
+        }
+
         Glide.with(this@MainActivity)
             .load(R.drawable.background_image_size)
             .into(iv!!)
@@ -134,37 +134,6 @@ class MainActivity : AppCompatActivity() {
             userInfo.userId = auth?.currentUser?.email
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
-        }
-        setupBottomNavigationView()
-    }
-
-    private fun setupBottomNavigationView() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        enableNavigation(mContext, bottomNavigationView)
-        val menu: Menu = bottomNavigationView.menu
-        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
-        menuItem.isChecked = true
-    }
-
-    private fun enableNavigation(context: Context, view: BottomNavigationView) {
-        view.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.page_home -> {
-                    if (this@MainActivity != this@MainActivity) {
-                        val intent1 = Intent(context, MainActivity::class.java) // 0
-                        context.startActivity(intent1)
-                    }
-                }
-                R.id.page_chat -> {
-                    val intent2 = Intent(context, ChatActivity::class.java) // 1
-                    context.startActivity(intent2)
-                }
-                R.id.page_setting -> {
-                    val intent3 = Intent(context, SettingActivity::class.java) // 2
-                    context.startActivity(intent3)
-                }
-            }
-            false
         }
     }
 
@@ -209,6 +178,11 @@ class MainActivity : AppCompatActivity() {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
+    }
+
+    private fun clickAccess() {
+        val intent = Intent(this, SubActivity::class.java)
+        startActivity(intent)
     }
 
     private fun revokeAccess() {

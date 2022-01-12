@@ -21,6 +21,7 @@
     <string name="default_notification_channel_id">FakeCarrotMarket</string>
     <string name="fcm_message">Login Success</string>
     <string name="msg_token_fmt" translatable="false">토큰 : %s</string>
+    <string name="title_activity_message">MessageActivity</string>
 
 
 </resources>
