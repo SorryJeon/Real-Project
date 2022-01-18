@@ -11,9 +11,77 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="채팅방 입장 또는 새로 만들기"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/user_chat"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:hint="CHAT NAME"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/user_edit"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:hint="USER NAME"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/user_next"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="GO" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="현재 개설된 채팅방"
+                android:textSize="20dp" />
+
+            <ListView
+                android:id="@+id/chat_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -21,5 +89,4 @@
         android:layout_height="wrap_content"
         app:itemBackground="@android:color/white"
         app:menu="@menu/bottom_navigation_menu" />
-
 </LinearLayout>

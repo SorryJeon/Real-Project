@@ -16,12 +16,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MessageActivity"
-            android:exported="false"
-            android:label="@string/title_activity_message"
-            android:theme="@style/NoActionBar" />
-        <activity
-            android:name=".SubActivity"
+            android:name=".ChatActivity2"
             android:exported="false" />
         <activity
             android:name=".SettingActivity"

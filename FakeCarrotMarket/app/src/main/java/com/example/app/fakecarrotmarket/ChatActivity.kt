@@ -4,8 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.facebook.login.LoginManager
@@ -14,9 +19,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
+import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.database.DatabaseError
+
+import com.google.firebase.database.DataSnapshot
+
+import com.google.firebase.database.ChildEventListener
+
+import android.widget.ArrayAdapter
+
 
 class ChatActivity : AppCompatActivity() {
 
@@ -26,12 +42,25 @@ class ChatActivity : AppCompatActivity() {
     var second_time: Long = 0
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    private var user_chat: EditText? = null
+    private var user_edit: EditText? = null
+    private var user_next: Button? = null
+    private var chat_list: ListView? = null
+
+    private var firebaseDatabase = FirebaseDatabase.getInstance()
+    private var databaseReference = firebaseDatabase.reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+
+        user_chat = findViewById(R.id.user_chat)
+        user_edit = findViewById(R.id.user_edit)
+        user_next = findViewById(R.id.user_next)
+        chat_list = findViewById(R.id.chat_list)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -42,6 +71,40 @@ class ChatActivity : AppCompatActivity() {
 
         setupBottomNavigationView()
 
+//        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+//        val databaseReference: DatabaseReference = database.getReference("message")
+//        databaseReference.setValue("Hello World!")
+
+        user_next!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                if (user_edit!!.text.toString() == "" || user_chat!!.text.toString() == "") return
+                val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+                intent.putExtra("chatName", user_chat!!.text.toString())
+                intent.putExtra("userName", user_edit!!.text.toString())
+                startActivity(intent)
+            }
+        })
+        showChatList()
+    }
+
+    private fun showChatList() {
+        // 리스트 어댑터 생성 및 세팅
+        val adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+        chat_list!!.adapter = adapter
+
+        // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
+        databaseReference.child("chat").addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                Log.e("LOG", "dataSnapshot.getKey() : " + dataSnapshot.key)
+                adapter.add(dataSnapshot.key)
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
     }
 
     private fun setupBottomNavigationView() {
