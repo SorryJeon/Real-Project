@@ -12,6 +12,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="60dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -20,43 +21,52 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/nexon_gothic"
                 android:gravity="center"
                 android:text="채팅방 입장 또는 새로 만들기"
                 android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/user_chat"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/nexon_gothic"
                 android:gravity="center"
-                android:hint="CHAT NAME"
+                android:hint="채팅방 이름을 입력해주세요"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/user_edit"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/nexon_gothic"
                 android:gravity="center"
-                android:hint="USER NAME"
+                android:hint="유저 닉네임을 입력해주세요"
                 android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/user_next"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="GO" />
+                android:fontFamily="@font/nexon_gothic"
+                android:text="시작" />
 
         </LinearLayout>
 
@@ -69,17 +79,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/nexon_gothic"
                 android:gravity="center"
-                android:text="현재 개설된 채팅방"
+                android:text="현재 개설된 채팅방 목록"
                 android:textSize="20dp" />
 
             <ListView
                 android:id="@+id/chat_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </ListView>
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nexon_gothic"></ListView>
         </LinearLayout>
     </LinearLayout>
 

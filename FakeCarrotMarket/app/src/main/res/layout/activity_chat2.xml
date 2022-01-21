@@ -23,7 +23,8 @@
             <ListView
                 android:id="@+id/chat_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nexon_gothic" />
         </LinearLayout>
 
         <LinearLayout
@@ -34,7 +35,8 @@
             <EditText
                 android:id="@+id/chat_edit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexon_gothic" />
 
             <Button
                 android:id="@+id/chat_sent"
@@ -47,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/android_button_padding"
+                android:fontFamily="@font/nexon_gothic"
                 android:text="뒤로가기"
                 android:textColor="@color/white" />
 
