@@ -61,12 +61,33 @@
                 android:hint="유저 닉네임을 입력해주세요"
                 android:inputType="textPersonName" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/user_next"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/nexon_gothic"
                 android:text="시작" />
+
+            <Button
+                android:id="@+id/user_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/nexon_gothic"
+                android:text="삭제" />
 
         </LinearLayout>
 
@@ -76,22 +97,11 @@
             android:layout_marginTop="30dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/nexon_gothic"
-                android:gravity="center"
-                android:text="현재 개설된 채팅방 목록"
-                android:textSize="20dp" />
-
             <ListView
                 android:id="@+id/chat_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/nexon_gothic"></ListView>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexon_gothic" />
         </LinearLayout>
     </LinearLayout>
 

@@ -45,7 +45,9 @@ class ChatActivity : AppCompatActivity() {
     private var user_chat: EditText? = null
     private var user_edit: EditText? = null
     private var user_next: Button? = null
+    private var user_delete: Button? = null
     private var chat_list: ListView? = null
+
 
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
@@ -60,6 +62,7 @@ class ChatActivity : AppCompatActivity() {
         user_chat = findViewById(R.id.user_chat)
         user_edit = findViewById(R.id.user_edit)
         user_next = findViewById(R.id.user_next)
+        user_delete = findViewById(R.id.user_delete)
         chat_list = findViewById(R.id.chat_list)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -84,6 +87,10 @@ class ChatActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+        user_delete!!.setOnClickListener {
+            deleteChatList()
+            databaseReference.child("chat").removeValue()
+        }
         showChatList()
     }
 
@@ -102,6 +109,24 @@ class ChatActivity : AppCompatActivity() {
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+    }
+
+    private fun deleteChatList() {
+        val adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+
+        chat_list!!.adapter = adapter
+        databaseReference.child("chat").removeEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {}
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                adapter.remove(dataSnapshot.key)
+            }
+
             override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
             override fun onCancelled(databaseError: DatabaseError) {}
         })
