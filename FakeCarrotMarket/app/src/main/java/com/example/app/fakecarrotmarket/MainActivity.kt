@@ -37,18 +37,14 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    val TAG: String = "안녕"
     private val mContext: Context = this@MainActivity
     private val ACTIVITY_NUM = 0
 
     var first_time: Long = 0
     var second_time: Long = 0
-    var btnRevoke: Button? = null
-    var btnLogout: Button? = null
     var btnimage: Button? = null
     var btnupload: Button? = null
     var btndb: Button? = null
-    var btntoken: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
     var tvafter: TextView? = null
@@ -68,25 +64,15 @@ class MainActivity : AppCompatActivity() {
         actionBar?.hide()
 
         FacebookSdk.sdkInitialize(getApplicationContext())
-        btnLogout = findViewById<View>(R.id.btn_logout) as Button
-        btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
-        btntoken = findViewById<View>(R.id.btn_token) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
-
-        btnLogout!!.setOnClickListener {
-            signOut()
-        }
-        btnRevoke!!.setOnClickListener {
-            revokeAccess()
-        }
 
         btndb!!.setOnClickListener {
             clickLoad()
@@ -98,21 +84,6 @@ class MainActivity : AppCompatActivity() {
 
         btnupload!!.setOnClickListener {
             clickUpload()
-        }
-
-        btntoken!!.setOnClickListener {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                val token = task.result
-
-                val msg = getString(R.string.msg_token_fmt, token)
-                Log.d(TAG, msg)
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-            })
         }
 
         Glide.with(this@MainActivity)
@@ -168,35 +139,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun signOut() {
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.alert_popup, null)
-        val textView: TextView = view.findViewById(R.id.textView)
-        textView.text = "로그아웃을 하시겠습니까?"
-        val alertdialog = AlertDialog.Builder(this)
-            .setTitle("로그아웃 페이지")
-            .setPositiveButton("Yes") { dialog, which ->
-
-                TwitterCore.getInstance().sessionManager.clearActiveSession()
-                FirebaseAuth.getInstance().signOut()
-                LoginManager.getInstance().logOut()
-                Session.getCurrentSession().close()
-                if (account !== null) {
-                    googleSignInClient.signOut().addOnCompleteListener(this) {
-                    }
-                }
-                Toast.makeText(applicationContext, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT)
-                    .show()
-                finishAffinity()
-            }
-            .setNegativeButton("No", null)
-            .create()
-
-        alertdialog.setView(view)
-        alertdialog.show()
-    }
-
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
 
@@ -209,42 +151,6 @@ class MainActivity : AppCompatActivity() {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
-    }
-
-    private fun revokeAccess() {
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.alert_popup, null)
-        val textView: TextView = view.findViewById(R.id.textView)
-        textView.text = "회원탈퇴를 하시겠습니까?"
-        val alertdialog = AlertDialog.Builder(this)
-            .setTitle("회원탈퇴 페이지")
-            .setPositiveButton("Yes") { dialog, which ->
-
-                TwitterCore.getInstance().sessionManager.clearActiveSession()
-                if (auth!!.currentUser != null) {
-                    auth!!.currentUser!!.delete()
-                }
-
-                fbFireStore?.collection("users")?.document(auth?.uid.toString())?.delete()
-                FirebaseAuth.getInstance().signOut()
-                LoginManager.getInstance().logOut()
-                Session.getCurrentSession().close()
-
-                if (account !== null) {
-                    googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-                    }
-                }
-                Toast.makeText(applicationContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT)
-                    .show()
-                finishAffinity()
-            }
-
-            .setNegativeButton("No", null)
-            .create()
-
-        alertdialog.setView(view)
-        alertdialog.show()
     }
 
     private fun clickLoad() {
