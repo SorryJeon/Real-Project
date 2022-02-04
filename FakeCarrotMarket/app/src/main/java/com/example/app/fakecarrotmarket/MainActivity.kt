@@ -45,8 +45,11 @@ class MainActivity : AppCompatActivity() {
     var btnimage: Button? = null
     var btnupload: Button? = null
     var btndb: Button? = null
+    var superbtn: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
+    var titleEditText: EditText? = null
+    var priceEditText: EditText? = null
     var tvafter: TextView? = null
     var imgUri: Uri? = null
     var fbStorage: FirebaseStorage? = null
@@ -67,7 +70,10 @@ class MainActivity : AppCompatActivity() {
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
         btndb = findViewById<View>(R.id.btn_db) as Button
+        superbtn = findViewById<View>(R.id.btn_superUpload) as Button
         iv = findViewById<View>(R.id.iv) as ImageView
+        titleEditText = findViewById<View>(R.id.titleEditText) as EditText
+        priceEditText = findViewById<View>(R.id.priceEditText) as EditText
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
@@ -84,6 +90,11 @@ class MainActivity : AppCompatActivity() {
 
         btnupload!!.setOnClickListener {
             clickUpload()
+        }
+
+        superbtn!!.setOnClickListener {
+            titleEditText!!.text.toString()
+            priceEditText!!.text.toString()
         }
 
         Glide.with(this@MainActivity)
