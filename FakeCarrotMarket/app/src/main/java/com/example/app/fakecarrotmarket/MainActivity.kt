@@ -26,9 +26,13 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
 import com.facebook.FacebookSdk
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
@@ -55,6 +59,10 @@ class MainActivity : AppCompatActivity() {
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
     var nickname: TextView? = null
+
+    val articleDB: DatabaseReference by lazy {
+        Firebase.database.reference.child(DB_ARTICLES)
+    }
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -93,8 +101,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         superbtn!!.setOnClickListener {
-            titleEditText!!.text.toString()
-            priceEditText!!.text.toString()
+            val title = titleEditText!!.text.toString()
+            val price = priceEditText!!.text.toString()
+            val sellerId = auth?.currentUser?.uid.orEmpty()
+            uploadArticle(sellerId, title, price, "")
+            clickUpload()
         }
 
         Glide.with(this@MainActivity)
@@ -201,6 +212,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, 10)
+    }
+
+    private fun uploadArticle(sellerId: String, title: String, price: String, imageUrl: String) {
+        val model = ArticleModel(sellerId, title, System.currentTimeMillis(), "$price 원", imageUrl)
+        articleDB.push().setValue(model)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
