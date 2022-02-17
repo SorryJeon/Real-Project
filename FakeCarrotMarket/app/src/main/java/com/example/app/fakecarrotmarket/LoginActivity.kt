@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val actionBar : ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         val authConfig = TwitterAuthConfig(
@@ -136,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
     public override fun onStart() {
         // 어플을 실행할 때 마다 이전에 저장이 되었던 비밀번호 재설정 데이터를 초기화
         super.onStart()
+        Log.d(TAG, "LoginActivity가 실행되었습니다.")
         val sharedPreference =
             getSharedPreferences("file name", MODE_PRIVATE)
         val editor = sharedPreference.edit()

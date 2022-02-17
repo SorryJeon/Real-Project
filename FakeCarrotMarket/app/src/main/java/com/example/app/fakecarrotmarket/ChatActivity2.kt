@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.database.DatabaseError
@@ -59,6 +60,13 @@ class ChatActivity2 : AppCompatActivity() {
         backButton!!.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    public override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(ContentValues.TAG, "ChatActivity2가 실행되었습니다.")
+        Log.d(ContentValues.TAG, "ChatActivity2 - onStart() called")
     }
 
     private fun addMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {

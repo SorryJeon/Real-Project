@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -89,6 +90,13 @@ class SettingActivity : AppCompatActivity() {
             })
         }
 
+    }
+
+    public override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(ContentValues.TAG, "SettingActivity가 실행되었습니다.")
+        Log.d(ContentValues.TAG, "SettingActivity - onStart() called")
     }
 
     private fun setupBottomNavigationView() {

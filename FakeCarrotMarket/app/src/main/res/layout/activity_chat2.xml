@@ -42,7 +42,9 @@
                 android:id="@+id/chat_sent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="send" />
+                android:background="@drawable/android_button_padding_2"
+                android:text="채팅 보내기"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/goBack"
@@ -50,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/android_button_padding"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="뒤로가기"
+                android:text="뒤로 돌아가기"
                 android:textColor="@color/white" />
 
         </LinearLayout>

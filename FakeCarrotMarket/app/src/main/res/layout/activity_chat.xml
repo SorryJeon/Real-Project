@@ -12,7 +12,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -73,8 +73,10 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
+                android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="시작" />
+                android:text="생성"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/user_delete"
@@ -84,8 +86,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
+                android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="삭제" />
+                android:text="삭제"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

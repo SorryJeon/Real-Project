@@ -1,6 +1,7 @@
 package com.example.app.fakecarrotmarket
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -129,6 +130,13 @@ class MainActivity : AppCompatActivity() {
 
         }
         setupBottomNavigationView()
+    }
+
+    public override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(TAG, "MainActivity가 실행되었습니다.")
+        Log.d(TAG, "MainActivity - onStart() called")
     }
 
     private fun setupBottomNavigationView() {
