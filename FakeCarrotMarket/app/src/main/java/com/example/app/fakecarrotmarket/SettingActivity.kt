@@ -37,6 +37,7 @@ class SettingActivity : AppCompatActivity() {
     private val ACTIVITY_NUM = 2
     var first_time: Long = 0
     var second_time: Long = 0
+    var tvafter: TextView? = null
     var auth: FirebaseAuth? = null
     var btntoken: Button? = null
     var btnRevoke: Button? = null
@@ -52,6 +53,7 @@ class SettingActivity : AppCompatActivity() {
         btnLogout = findViewById<View>(R.id.btn_logout) as Button
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btntoken = findViewById<View>(R.id.btn_token) as Button
+        tvafter = findViewById<View>(R.id.tv_after) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()

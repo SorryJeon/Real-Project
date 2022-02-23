@@ -41,7 +41,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="70dp"
                 android:layout_marginEnd="20dp"
-                android:hint="글 제목"
+                android:hint="제목 (물건 소개 제목)"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:hint="가격"
+                android:hint="가격 (단위 상관 없음)"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
