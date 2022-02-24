@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="70dp"
                 android:fontFamily="@font/nexon_gothic"
                 android:gravity="center"
                 android:text="채팅방 입장 또는 새로 만들기"

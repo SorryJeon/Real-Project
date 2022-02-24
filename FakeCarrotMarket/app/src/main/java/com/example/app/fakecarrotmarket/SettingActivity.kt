@@ -3,6 +3,7 @@ package com.example.app.fakecarrotmarket
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +12,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -28,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 class SettingActivity : AppCompatActivity() {
 
@@ -37,6 +42,7 @@ class SettingActivity : AppCompatActivity() {
     private val ACTIVITY_NUM = 2
     var first_time: Long = 0
     var second_time: Long = 0
+    var iv: ImageView? = null
     var tvafter: TextView? = null
     var auth: FirebaseAuth? = null
     var btntoken: Button? = null
@@ -54,6 +60,7 @@ class SettingActivity : AppCompatActivity() {
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btntoken = findViewById<View>(R.id.btn_token) as Button
         tvafter = findViewById<View>(R.id.tv_after) as TextView
+        iv = findViewById<View>(R.id.iv) as ImageView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
@@ -69,6 +76,10 @@ class SettingActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         setupBottomNavigationView()
+
+        Glide.with(this@SettingActivity)
+            .load(R.drawable.background_image_size)
+            .into(iv!!)
 
         btnLogout!!.setOnClickListener {
             signOut()

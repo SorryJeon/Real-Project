@@ -49,7 +49,6 @@ class ChatActivity : AppCompatActivity() {
     private var user_delete: Button? = null
     private var chat_list: ListView? = null
 
-
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
 
@@ -92,6 +91,7 @@ class ChatActivity : AppCompatActivity() {
             deleteChatList()
             databaseReference.child("chat").removeValue()
         }
+
         showChatList()
     }
 
