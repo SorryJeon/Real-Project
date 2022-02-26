@@ -1,6 +1,7 @@
 package com.example.app.fakecarrotmarket
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -24,20 +25,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
+import com.example.app.fakecarrotmarket.databinding.ActivityAccountBinding
+import com.example.app.fakecarrotmarket.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     var iv: ImageView? = null
     var titleEditText: EditText? = null
     var priceEditText: EditText? = null
+    var titleType: Button? = null
     var tvafter: TextView? = null
     var imgUri: Uri? = null
     var fbStorage: FirebaseStorage? = null
@@ -66,11 +66,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var googleSignInClient: GoogleSignInClient
+    lateinit var binding: ActivityMainBinding
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
@@ -83,11 +85,24 @@ class MainActivity : AppCompatActivity() {
         iv = findViewById<View>(R.id.iv) as ImageView
         titleEditText = findViewById<View>(R.id.titleEditText) as EditText
         priceEditText = findViewById<View>(R.id.priceEditText) as EditText
+        titleType = findViewById<View>(R.id.titleType) as Button
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
+
+        binding.titleType.setOnClickListener {
+            val items = arrayOf("과일", "채소", "야채", "육류", "과자")
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("상품 항목을 고르세요")
+            builder.setItems(items) { dialog, which ->
+                Toast.makeText(baseContext, "${items[which]} 항목이 선택되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d(TAG, "${items[which]} 항목이 선택되었습니다.")
+            }
+            builder.show()
+        }
 
         btndb!!.setOnClickListener {
             clickLoad()

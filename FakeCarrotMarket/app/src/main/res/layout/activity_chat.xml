@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_background_settings"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".ChatActivity">
 
@@ -42,7 +44,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/nexon_gothic"
-                android:gravity="center"
                 android:hint="채팅방 이름을 입력해주세요"
                 android:inputType="textPersonName" />
 
@@ -55,7 +56,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/nexon_gothic"
-                android:gravity="center"
                 android:hint="유저 닉네임을 입력해주세요"
                 android:inputType="textPersonName" />
 

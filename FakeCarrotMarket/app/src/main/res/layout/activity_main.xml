@@ -42,6 +42,7 @@
                 android:layout_marginTop="70dp"
                 android:layout_marginEnd="20dp"
                 android:hint="제목 (물건 소개 제목)"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -53,9 +54,20 @@
                 android:layout_marginEnd="20dp"
                 android:hint="가격 (단위 상관 없음)"
                 android:inputType="numberDecimal"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+
+            <Button
+                android:id="@+id/titleType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#0BBD8B"
+                android:text="상품 종류"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/iv"
