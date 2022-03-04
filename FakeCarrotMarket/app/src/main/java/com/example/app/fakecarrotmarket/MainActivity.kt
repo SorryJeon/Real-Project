@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     var first_time: Long = 0
     var second_time: Long = 0
+    var temp: String? = "상품 종류"
     var btnimage: Button? = null
     var btnupload: Button? = null
     var btndb: Button? = null
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     var priceEditText: EditText? = null
     var titleType: Button? = null
     var tvafter: TextView? = null
+    var productType: TextView? = null
     var imgUri: Uri? = null
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         priceEditText = findViewById<View>(R.id.priceEditText) as EditText
         titleType = findViewById<View>(R.id.titleType) as Button
         tvafter = findViewById<View>(R.id.tv_after) as TextView
+        productType = findViewById<View>(R.id.product_type) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
@@ -100,6 +103,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "${items[which]} 항목이 선택되었습니다.", Toast.LENGTH_SHORT)
                     .show()
                 Log.d(TAG, "${items[which]} 항목이 선택되었습니다.")
+                productType!!.text = items[which]
+                if (items[which] != temp) {
+                    Log.d(TAG, "상품 종류가 ${items[which]}로 변경되었습니다.")
+                }
+                temp = items[which]
             }
             builder.show()
         }
