@@ -74,7 +74,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#CFBE1E"
+                    android:backgroundTint="#2A9F10"
                     android:fontFamily="@font/nexon_gothic"
                     android:text="상품 종류"
                     android:textColor="@color/white" />

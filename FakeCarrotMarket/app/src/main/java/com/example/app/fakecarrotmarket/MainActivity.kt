@@ -8,7 +8,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
-import com.example.app.fakecarrotmarket.databinding.ActivityAccountBinding
 import com.example.app.fakecarrotmarket.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     var tvafter: TextView? = null
     var productType: TextView? = null
     var imgUri: Uri? = null
+    var imgUrl: String = ""
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
     var nickname: TextView? = null
@@ -96,9 +95,9 @@ class MainActivity : AppCompatActivity() {
         fbFireStore = FirebaseFirestore.getInstance()
 
         binding.titleType.setOnClickListener {
-            val items = arrayOf("과일", "채소", "야채", "육류", "과자")
+            val items = arrayOf("과일", "채소", "야채", "육류", "과자", "기타")
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("상품 항목을 고르세요")
+            builder.setTitle("상품 항목을 골라주세요")
             builder.setItems(items) { dialog, which ->
                 Toast.makeText(baseContext, "${items[which]} 항목이 선택되었습니다.", Toast.LENGTH_SHORT)
                     .show()
@@ -128,8 +127,16 @@ class MainActivity : AppCompatActivity() {
             val title = titleEditText!!.text.toString()
             val price = priceEditText!!.text.toString()
             val sellerId = auth?.currentUser?.uid.orEmpty()
-            uploadArticle(sellerId, title, price, "")
-            clickUpload()
+            if (title != "" && price != "" && imgUrl != "") {
+                uploadArticle(sellerId, title, price, imgUrl)
+                Log.d(TAG, "${auth?.currentUser.toString()}님이 ${title}을 ${price}에 등록하셨습니다.")
+                Log.d(TAG, "${auth?.currentUser.toString()}님이 ${imgUrl}을 업로드하였습니다.")
+            } else {
+                Toast.makeText(
+                    baseContext, "물건 제목과 가격을 입력해주세요 (이미지 첨부 필수)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         Glide.with(this@MainActivity)
@@ -230,7 +237,6 @@ class MainActivity : AppCompatActivity() {
                 baseContext, "파일 DB에서 가져오기 성공!",
                 Toast.LENGTH_SHORT
             ).show()
-            tvafter!!.text = "파일 DB에서 가져오기 성공!"
         }
 
         imgRef.getFile(localfile).addOnSuccessListener {
@@ -246,7 +252,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun uploadArticle(sellerId: String, title: String, price: String, imageUrl: String) {
-        val model = ArticleModel(sellerId, title, System.currentTimeMillis(), "$price 원", imageUrl)
+        val model = ArticleModel(sellerId, title, System.currentTimeMillis(), price, imageUrl)
         articleDB.push().setValue(model)
     }
 
@@ -261,7 +267,6 @@ class MainActivity : AppCompatActivity() {
                     baseContext, "파일 로컬에서 가져오기 성공!",
                     Toast.LENGTH_SHORT
                 ).show()
-                tvafter!!.text = "파일 로컬에서 가져오기 성공!"
             }
         }
     }
@@ -274,10 +279,10 @@ class MainActivity : AppCompatActivity() {
         if (imgUri != null) {
             storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
                 Toast.makeText(baseContext, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
-                tvafter!!.text = "이미지 업로드 성공!"
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
                     val userInfo = ModelUsers()
                     userInfo.imageUrl = uri.toString()
+                    imgUrl = uri.toString()
 
                     fbFireStore?.collection("users")?.document(auth?.uid.toString())
                         ?.update("imageUrl", userInfo.imageUrl.toString())
@@ -288,7 +293,6 @@ class MainActivity : AppCompatActivity() {
                 baseContext, "이미지 업로드 실패!",
                 Toast.LENGTH_SHORT
             ).show()
-            tvafter!!.text = "이미지 업로드 실패!"
         }
     }
 
