@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -125,12 +127,31 @@ class MainActivity : AppCompatActivity() {
 
         superbtn!!.setOnClickListener {
             val title = titleEditText!!.text.toString()
-            val price = priceEditText!!.text.toString()
+            var price = priceEditText!!.text.toString()
             val sellerId = auth?.currentUser?.uid.orEmpty()
             if (title != "" && price != "" && imgUrl != "") {
                 uploadArticle(sellerId, title, price, imgUrl)
                 Log.d(TAG, "${auth?.currentUser.toString()}님이 ${title}을 ${price}에 등록하셨습니다.")
                 Log.d(TAG, "${auth?.currentUser.toString()}님이 ${imgUrl}을 업로드하였습니다.")
+                Toast.makeText(
+                    baseContext, "${auth?.currentUser.toString()}님이 ${title}을 ${price}에 등록하셨습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d(
+                    TAG,
+                    "${auth?.currentUser.toString()}님의 닉네임이 ${auth?.currentUser!!.uid}로 설정되었습니다."
+                )
+                Toast.makeText(
+                    baseContext,
+                    "${auth?.currentUser.toString()}님의 닉네임이 ${auth?.currentUser!!.uid}로 설정되었습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                val intent = Intent(this@MainActivity, ChatActivity2::class.java)
+                intent.putExtra("chatName", title)
+                intent.putExtra("userName", auth?.currentUser!!.uid)
+                startActivity(intent)
+
             } else {
                 Toast.makeText(
                     baseContext, "물건 제목과 가격을 입력해주세요 (이미지 첨부 필수)",

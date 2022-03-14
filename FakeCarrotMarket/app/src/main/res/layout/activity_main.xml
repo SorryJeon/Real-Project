@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="가격 (단위 상관 없음)"
                 android:inputType="numberDecimal"
