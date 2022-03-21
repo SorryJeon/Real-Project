@@ -9,10 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -30,7 +27,9 @@ import com.google.firebase.database.DataSnapshot
 
 import com.google.firebase.database.ChildEventListener
 
-import android.widget.ArrayAdapter
+import com.example.app.fakecarrotmarket.Adapter.ListViewAdapter
+import com.example.app.fakecarrotmarket.DataBase.ListViewItem
+import kotlinx.android.synthetic.main.activity_chat2.*
 
 
 class ChatActivity : AppCompatActivity() {
@@ -91,6 +90,12 @@ class ChatActivity : AppCompatActivity() {
         }
 
         showChatList()
+
+        chat_view.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
+            val item =
+                parent.getItemAtPosition(position) as ListViewItem
+            Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
+        }
     }
 
     public override fun onStart() {
@@ -102,8 +107,8 @@ class ChatActivity : AppCompatActivity() {
 
     private fun showChatList() {
         // 리스트 어댑터 생성 및 세팅
-        val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+        val items = mutableListOf<ListViewItem>()
+        val adapter = ListViewAdapter(items)
         chat_list!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
@@ -121,10 +126,12 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun deleteChatList() {
-        val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
-
+        // 리스트 어댑터 생성 및 세팅
+        val items = mutableListOf<ListViewItem>()
+        val adapter = ListViewAdapter(items)
         chat_list!!.adapter = adapter
+
+        // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
         databaseReference.child("chat").removeEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {}
 
