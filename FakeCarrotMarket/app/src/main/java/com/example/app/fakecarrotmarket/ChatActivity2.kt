@@ -83,7 +83,7 @@ class ChatActivity2 : AppCompatActivity() {
         // 리스트 어댑터 생성 및 세팅
         val adapter =
             ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
-        chat_view!!.setAdapter(adapter)
+        chat_view!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
         databaseReference.child("chat").child(chatName!!)

@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -91,9 +92,33 @@ class ChatActivity : AppCompatActivity() {
 
         showChatList()
 
-        chat_view.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
-            val item =
-                parent.getItemAtPosition(position) as ListViewItem
+        val items = mutableListOf<ListViewItem>()
+        items.add(
+            ListViewItem(
+                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
+                "인스타그램",
+                "인스타그램 입니다"
+            )
+        )
+        items.add(
+            ListViewItem(
+                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
+                "페이스북",
+                "페이스북 입니다"
+            )
+        )
+        items.add(
+            ListViewItem(
+                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
+                "유튜브",
+                "유튜브 입니다"
+            )
+        )
+        val adapter = ListViewAdapter(items)
+        chat_list!!.adapter = adapter
+
+        chat_list!!.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
+            val item = parent.getItemAtPosition(position) as ListViewItem
             Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
         }
     }
@@ -107,8 +132,8 @@ class ChatActivity : AppCompatActivity() {
 
     private fun showChatList() {
         // 리스트 어댑터 생성 및 세팅
-        val items = mutableListOf<ListViewItem>()
-        val adapter = ListViewAdapter(items)
+        val adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
         chat_list!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
@@ -127,8 +152,8 @@ class ChatActivity : AppCompatActivity() {
 
     private fun deleteChatList() {
         // 리스트 어댑터 생성 및 세팅
-        val items = mutableListOf<ListViewItem>()
-        val adapter = ListViewAdapter(items)
+        val adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
         chat_list!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리

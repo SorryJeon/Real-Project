@@ -19,15 +19,12 @@ class ListViewAdapter(private val items: MutableList<ListViewItem>) : BaseAdapte
         parent: ViewGroup?
     ): View {
         var convertView = view
-        if (convertView == null)
-            convertView = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.custom_listview, parent, false)
-        val item: ListViewItem =
-            items[position]
+        if (convertView == null) convertView =
+            LayoutInflater.from(parent?.context).inflate(R.layout.custom_listview, parent, false)
+        val item: ListViewItem = items[position]
         convertView!!.image_title.setImageDrawable(item.icon)
         convertView.text_title.text = item.title
-        convertView.text_sub_title.text =
-            item.subTitle
+        convertView.text_sub_title.text = item.subTitle
         return convertView
     }
 
