@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,10 +26,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 
 import com.google.firebase.database.ChildEventListener
-
-import com.example.app.fakecarrotmarket.Adapter.ListViewAdapter
-import com.example.app.fakecarrotmarket.DataBase.ListViewItem
-import kotlinx.android.synthetic.main.activity_chat2.*
 
 
 class ChatActivity : AppCompatActivity() {
@@ -91,36 +86,6 @@ class ChatActivity : AppCompatActivity() {
         }
 
         showChatList()
-
-        val items = mutableListOf<ListViewItem>()
-        items.add(
-            ListViewItem(
-                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
-                "인스타그램",
-                "인스타그램 입니다"
-            )
-        )
-        items.add(
-            ListViewItem(
-                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
-                "페이스북",
-                "페이스북 입니다"
-            )
-        )
-        items.add(
-            ListViewItem(
-                ContextCompat.getDrawable(this, R.drawable.background_image)!!,
-                "유튜브",
-                "유튜브 입니다"
-            )
-        )
-        val adapter = ListViewAdapter(items)
-        chat_list!!.adapter = adapter
-
-        chat_list!!.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
-            val item = parent.getItemAtPosition(position) as ListViewItem
-            Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
-        }
     }
 
     public override fun onStart() {
