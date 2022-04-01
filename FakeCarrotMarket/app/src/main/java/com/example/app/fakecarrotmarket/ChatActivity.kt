@@ -98,7 +98,7 @@ class ChatActivity : AppCompatActivity() {
     private fun showChatList() {
         // 리스트 어댑터 생성 및 세팅
         val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+            ArrayAdapter<String>(this, R.layout.custom_listview, R.id.text_title)
         chat_list!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
@@ -118,7 +118,7 @@ class ChatActivity : AppCompatActivity() {
     private fun deleteChatList() {
         // 리스트 어댑터 생성 및 세팅
         val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+            ArrayAdapter<String>(this, R.layout.custom_listview, R.id.text_title)
         chat_list!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
