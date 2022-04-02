@@ -4,8 +4,8 @@
 
     <ImageView
         android:id="@+id/image_title"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/gogumarket_picture_design" />
 
@@ -23,7 +23,7 @@
             android:gravity="center_vertical"
             android:text="New Text"
             android:textColor="#000000"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/text_sub_title"

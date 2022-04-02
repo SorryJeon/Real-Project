@@ -34,6 +34,7 @@ class ChatActivity : AppCompatActivity() {
     private val ACTIVITY_NUM = 1
     var first_time: Long = 0
     var second_time: Long = 0
+    var auth: FirebaseAuth? = null
     private lateinit var googleSignInClient: GoogleSignInClient
 
     private var user_chat: EditText? = null
@@ -86,6 +87,14 @@ class ChatActivity : AppCompatActivity() {
         }
 
         showChatList()
+
+//        chat_list!!.setOnItemClickListener { parent, view, position, id ->
+//
+//            val element = parent.getItemAtPosition(position) as String
+//            val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+//            startActivity(intent)
+//
+//        }
     }
 
     public override fun onStart() {
