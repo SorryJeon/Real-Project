@@ -83,9 +83,11 @@ class SettingActivity : AppCompatActivity() {
 
         btnLogout!!.setOnClickListener {
             signOut()
+            Log.d(TAG, "고구마켓이 종료되었습니다.")
         }
         btnRevoke!!.setOnClickListener {
             revokeAccess()
+            Log.d(TAG, "고구마켓이 종료되었습니다.")
         }
 
         btntoken!!.setOnClickListener {
@@ -152,7 +154,7 @@ class SettingActivity : AppCompatActivity() {
         textView.text = "로그아웃을 하시겠습니까?"
         val alertdialog = AlertDialog.Builder(this)
             .setTitle("로그아웃 페이지")
-            .setPositiveButton("Yes") { dialog, which ->
+            .setPositiveButton("예") { dialog, which ->
 
                 TwitterCore.getInstance().sessionManager.clearActiveSession()
                 FirebaseAuth.getInstance().signOut()
@@ -164,9 +166,10 @@ class SettingActivity : AppCompatActivity() {
                 }
                 Toast.makeText(applicationContext, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
+                Log.d(TAG, "로그아웃이 완료되었습니다.")
                 finishAffinity()
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton("아니오", null)
             .create()
 
         alertdialog.setView(view)
@@ -213,6 +216,7 @@ class SettingActivity : AppCompatActivity() {
                 }
                 Toast.makeText(applicationContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
+                Log.d(TAG, "회원탈퇴가 완료되었습니다.")
                 finishAffinity()
             }
 
@@ -228,6 +232,7 @@ class SettingActivity : AppCompatActivity() {
         if (second_time - first_time < 2000) {
             super.onBackPressed()
             signOut2()
+            Log.d(TAG, "고구마켓이 종료되었습니다.")
             finishAffinity()
         } else {
             Toast.makeText(this@SettingActivity, "뒤로가기를 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)

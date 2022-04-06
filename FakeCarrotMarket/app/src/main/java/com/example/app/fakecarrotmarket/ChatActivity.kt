@@ -1,16 +1,19 @@
 package com.example.app.fakecarrotmarket
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -82,8 +85,7 @@ class ChatActivity : AppCompatActivity() {
             }
         })
         user_delete!!.setOnClickListener {
-            deleteChatList()
-            databaseReference.child("chat").removeValue()
+            onDialog()
         }
 
         showChatList()
@@ -187,6 +189,34 @@ class ChatActivity : AppCompatActivity() {
             googleSignInClient.signOut().addOnCompleteListener(this) {
             }
         }
+    }
+
+    private fun onDialog() {
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.alert_popup, null)
+        val textView: TextView = view.findViewById(R.id.textView)
+        textView.text = "채팅방 전체를 삭제하시겠습니까?"
+        Log.d(TAG, "채팅방 삭제 Dialog 활성화.")
+        val alertdialog = AlertDialog.Builder(this)
+            .setTitle("채팅방 삭제여부 페이지")
+            .setPositiveButton("예") { dialog, which ->
+                deleteChatList()
+                databaseReference.child("chat").removeValue()
+                Toast.makeText(applicationContext, "채팅방이 모두 삭제되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d(TAG, "채팅방이 모두 삭제되었습니다.")
+                Log.d(TAG, "채팅방 삭제 Dialog 종료.")
+            }
+            .setNegativeButton("아니오") { dialog, which ->
+                Toast.makeText(applicationContext, "채팅방 삭제가 취소되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d(TAG, "채팅방 삭제를 취소하겠습니다.")
+                Log.d(TAG, "채팅방 삭제 Dialog 종료.")
+            }
+            .create()
+
+        alertdialog.setView(view)
+        alertdialog.show()
     }
 
     override fun onBackPressed() {
