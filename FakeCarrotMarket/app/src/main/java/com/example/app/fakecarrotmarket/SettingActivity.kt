@@ -3,7 +3,6 @@ package com.example.app.fakecarrotmarket
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -31,8 +29,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 class SettingActivity : AppCompatActivity() {
 
@@ -104,7 +100,6 @@ class SettingActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             })
         }
-
     }
 
     public override fun onStart() {
@@ -132,6 +127,7 @@ class SettingActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
+                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
 
                 }

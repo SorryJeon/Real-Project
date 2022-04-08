@@ -1,6 +1,5 @@
 package com.example.app.fakecarrotmarket
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -90,20 +89,26 @@ class ChatActivity : AppCompatActivity() {
 
         showChatList()
 
-//        chat_list!!.setOnItemClickListener { parent, view, position, id ->
-//
-//            val element = parent.getItemAtPosition(position) as String
-//            val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
-//            startActivity(intent)
-//
-//        }
+        val intent = intent
+        val currentAccount = intent.getStringExtra("currentAccount")
+
+        chat_list!!.setOnItemClickListener { parent, view, position, id ->
+
+            val element = parent.getItemAtPosition(position) as String
+            val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+            intent.putExtra("chatName", element)
+            intent.putExtra("userName", currentAccount)
+            Log.d(TAG, "${element} 채팅방으로 이동합니다.")
+            startActivity(intent)
+
+        }
     }
 
     public override fun onStart() {
         // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
         super.onStart()
-        Log.d(ContentValues.TAG, "ChatActivity가 실행되었습니다.")
-        Log.d(ContentValues.TAG, "ChatActivity - onStart() called")
+        Log.d(TAG, "ChatActivity가 실행되었습니다.")
+        Log.d(TAG, "ChatActivity - onStart() called")
     }
 
     private fun showChatList() {

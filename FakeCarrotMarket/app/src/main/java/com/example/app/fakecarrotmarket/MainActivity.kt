@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -181,6 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         setupBottomNavigationView()
+
     }
 
     public override fun onStart() {
@@ -209,6 +208,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
+                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
                 }
                 R.id.page_setting -> {
