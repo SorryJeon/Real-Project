@@ -74,7 +74,7 @@ class SettingActivity : AppCompatActivity() {
         setupBottomNavigationView()
 
         Glide.with(this@SettingActivity)
-            .load(R.drawable.background_image_size)
+            .load(R.drawable.sweet_potato_design)
             .into(iv!!)
 
         btnLogout!!.setOnClickListener {

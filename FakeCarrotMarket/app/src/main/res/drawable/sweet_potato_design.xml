@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="864px"
+        android:height="752px"
+        android:drawable="@drawable/sweet_potato" />
+</layer-list>
