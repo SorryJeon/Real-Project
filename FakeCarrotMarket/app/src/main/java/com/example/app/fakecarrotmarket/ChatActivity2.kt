@@ -82,7 +82,7 @@ class ChatActivity2 : AppCompatActivity() {
     private fun openChat(chatName: String?) {
         // 리스트 어댑터 생성 및 세팅
         val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1)
+            ArrayAdapter<String>(this, R.layout.chating_listview, R.id.text_chat)
         chat_view!!.adapter = adapter
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
