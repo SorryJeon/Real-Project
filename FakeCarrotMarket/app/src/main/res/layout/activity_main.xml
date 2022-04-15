@@ -42,11 +42,11 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/basic_radius"
+                android:backgroundTint="#DADADA"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="제목 (물건 소개 제목)"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:minHeight="40dp" />
 
             <EditText
                 android:id="@+id/priceEditText"
@@ -54,14 +54,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/basic_radius"
+                android:backgroundTint="#DADADA"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="가격 (단위 상관 없음)"
                 android:inputType="numberDecimal"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+                android:minHeight="40dp"
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,8 +75,10 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
+                    android:background="@drawable/basic_radius"
                     android:backgroundTint="#2A9F10"
                     android:fontFamily="@font/nexon_gothic"
+                    android:minHeight="32dp"
                     android:text="상품 종류"
                     android:textColor="@color/white" />
 
@@ -84,6 +86,7 @@
                     android:id="@+id/product_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/nexon_gothic"
@@ -119,8 +122,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_radius"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
                 android:text="DB"
                 android:textColor="@color/white" />
 
@@ -131,8 +136,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_radius"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
                 android:text="로컬"
                 android:textColor="@color/white" />
 
@@ -144,8 +151,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_radius"
                 android:backgroundTint="@color/google"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
                 android:text="업로드"
                 android:textColor="@color/white" />
 
@@ -157,10 +166,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/basic_radius"
             android:backgroundTint="#308F4C"
             android:fontFamily="@font/nexon_gothic"
+            android:minHeight="32dp"
             android:text="상품 등록"
             android:textColor="@color/white" />
 

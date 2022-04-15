@@ -28,7 +28,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
-        android:background="#DADADA"
+        android:background="@drawable/basic_radius"
+        android:backgroundTint="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 아이디"
@@ -45,7 +46,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:background="#DADADA"
+        android:background="@drawable/basic_radius"
+        android:backgroundTint="#DADADA"
         android:ems="12"
         android:fontFamily="@font/nexon_gothic"
         android:hint=" 비밀번호"
@@ -62,8 +64,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/basic_radius"
         android:backgroundTint="#308F4C"
         android:fontFamily="@font/nexon_gothic"
+        android:minHeight="32dp"
         android:text="로그인"
         android:textColor="@color/white" />
 
@@ -73,9 +77,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/basic_radius"
         android:backgroundTint="#3F6DC8"
         android:fontFamily="@font/nexon_gothic"
+        android:minHeight="32dp"
         android:text="회원가입"
         android:textColor="@color/white" />
 
@@ -85,16 +92,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/basic_radius"
         android:backgroundTint="#CFBE1E"
         android:fontFamily="@font/nexon_gothic"
+        android:minHeight="32dp"
         android:text="비밀번호 재설정"
         android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 

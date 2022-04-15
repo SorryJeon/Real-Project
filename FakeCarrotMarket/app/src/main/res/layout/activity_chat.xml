@@ -75,8 +75,10 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_radius"
                 android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
                 android:text="생성"
                 android:textColor="@color/white" />
 
@@ -88,8 +90,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="40dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_radius"
                 android:backgroundTint="#308F4C"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
                 android:text="삭제"
                 android:textColor="@color/white" />
 
