@@ -6,14 +6,12 @@ import android.os.Bundle
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ChildEventListener
-import android.widget.ArrayAdapter
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.chating_listview.*
 
 
 class ChatActivity2 : AppCompatActivity() {
@@ -71,12 +69,12 @@ class ChatActivity2 : AppCompatActivity() {
 
     private fun addMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.add(chatDTO!!.userName + " : " + chatDTO.message)
+        adapter.add(chatDTO!!.userName + "\n" + chatDTO.message)
     }
 
     private fun removeMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.remove(chatDTO!!.userName + " : " + chatDTO.message)
+        adapter.remove(chatDTO!!.userName + "\n" + chatDTO.message)
     }
 
     private fun openChat(chatName: String?) {

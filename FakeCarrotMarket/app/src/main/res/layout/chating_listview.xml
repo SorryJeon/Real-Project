@@ -2,18 +2,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/gogumarket_chatting_thumbnail" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="@font/nexon_gothic"
-            android:text="GoguMarket 채팅내용입니다"
+            android:gravity="center_vertical"
+            android:text="GoguMarket 닉네임입니다"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="14dp" />
+
     </LinearLayout>
 </LinearLayout>
