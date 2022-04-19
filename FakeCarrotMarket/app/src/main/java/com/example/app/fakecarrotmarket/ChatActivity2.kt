@@ -1,15 +1,17 @@
 package com.example.app.fakecarrotmarket
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ChildEventListener
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.chating_listview.*
 
@@ -24,6 +26,7 @@ class ChatActivity2 : AppCompatActivity() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat2)
@@ -41,6 +44,10 @@ class ChatActivity2 : AppCompatActivity() {
         val intent = intent
         CHAT_NAME = intent.getStringExtra("chatName")
         USER_NAME = intent.getStringExtra("userName")
+
+        val header = layoutInflater.inflate(R.layout.chating_listview, null, false)
+        val nickName = header.findViewById<View>(R.id.text_nick) as TextView
+        nickName.text = USER_NAME
 
         // 채팅 방 입장
         openChat(CHAT_NAME)
@@ -62,6 +69,7 @@ class ChatActivity2 : AppCompatActivity() {
 
     public override fun onStart() {
         // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+
         super.onStart()
         Log.d(ContentValues.TAG, "ChatActivity2가 실행되었습니다.")
         Log.d(ContentValues.TAG, "ChatActivity2 - onStart() called")
@@ -69,12 +77,12 @@ class ChatActivity2 : AppCompatActivity() {
 
     private fun addMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.add(chatDTO!!.userName + "\n" + chatDTO.message)
+        adapter.add(chatDTO!!.message)
     }
 
     private fun removeMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.remove(chatDTO!!.userName + "\n" + chatDTO.message)
+        adapter.remove(chatDTO!!.message)
     }
 
     private fun openChat(chatName: String?) {
