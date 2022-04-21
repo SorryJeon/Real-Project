@@ -127,7 +127,6 @@ class SettingActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
-                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
 
                 }

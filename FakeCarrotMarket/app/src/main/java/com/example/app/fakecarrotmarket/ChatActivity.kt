@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 
 import com.google.firebase.database.ChildEventListener
+import java.util.*
 
 
 class ChatActivity : AppCompatActivity() {
@@ -55,6 +56,9 @@ class ChatActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
+        val randomMath = Random()
+        val num = randomMath.nextInt(9999) + 1
+
         user_chat = findViewById(R.id.user_chat)
         user_edit = findViewById(R.id.user_edit)
         user_next = findViewById(R.id.user_next)
@@ -80,6 +84,13 @@ class ChatActivity : AppCompatActivity() {
                 val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
                 intent.putExtra("chatName", user_chat!!.text.toString())
                 intent.putExtra("userName", user_edit!!.text.toString())
+                Log.d(TAG, "${user_chat!!.text} 유저가 ${user_edit!!.text} 채팅방으로 이동합니다.")
+                Toast.makeText(
+                    applicationContext,
+                    "${user_chat!!.text} 유저가 ${user_edit!!.text} 채팅방으로 이동합니다.",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
                 startActivity(intent)
             }
         })
@@ -87,18 +98,16 @@ class ChatActivity : AppCompatActivity() {
             onDialog()
         }
 
-        showChatList()
-
-        val intent = intent
-        val currentAccount = intent.getStringExtra("currentAccount")
-
         chat_list!!.setOnItemClickListener { parent, view, position, id ->
 
             val element = parent.getItemAtPosition(position) as String
             val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+            val temp = num.toString()
             intent.putExtra("chatName", element)
-            intent.putExtra("userName", currentAccount)
-            Log.d(TAG, "${element} 채팅방으로 이동합니다.")
+            intent.putExtra("userName", "고구마켓$temp")
+            Log.d(TAG, "고구마켓$temp 유저가 $element 채팅방으로 이동합니다.")
+            Toast.makeText(applicationContext, "$element 채팅방으로 이동합니다.", Toast.LENGTH_SHORT)
+                .show()
             startActivity(intent)
 
         }
@@ -109,6 +118,11 @@ class ChatActivity : AppCompatActivity() {
         super.onStart()
         Log.d(TAG, "ChatActivity가 실행되었습니다.")
         Log.d(TAG, "ChatActivity - onStart() called")
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        showChatList()
     }
 
     private fun showChatList() {

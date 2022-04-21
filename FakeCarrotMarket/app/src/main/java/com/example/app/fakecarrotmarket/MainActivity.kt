@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
         superbtn!!.setOnClickListener {
             val title = titleEditText!!.text.toString()
-            var price = priceEditText!!.text.toString()
+            val price = priceEditText!!.text.toString()
             val sellerId = auth?.currentUser?.uid.orEmpty()
             if (title != "" && price != "" && imgUrl != "") {
                 uploadArticle(sellerId, title, price, imgUrl)
@@ -208,7 +208,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
-                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
                 }
                 R.id.page_setting -> {

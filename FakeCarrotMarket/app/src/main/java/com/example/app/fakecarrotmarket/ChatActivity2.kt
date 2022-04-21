@@ -1,8 +1,7 @@
 package com.example.app.fakecarrotmarket
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,8 +12,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.chating_listview.*
-
 
 class ChatActivity2 : AppCompatActivity() {
 
@@ -26,7 +23,6 @@ class ChatActivity2 : AppCompatActivity() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
 
-    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat2)
@@ -45,10 +41,6 @@ class ChatActivity2 : AppCompatActivity() {
         CHAT_NAME = intent.getStringExtra("chatName")
         USER_NAME = intent.getStringExtra("userName")
 
-        val header = layoutInflater.inflate(R.layout.chating_listview, null, false)
-        val nickName = header.findViewById<View>(R.id.text_nick) as TextView
-        nickName.text = USER_NAME
-
         // 채팅 방 입장
         openChat(CHAT_NAME)
 
@@ -58,12 +50,16 @@ class ChatActivity2 : AppCompatActivity() {
                 if (chat_edit!!.text.toString() == "") return
                 val chat = ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
                 databaseReference.child("chat").child(CHAT_NAME!!).push().setValue(chat) // 데이터 푸쉬
+                Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
                 chat_edit!!.setText("") //입력창 초기화
             }
         })
 
         backButton!!.setOnClickListener {
             onBackPressed()
+            Log.d(TAG, "$USER_NAME 님이 $CHAT_NAME 채팅방에서 퇴장하셨습니다.")
+            Toast.makeText(applicationContext, "$CHAT_NAME 채팅방에서 퇴장하셨습니다.", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -77,12 +73,12 @@ class ChatActivity2 : AppCompatActivity() {
 
     private fun addMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.add(chatDTO!!.message)
+        adapter.add(chatDTO!!.userName + "\n: " + chatDTO.message)
     }
 
     private fun removeMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {
         val chatDTO = dataSnapshot.getValue(ChatDTO::class.java)
-        adapter.remove(chatDTO!!.message)
+        adapter.remove(chatDTO!!.userName + "\n: " + chatDTO.message)
     }
 
     private fun openChat(chatName: String?) {
