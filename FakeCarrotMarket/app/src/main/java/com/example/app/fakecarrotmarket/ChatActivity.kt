@@ -96,15 +96,33 @@ class ChatActivity : AppCompatActivity() {
             onDialog()
         }
 
-        val randomMath = Random()
-        var num = randomMath.nextInt(9999) + 1
-        while (num < 1000) {
-            num = randomMath.nextInt() + 1
-        }
-        temp = num.toString()
+        val intent = intent
+        val currentAccount = intent.getStringExtra("currentAccount")
 
-        Log.d(TAG, "고구마켓${temp}님, 반갑습니다!")
-        Toast.makeText(applicationContext, "고구마켓${temp}님, 반갑습니다!", Toast.LENGTH_SHORT).show()
+        val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
+        val savedTemp = sharedPreference.getString("temp", "")
+        temp = savedTemp
+
+        if (temp != "") {
+            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓${temp}")
+        } //어플에서 이미 저장된 temp값이 있는 경우 불러오기
+
+        else {
+            val randomMath = Random()
+            var num = randomMath.nextInt(9999) + 1
+            while (num < 1000) {
+                num = randomMath.nextInt(9999) + 1
+            }
+            temp = num.toString()
+
+            val editor = sharedPreference.edit()
+            editor.putString("temp", temp)
+            editor.putString("id", currentAccount)
+            editor.putString("previousId", currentAccount)
+            editor.putString("previousTemp", temp)
+            editor.apply() // Activity가 바뀌어도 앱을 종료할 때 까지 프로그램이 변경되지 않도록 수정.
+            Log.d(TAG, "현재 생성된 무작위 회원 : 고구마켓${temp}")
+        } // 어플에서 이미 저장된 temp값이 없을 경우 새로 생성하기
 
         chat_list!!.setOnItemClickListener { parent, view, position, id ->
 
@@ -130,6 +148,7 @@ class ChatActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
 
+        Log.d(TAG, "현재 접속중인 무작위 회원 : 당근마켓${temp}")
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()
@@ -192,9 +211,6 @@ class ChatActivity : AppCompatActivity() {
         view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_home -> {
-                    Log.d(TAG, "고구마켓${temp}님, 안녕히 가세요!")
-                    Toast.makeText(applicationContext, "고구마켓${temp}님, 안녕히 가세요!", Toast.LENGTH_SHORT)
-                        .show()
                     val intent1 = Intent(context, MainActivity::class.java) // 0
                     context.startActivity(intent1)
 
@@ -206,9 +222,6 @@ class ChatActivity : AppCompatActivity() {
                     }
                 }
                 R.id.page_setting -> {
-                    Log.d(TAG, "고구마켓${temp}님, 안녕히 가세요!")
-                    Toast.makeText(applicationContext, "고구마켓${temp}님, 안녕히 가세요!", Toast.LENGTH_SHORT)
-                        .show()
                     val intent3 = Intent(context, SettingActivity::class.java) // 2
                     context.startActivity(intent3)
                 }

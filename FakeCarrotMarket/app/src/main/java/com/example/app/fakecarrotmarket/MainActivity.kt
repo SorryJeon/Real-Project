@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
         Firebase.database.reference.child(DB_ARTICLES)
     }
 
+    private var temp2: String? = null
+    private var previousId: String? = null
+    private var previousTemp2: String? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     lateinit var binding: ActivityMainBinding
 
@@ -93,6 +96,13 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.titleType.setOnClickListener {
             val items = arrayOf("과일", "채소", "야채", "육류", "과자", "기타")
@@ -158,16 +168,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val map: MutableMap<String, String> = mutableMapOf()
+        val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        val savedUID = sharedPreference.getString("id", "")
+        if (savedUID != "") {
+            if (auth?.currentUser!!.uid != savedUID) {
+                previousTemp2 = sharedPreference.getString("previousTemp", "")
+                previousId = sharedPreference.getString("previousId", "")
+                map.put(previousId.toString(), previousTemp2.toString())
+                Log.d(TAG, "고구마켓 => $map")
+                editor.remove("temp")
+                editor.apply()
+            } else {
+                Log.d(TAG, "${auth?.currentUser!!.uid} : $savedUID")
+            }
+        }
+        val savedTemp = sharedPreference.getString("temp", "")
+        temp2 = savedTemp
+
+        if (temp2 != "") {
+            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp2")
+        } else {
+            Log.d(TAG, "고구마켓의 채팅창에서 무작위 회원을 생성하세요.")
+        }
+
         Glide.with(this@MainActivity)
             .load(R.drawable.sweet_potato_design2)
             .into(iv!!)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         if (auth!!.currentUser != null) {
 
@@ -220,6 +248,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
+                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
                 }
                 R.id.page_setting -> {

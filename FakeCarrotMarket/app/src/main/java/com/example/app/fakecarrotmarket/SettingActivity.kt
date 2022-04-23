@@ -36,6 +36,7 @@ class SettingActivity : AppCompatActivity() {
 
     private val mContext: Context = this@SettingActivity
     private val ACTIVITY_NUM = 2
+    private var temp: String? = null
     var first_time: Long = 0
     var second_time: Long = 0
     var iv: ImageView? = null
@@ -72,6 +73,13 @@ class SettingActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         setupBottomNavigationView()
+
+        val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
+        val savedTemp = sharedPreference.getString("temp", "")
+        temp = savedTemp.toString()
+        if (temp != "") {
+            Log.d(ContentValues.TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
+        }
 
         Glide.with(this@SettingActivity)
             .load(R.drawable.sweet_potato_design)
@@ -139,6 +147,7 @@ class SettingActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
+                    intent2.putExtra("currentAccount",auth?.currentUser!!.uid)
                     context.startActivity(intent2)
 
                 }

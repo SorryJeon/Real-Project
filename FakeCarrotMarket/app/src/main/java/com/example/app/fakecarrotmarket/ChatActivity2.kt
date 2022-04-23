@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ChatActivity2 : AppCompatActivity() {
 
+    private var temp: String? = null
     private var CHAT_NAME: String? = null
     private var USER_NAME: String? = null
     private var chat_view: ListView? = null
@@ -43,6 +44,14 @@ class ChatActivity2 : AppCompatActivity() {
 
         // 채팅 방 입장
         openChat(CHAT_NAME)
+
+        // Activity 변경혹은 어플 종료시 temp값이 초기화 되므로, 초기화를 없애는 저장 기능 사용
+        val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
+        val savedTemp = sharedPreference.getString("temp", "")
+        temp = savedTemp
+        if (temp != "") {
+            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
+        }
 
         // 메시지 전송 버튼에 대한 클릭 리스너 지정
         chat_send!!.setOnClickListener(object : View.OnClickListener {
