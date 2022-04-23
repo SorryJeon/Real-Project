@@ -189,6 +189,18 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "MainActivity - onStart() called")
     }
 
+    public override fun onResume() {
+        super.onResume()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+    }
+
     private fun setupBottomNavigationView() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         enableNavigation(mContext, bottomNavigationView)

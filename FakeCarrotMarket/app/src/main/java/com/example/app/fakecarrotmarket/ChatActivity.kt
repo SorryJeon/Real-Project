@@ -45,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
     private var user_next: Button? = null
     private var user_delete: Button? = null
     private var chat_list: ListView? = null
+    private var temp: String? = null
 
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
@@ -55,9 +56,6 @@ class ChatActivity : AppCompatActivity() {
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
-
-        val randomMath = Random()
-        val num = randomMath.nextInt(9999) + 1
 
         user_chat = findViewById(R.id.user_chat)
         user_edit = findViewById(R.id.user_edit)
@@ -98,11 +96,20 @@ class ChatActivity : AppCompatActivity() {
             onDialog()
         }
 
+        val randomMath = Random()
+        var num = randomMath.nextInt(9999) + 1
+        while (num < 1000) {
+            num = randomMath.nextInt() + 1
+        }
+        temp = num.toString()
+
+        Log.d(TAG, "고구마켓${temp}님, 반갑습니다!")
+        Toast.makeText(applicationContext, "고구마켓${temp}님, 반갑습니다!", Toast.LENGTH_SHORT).show()
+
         chat_list!!.setOnItemClickListener { parent, view, position, id ->
 
             val element = parent.getItemAtPosition(position) as String
             val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
-            val temp = num.toString()
             intent.putExtra("chatName", element)
             intent.putExtra("userName", "고구마켓$temp")
             Log.d(TAG, "고구마켓$temp 유저가 $element 채팅방으로 이동합니다.")
@@ -122,6 +129,14 @@ class ChatActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         showChatList()
     }
 
@@ -177,6 +192,9 @@ class ChatActivity : AppCompatActivity() {
         view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_home -> {
+                    Log.d(TAG, "고구마켓${temp}님, 안녕히 가세요!")
+                    Toast.makeText(applicationContext, "고구마켓${temp}님, 안녕히 가세요!", Toast.LENGTH_SHORT)
+                        .show()
                     val intent1 = Intent(context, MainActivity::class.java) // 0
                     context.startActivity(intent1)
 
@@ -188,6 +206,9 @@ class ChatActivity : AppCompatActivity() {
                     }
                 }
                 R.id.page_setting -> {
+                    Log.d(TAG, "고구마켓${temp}님, 안녕히 가세요!")
+                    Toast.makeText(applicationContext, "고구마켓${temp}님, 안녕히 가세요!", Toast.LENGTH_SHORT)
+                        .show()
                     val intent3 = Intent(context, SettingActivity::class.java) // 2
                     context.startActivity(intent3)
                 }
