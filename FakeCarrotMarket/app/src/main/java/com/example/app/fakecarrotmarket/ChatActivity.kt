@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot
 
 import com.google.firebase.database.ChildEventListener
 import java.util.*
+import kotlin.collections.HashSet
 
 
 class ChatActivity : AppCompatActivity() {
@@ -116,10 +117,11 @@ class ChatActivity : AppCompatActivity() {
             temp = num.toString()
 
             val editor = sharedPreference.edit()
-            editor.putString("temp", temp)
+            val mutableSet = hashSetOf("$currentAccount : 고구마켓${temp}")
+
             editor.putString("id", currentAccount)
-            editor.putString("previousId", currentAccount)
-            editor.putString("previousTemp", temp)
+            editor.putString("temp", temp)
+            editor.putStringSet("preset", mutableSet)
             editor.apply() // Activity가 바뀌어도 앱을 종료할 때 까지 프로그램이 변경되지 않도록 수정.
             Log.d(TAG, "현재 생성된 무작위 회원 : 고구마켓${temp}")
         } // 어플에서 이미 저장된 temp값이 없을 경우 새로 생성하기
@@ -148,7 +150,7 @@ class ChatActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
 
-        Log.d(TAG, "현재 접속중인 무작위 회원 : 당근마켓${temp}")
+        Log.d(TAG, "고구마켓${temp}님이 접속중입니다.")
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()

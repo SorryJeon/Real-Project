@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
@@ -53,6 +54,11 @@ class ChatActivity2 : AppCompatActivity() {
             Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
         }
 
+        // EditText 항목에 Enter Key 활성화 막기
+        chat_edit!!.setOnKeyListener { _, keyCode, _ ->
+            keyCode == KeyEvent.KEYCODE_ENTER
+        }
+
         // 메시지 전송 버튼에 대한 클릭 리스너 지정
         chat_send!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -66,7 +72,6 @@ class ChatActivity2 : AppCompatActivity() {
 
         backButton!!.setOnClickListener {
             onBackPressed()
-            Log.d(TAG, "$USER_NAME 님이 $CHAT_NAME 채팅방에서 퇴장하셨습니다.")
             Toast.makeText(applicationContext, "$CHAT_NAME 채팅방에서 퇴장하셨습니다.", Toast.LENGTH_SHORT)
                 .show()
         }
@@ -78,6 +83,11 @@ class ChatActivity2 : AppCompatActivity() {
         super.onStart()
         Log.d(ContentValues.TAG, "ChatActivity2가 실행되었습니다.")
         Log.d(ContentValues.TAG, "ChatActivity2 - onStart() called")
+    }
+
+    override fun onBackPressed() {
+        Log.d(TAG, "$USER_NAME 님이 $CHAT_NAME 채팅방에서 퇴장하셨습니다.")
+        super.onBackPressed()
     }
 
     private fun addMessage(dataSnapshot: DataSnapshot, adapter: ArrayAdapter<String>) {

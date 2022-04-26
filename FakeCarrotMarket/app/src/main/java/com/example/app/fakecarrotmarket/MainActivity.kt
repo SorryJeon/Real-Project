@@ -67,8 +67,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var temp2: String? = null
-    private var previousId: String? = null
-    private var previousTemp2: String? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     lateinit var binding: ActivityMainBinding
 
@@ -168,29 +166,39 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val map: MutableMap<String, String> = mutableMapOf()
         val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
         val editor = sharedPreference.edit()
         val savedUID = sharedPreference.getString("id", "")
+        val savedTemp = sharedPreference.getString("temp", "")
+        val savedPreset = sharedPreference.getStringSet("preset", mutableSetOf())
+        temp2 = savedTemp
+
         if (savedUID != "") {
             if (auth?.currentUser!!.uid != savedUID) {
-                previousTemp2 = sharedPreference.getString("previousTemp", "")
-                previousId = sharedPreference.getString("previousId", "")
-                map.put(previousId.toString(), previousTemp2.toString())
-                Log.d(TAG, "고구마켓 => $map")
-                editor.remove("temp")
+                Log.d(TAG, "과거 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
+                val randomMath = Random()
+                var num = randomMath.nextInt(9999) + 1
+                while (num < 1000) {
+                    num = randomMath.nextInt(9999) + 1
+                }
+                temp2 = num.toString()
+
+                savedPreset!!.add("${auth?.currentUser!!.uid} : 고구마켓${temp2}")
+                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
+
+                editor.putString("id", auth?.currentUser!!.uid)
+                editor.putString("temp", temp2)
+                editor.putStringSet("preset", savedPreset)
                 editor.apply()
             } else {
-                Log.d(TAG, "${auth?.currentUser!!.uid} : $savedUID")
+                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
             }
+        } else {
+            Log.d(TAG, "고구마켓 채팅방으로 들어가서 계정을 생성하세요.")
         }
-        val savedTemp = sharedPreference.getString("temp", "")
-        temp2 = savedTemp
 
         if (temp2 != "") {
             Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp2")
-        } else {
-            Log.d(TAG, "고구마켓의 채팅창에서 무작위 회원을 생성하세요.")
         }
 
         Glide.with(this@MainActivity)
