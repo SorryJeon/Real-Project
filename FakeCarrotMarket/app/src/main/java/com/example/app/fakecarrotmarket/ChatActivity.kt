@@ -13,21 +13,19 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
 
-import com.google.firebase.database.DatabaseError
-
-import com.google.firebase.database.DataSnapshot
-
-import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -50,6 +48,11 @@ class ChatActivity : AppCompatActivity() {
 
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
+    private var marketAccount: String? = null
+
+    val chatUserDB: DatabaseReference by lazy {
+        Firebase.database.reference.child(DBKey.DB_USERS)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +102,7 @@ class ChatActivity : AppCompatActivity() {
 
         val intent = intent
         val currentAccount = intent.getStringExtra("currentAccount")
+        marketAccount = currentAccount
 
         val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
         val savedTemp = sharedPreference.getString("temp", "")
@@ -124,6 +128,8 @@ class ChatActivity : AppCompatActivity() {
             editor.putStringSet("preset", mutableSet)
             editor.apply() // Activity가 바뀌어도 앱을 종료할 때 까지 프로그램이 변경되지 않도록 수정.
             Log.d(TAG, "현재 생성된 무작위 회원 : 고구마켓${temp}")
+            uploadAccount(currentAccount!!, "고구마켓" + temp!!)
+            Log.d(TAG, "고구마켓 DB에 계정 업로드가 성공적으로 수행되었습니다!")
         } // 어플에서 이미 저장된 temp값이 없을 경우 새로 생성하기
 
         chat_list!!.setOnItemClickListener { parent, view, position, id ->
@@ -159,6 +165,11 @@ class ChatActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         showChatList()
+    }
+
+    private fun uploadAccount(userId: String, userTemp: String) {
+        val model = ChatUser(userId, userTemp)
+        chatUserDB.child(marketAccount!!).setValue(model)
     }
 
     private fun showChatList() {

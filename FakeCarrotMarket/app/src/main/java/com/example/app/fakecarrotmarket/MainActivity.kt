@@ -27,6 +27,8 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
+import com.example.app.fakecarrotmarket.DBKey.Companion.DB_USERS
+import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -64,6 +66,10 @@ class MainActivity : AppCompatActivity() {
 
     val articleDB: DatabaseReference by lazy {
         Firebase.database.reference.child(DB_ARTICLES)
+    }
+
+    val chatUserDB: DatabaseReference by lazy {
+        Firebase.database.reference.child(DB_USERS)
     }
 
     private var temp2: String? = null
@@ -185,11 +191,12 @@ class MainActivity : AppCompatActivity() {
 
                 savedPreset!!.add("${auth?.currentUser!!.uid} : 고구마켓${temp2}")
                 Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
-
                 editor.putString("id", auth?.currentUser!!.uid)
                 editor.putString("temp", temp2)
                 editor.putStringSet("preset", savedPreset)
                 editor.apply()
+                uploadAccount(auth?.currentUser!!.uid, "고구마켓" + temp2!!)
+                Log.d(TAG, "고구마켓 DB에 계정 업로드가 성공적으로 수행되었습니다!")
             } else {
                 Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
             }
@@ -323,6 +330,11 @@ class MainActivity : AppCompatActivity() {
     private fun uploadArticle(sellerId: String, title: String, price: String, imageUrl: String) {
         val model = ArticleModel(sellerId, title, System.currentTimeMillis(), price, imageUrl)
         articleDB.push().setValue(model)
+    }
+
+    private fun uploadAccount(userId: String, userTemp: String) {
+        val model = ChatUser(userId, userTemp)
+        chatUserDB.child(auth?.currentUser!!.uid).setValue(model)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

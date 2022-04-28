@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -48,6 +49,9 @@ class SettingActivity : AppCompatActivity() {
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private var firebaseDatabase = FirebaseDatabase.getInstance()
+    private var databaseReference = firebaseDatabase.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,7 +151,7 @@ class SettingActivity : AppCompatActivity() {
                 }
                 R.id.page_chat -> {
                     val intent2 = Intent(context, ChatActivity::class.java) // 1
-                    intent2.putExtra("currentAccount",auth?.currentUser!!.uid)
+                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
                     context.startActivity(intent2)
 
                 }
@@ -222,6 +226,7 @@ class SettingActivity : AppCompatActivity() {
                 }
 
                 fbFireStore?.collection("users")?.document(auth?.uid.toString())?.delete()
+                databaseReference.child("Users").child(auth?.currentUser!!.uid).removeValue()
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
                 Session.getCurrentSession().close()
