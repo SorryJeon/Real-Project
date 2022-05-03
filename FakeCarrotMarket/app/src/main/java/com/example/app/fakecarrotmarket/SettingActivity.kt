@@ -187,7 +187,11 @@ class SettingActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
                 Log.d(TAG, "로그아웃이 완료되었습니다.")
-                finishAffinity()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                Log.d(TAG, "로그인 화면으로 이동합니다.")
+                Toast.makeText(applicationContext, "로그인 화면으로 이동합니다.", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("아니오", null)
             .create()
@@ -238,7 +242,11 @@ class SettingActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT)
                     .show()
                 Log.d(TAG, "회원탈퇴가 완료되었습니다.")
-                finishAffinity()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                Log.d(TAG, "로그인 화면으로 이동합니다.")
+                Toast.makeText(applicationContext, "로그인 화면으로 이동합니다.", Toast.LENGTH_SHORT).show()
             }
 
             .setNegativeButton("No", null)
