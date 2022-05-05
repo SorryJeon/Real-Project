@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -42,6 +43,8 @@ class SettingActivity : AppCompatActivity() {
     var second_time: Long = 0
     var iv: ImageView? = null
     var tvafter: TextView? = null
+    var inputId: TextView? = null
+    var inputName: TextView? = null
     var auth: FirebaseAuth? = null
     var btntoken: Button? = null
     var btnRevoke: Button? = null
@@ -53,6 +56,7 @@ class SettingActivity : AppCompatActivity() {
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
@@ -61,6 +65,8 @@ class SettingActivity : AppCompatActivity() {
         btnRevoke = findViewById<View>(R.id.btn_revoke) as Button
         btntoken = findViewById<View>(R.id.btn_token) as Button
         tvafter = findViewById<View>(R.id.tv_after) as TextView
+        inputId = findViewById<View>(R.id.input_id) as TextView
+        inputName = findViewById<View>(R.id.input_name) as TextView
         iv = findViewById<View>(R.id.iv) as ImageView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
@@ -84,6 +90,10 @@ class SettingActivity : AppCompatActivity() {
         if (temp != "") {
             Log.d(ContentValues.TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
         }
+
+        val tempName = "고구마켓$temp"
+        inputName!!.text = "무작위 닉네임 : $tempName"
+        inputId!!.text = "현재 접속중인 ID : ${auth?.currentUser!!.uid}"
 
         Glide.with(this@SettingActivity)
             .load(R.drawable.sweet_potato_design)
