@@ -41,7 +41,6 @@ android {
     }
 }
 
-
 dependencies {
 
     implementation 'com.android.support:design:30.0.0'
@@ -81,7 +80,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation 'com.facebook.android:facebook-android-sdk:4.+'
     implementation 'com.facebook.android:audience-network-sdk:5.+'
 
     implementation "com.kakao.sdk:v2-user:2.8.2" // 카카오 로그인
