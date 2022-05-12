@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background_settings"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
@@ -23,6 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,7 +46,8 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="채팅방 이름을 입력해주세요"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/user_edit"
@@ -58,7 +59,8 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="유저 닉네임을 입력해주세요"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -80,7 +82,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="생성"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/user_delete"
@@ -95,7 +98,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="삭제"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
         </LinearLayout>
 
