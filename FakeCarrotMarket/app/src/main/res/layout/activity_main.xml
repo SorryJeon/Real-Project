@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!--    <com.google.android.material.navigation.NavigationView-->
+    <!--        android:id="@+id/topNavigationView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?attr/actionBarSize"-->
+    <!--        app:itemBackground="@android:color/white"-->
+    <!--        app:menu="@menu/top_navigation_menu" />-->
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"

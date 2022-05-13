@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/page_home"
+        android:id="@+id/menu_search"
         android:enabled="true"
-        android:icon="@drawable/icon_home"
-        android:title="메인"
+        android:icon="@drawable/icon_search"
+        android:title="검색"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/page_chat"
+        android:id="@+id/menu_category"
         android:enabled="true"
-        android:icon="@drawable/icon_chat"
-        android:title="채팅"
+        android:icon="@drawable/icon_category"
+        android:title="카테고리"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/page_setting"
+        android:id="@+id/menu_notification"
         android:enabled="true"
-        android:icon="@drawable/icon_setting"
-        android:title="설정"
+        android:icon="@drawable/icon_notification"
+        android:title="알림"
         app:showAsAction="always" />
 </menu>

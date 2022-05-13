@@ -59,7 +59,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
 
         val actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
+        actionBar?.title = "채팅목록"
 
         user_chat = findViewById(R.id.user_chat)
         user_edit = findViewById(R.id.user_edit)
@@ -165,6 +165,28 @@ class ChatActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         showChatList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_navigation_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val menuId = item.itemId
+        when (menuId) {
+            R.id.menu_search -> Toast.makeText(this, "Search Clicked", Toast.LENGTH_SHORT).show()
+            R.id.menu_category -> Toast.makeText(this, "Category Clicked", Toast.LENGTH_SHORT)
+                .show()
+            R.id.menu_notification -> Toast.makeText(
+                this,
+                "Notifiation Clicked",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun uploadAccount(userId: String, userTemp: String) {

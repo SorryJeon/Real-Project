@@ -12,18 +12,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import com.facebook.login.LoginManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import java.text.SimpleDateFormat
-import java.util.*
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
@@ -31,13 +21,22 @@ import com.example.app.fakecarrotmarket.DBKey.Companion.DB_USERS
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -82,9 +81,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
-
         FacebookSdk.sdkInitialize(getApplicationContext())
         btnimage = findViewById<View>(R.id.btn_image) as Button
         btnupload = findViewById<View>(R.id.btn_upload) as Button
@@ -100,6 +96,9 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
+
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.title = "상품목록"
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -241,7 +240,28 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_navigation_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val menuId = item.itemId
+        when (menuId) {
+            R.id.menu_search -> Toast.makeText(this, "Search Clicked", Toast.LENGTH_SHORT).show()
+            R.id.menu_category -> Toast.makeText(this, "Category Clicked", Toast.LENGTH_SHORT)
+                .show()
+            R.id.menu_notification -> Toast.makeText(
+                this,
+                "Notifiation Clicked",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupBottomNavigationView() {

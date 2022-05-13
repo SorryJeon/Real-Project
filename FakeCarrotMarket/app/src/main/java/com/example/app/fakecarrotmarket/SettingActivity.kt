@@ -73,7 +73,7 @@ class SettingActivity : AppCompatActivity() {
         fbFireStore = FirebaseFirestore.getInstance()
 
         val actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
+        actionBar?.title = "상품목록"
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -141,6 +141,28 @@ class SettingActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_navigation_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val menuId = item.itemId
+        when (menuId) {
+            R.id.menu_search -> Toast.makeText(this, "Search Clicked", Toast.LENGTH_SHORT).show()
+            R.id.menu_category -> Toast.makeText(this, "Category Clicked", Toast.LENGTH_SHORT)
+                .show()
+            R.id.menu_notification -> Toast.makeText(
+                this,
+                "Notifiation Clicked",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupBottomNavigationView() {
