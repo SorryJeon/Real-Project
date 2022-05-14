@@ -122,5 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/color_check"
+        app:itemTextColor="@drawable/color_check"
         app:menu="@menu/bottom_navigation_menu" />
 </LinearLayout>
