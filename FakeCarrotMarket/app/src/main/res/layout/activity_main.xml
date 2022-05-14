@@ -38,14 +38,15 @@
                 android:text="Welcome to GoguMarket"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="23dp" />
+                android:textSize="23dp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/basic_radius"
@@ -183,6 +184,15 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFloatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:backgroundTint="#FFC107"
+        android:src="@drawable/icon_add"
+        app:tint="@color/white" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -192,7 +202,6 @@
         app:itemIconTint="@drawable/color_check"
         app:itemTextColor="@drawable/color_check"
         app:menu="@menu/bottom_navigation_menu" />
-
 
     <LinearLayout
         android:layout_width="match_parent"

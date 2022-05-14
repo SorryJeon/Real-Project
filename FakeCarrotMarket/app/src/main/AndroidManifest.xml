@@ -25,9 +25,6 @@
             android:name=".ChatActivity"
             android:exported="true" />
         <activity
-            android:name=".AccountActivity"
-            android:exported="true" />
-        <activity
             android:name=".SignUpSecondWebView"
             android:exported="true" />
         <activity
