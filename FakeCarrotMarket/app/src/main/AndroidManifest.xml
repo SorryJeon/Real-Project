@@ -16,6 +16,9 @@
         android:theme="@style/Theme.FakeCarrotMarket"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AddArticleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChatActivity2"
             android:exported="false" />
         <activity

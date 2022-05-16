@@ -1,6 +1,6 @@
 package com.example.app.fakecarrotmarket
 
-    import android.annotation.SuppressLint
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -15,7 +15,8 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import com.bumptech.glide.Glide
+    import androidx.fragment.app.Fragment
+    import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_USERS
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
@@ -104,6 +105,27 @@ class MainActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()
             .build()
+
+        val homeFragment = HomeFragment()
+        val chatFragment = ChatFragment()
+        val settingFragment = SettingFragment()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        replaceFragment(homeFragment)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.page_home -> {replaceFragment(homeFragment)
+                                  actionBar?.title = "상품목록"}
+
+                R.id.page_chat -> {replaceFragment(chatFragment)
+                    actionBar?.title = "채팅목록"}
+                R.id.page_setting -> {
+                    replaceFragment(settingFragment)
+                    actionBar?.title = "유저목록"}
+            }
+            true
+        }
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -220,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
-        setupBottomNavigationView()
+//        setupBottomNavigationView()
 
     }
 
@@ -264,36 +286,36 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupBottomNavigationView() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        enableNavigation(mContext, bottomNavigationView)
-        val menu: Menu = bottomNavigationView.menu
-        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
-        menuItem.isChecked = true
-    }
-
-    private fun enableNavigation(context: Context, view: BottomNavigationView) {
-        view.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.page_home -> {
-                    if (this@MainActivity != this@MainActivity) {
-                        val intent1 = Intent(context, MainActivity::class.java) // 0
-                        context.startActivity(intent1)
-                    }
-                }
-                R.id.page_chat -> {
-                    val intent2 = Intent(context, ChatActivity::class.java) // 1
-                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
-                    context.startActivity(intent2)
-                }
-                R.id.page_setting -> {
-                    val intent3 = Intent(context, SettingActivity::class.java) // 2
-                    context.startActivity(intent3)
-                }
-            }
-            false
-        }
-    }
+//    private fun setupBottomNavigationView() {
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//        enableNavigation(mContext, bottomNavigationView)
+//        val menu: Menu = bottomNavigationView.menu
+//        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
+//        menuItem.isChecked = true
+//    }
+//
+//    private fun enableNavigation(context: Context, view: BottomNavigationView) {
+//        view.setOnNavigationItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.page_home -> {
+//                    if (this@MainActivity != this@MainActivity) {
+//                        val intent1 = Intent(context, MainActivity::class.java) // 0
+//                        context.startActivity(intent1)
+//                    }
+//                }
+//                R.id.page_chat -> {
+//                    val intent2 = Intent(context, ChatActivity::class.java) // 1
+//                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
+//                    context.startActivity(intent2)
+//                }
+//                R.id.page_setting -> {
+//                    val intent3 = Intent(context, SettingActivity::class.java) // 2
+//                    context.startActivity(intent3)
+//                }
+//            }
+//            false
+//        }
+//    }
 
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
@@ -370,6 +392,14 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .apply {
+                replace(R.id.fragmentContainer, fragment)
+                commit()
+            }
     }
 
     private fun clickUpload() {

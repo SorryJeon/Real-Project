@@ -74,7 +74,7 @@ class ChatActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        setupBottomNavigationView()
+//        setupBottomNavigationView()
 
 //        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
 //        val databaseReference: DatabaseReference = database.getReference("message")
@@ -234,36 +234,36 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupBottomNavigationView() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        enableNavigation(mContext, bottomNavigationView)
-        val menu: Menu = bottomNavigationView.menu
-        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
-        menuItem.isChecked = true
-    }
-
-    private fun enableNavigation(context: Context, view: BottomNavigationView) {
-        view.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.page_home -> {
-                    val intent1 = Intent(context, MainActivity::class.java) // 0
-                    context.startActivity(intent1)
-
-                }
-                R.id.page_chat -> {
-                    if (this@ChatActivity != this@ChatActivity) {
-                        val intent2 = Intent(context, ChatActivity::class.java) // 1
-                        context.startActivity(intent2)
-                    }
-                }
-                R.id.page_setting -> {
-                    val intent3 = Intent(context, SettingActivity::class.java) // 2
-                    context.startActivity(intent3)
-                }
-            }
-            false
-        }
-    }
+//    private fun setupBottomNavigationView() {
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//        enableNavigation(mContext, bottomNavigationView)
+//        val menu: Menu = bottomNavigationView.menu
+//        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
+//        menuItem.isChecked = true
+//    }
+//
+//    private fun enableNavigation(context: Context, view: BottomNavigationView) {
+//        view.setOnNavigationItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.page_home -> {
+//                    val intent1 = Intent(context, MainActivity::class.java) // 0
+//                    context.startActivity(intent1)
+//
+//                }
+//                R.id.page_chat -> {
+//                    if (this@ChatActivity != this@ChatActivity) {
+//                        val intent2 = Intent(context, ChatActivity::class.java) // 1
+//                        context.startActivity(intent2)
+//                    }
+//                }
+//                R.id.page_setting -> {
+//                    val intent3 = Intent(context, SettingActivity::class.java) // 2
+//                    context.startActivity(intent3)
+//                }
+//            }
+//            false
+//        }
+//    }
 
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
