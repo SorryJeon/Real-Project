@@ -15,8 +15,8 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-    import androidx.fragment.app.Fragment
-    import com.bumptech.glide.Glide
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_USERS
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
@@ -115,14 +115,19 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.page_home -> {replaceFragment(homeFragment)
-                                  actionBar?.title = "상품목록"}
+                R.id.page_home -> {
+                    replaceFragment(homeFragment)
+                    actionBar?.title = "상품목록"
+                }
 
-                R.id.page_chat -> {replaceFragment(chatFragment)
-                    actionBar?.title = "채팅목록"}
+                R.id.page_chat -> {
+                    replaceFragment(chatFragment)
+                    actionBar?.title = "채팅목록"
+                }
                 R.id.page_setting -> {
                     replaceFragment(settingFragment)
-                    actionBar?.title = "유저목록"}
+                    actionBar?.title = "유저목록"
+                }
             }
             true
         }
@@ -242,6 +247,7 @@ class MainActivity : AppCompatActivity() {
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
+
 //        setupBottomNavigationView()
 
     }

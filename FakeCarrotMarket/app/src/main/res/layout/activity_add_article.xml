@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_after"
+                android:id="@+id/tv_after2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -31,7 +31,7 @@
                 android:textSize="23dp" />
 
             <EditText
-                android:id="@+id/titleEditText"
+                android:id="@+id/titleEditText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -45,7 +45,7 @@
                 android:minHeight="40dp" />
 
             <EditText
-                android:id="@+id/priceEditText"
+                android:id="@+id/priceEditText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -65,7 +65,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/titleType"
+                    android:id="@+id/titleType2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -79,7 +79,7 @@
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/product_type"
+                    android:id="@+id/product_type2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -94,7 +94,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/iv"
+                android:id="@+id/iv2"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
@@ -112,7 +112,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_db"
+                android:id="@+id/btn_db2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -126,7 +126,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_image"
+                android:id="@+id/btn_image2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -140,7 +140,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_upload"
+                android:id="@+id/btn_upload2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -157,7 +157,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_superUpload"
+            android:id="@+id/btn_superUpload2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
