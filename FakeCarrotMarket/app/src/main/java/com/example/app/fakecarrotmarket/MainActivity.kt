@@ -35,6 +35,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.models.TwitterCollection
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         tvafter = findViewById<View>(R.id.tv_after) as TextView
         productType = findViewById<View>(R.id.product_type) as TextView
         nickname = findViewById<View>(R.id.nickname) as TextView
+
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
@@ -108,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = HomeFragment()
         val chatFragment = ChatFragment()
+        val contentFragment = ContentFragment()
         val settingFragment = SettingFragment()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -118,6 +121,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.page_home -> {
                     replaceFragment(homeFragment)
                     actionBar?.title = "상품목록"
+                }
+
+                R.id.page_content -> {
+                    replaceFragment(contentFragment)
+                    actionBar?.title = "영상목록"
                 }
 
                 R.id.page_chat -> {

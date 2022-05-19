@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.app.fakecarrotmarket.databinding.FragmentHomeBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -15,10 +18,18 @@ var auth: FirebaseAuth? = null
 class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
     }
 
     override fun onCreateView(
@@ -38,7 +49,8 @@ class HomeFragment : Fragment() {
             context?.let {
                 if (auth?.currentUser != null) {
                     val intent = Intent(it, AddArticleActivity::class.java)
-                    intent.putExtra("currentUser",auth?.currentUser)
+                    intent.putExtra("currentUid", auth?.uid)
+                    intent.putExtra("currentUser", auth?.currentUser)
                     startActivity(intent)
                 } else {
                     Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()

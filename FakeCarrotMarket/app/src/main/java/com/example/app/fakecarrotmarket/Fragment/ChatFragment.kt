@@ -22,13 +22,13 @@ private var temp: String? = null
 
 private var firebaseDatabase = FirebaseDatabase.getInstance()
 private var databaseReference = firebaseDatabase.reference
-private var marketAccount: String? = null
 
 class ChatFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
     }
 
     override fun onCreateView(
@@ -40,21 +40,14 @@ class ChatFragment : ListFragment() {
             container,
             false
         )
-        showChatList()
-        // Inflate the layout for this fragment
-        return view
-    }
-
-    private fun showChatList() {
+        val chatList = view.findViewById(android.R.id.list) as ListView
         val adapter =
             ArrayAdapter<String>(
-                requireActivity(),
+                this.requireContext(),
                 R.layout.custom_listview,
                 R.id.text_title
             )
-
-
-        // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
+        chatList.adapter = adapter
         databaseReference.child("chat").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 Log.e("LOG", "dataSnapshot.getKey() : " + dataSnapshot.key)
@@ -66,6 +59,7 @@ class ChatFragment : ListFragment() {
             override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-
+        // Inflate the layout for this fragment
+        return view
     }
 }

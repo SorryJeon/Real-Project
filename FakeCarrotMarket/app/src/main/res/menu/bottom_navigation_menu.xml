@@ -9,6 +9,13 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/page_content"
+        android:enabled="true"
+        android:icon="@drawable/icon_content"
+        android:title="영상"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/page_chat"
         android:enabled="true"
         android:icon="@drawable/icon_chat"

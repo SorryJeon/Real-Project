@@ -79,6 +79,9 @@ class AddArticleActivity : AppCompatActivity() {
         titleType = findViewById<View>(R.id.titleType2) as Button
         tvafter = findViewById<View>(R.id.tv_after2) as TextView
         productType = findViewById<View>(R.id.product_type2) as TextView
+        auth = FirebaseAuth.getInstance()
+        fbStorage = FirebaseStorage.getInstance()
+        fbFireStore = FirebaseFirestore.getInstance()
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
@@ -141,7 +144,7 @@ class AddArticleActivity : AppCompatActivity() {
                     "${auth?.currentUser.toString()}님의 닉네임이 ${auth?.currentUser!!.uid}로 설정되었습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
-                val intent = Intent(this@AddArticleActivity, MainActivity::class.java)
+                val intent = Intent(this@AddArticleActivity, ChatActivity2::class.java)
                 intent.putExtra("chatName", title)
                 intent.putExtra("userName", auth?.currentUser!!.uid)
                 startActivity(intent)
@@ -153,9 +156,6 @@ class AddArticleActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
-        val intent = intent
-        val currentAccount = intent.getParcelableExtra<FirebaseUser>("currentUser")
 
         Glide.with(this@AddArticleActivity)
             .load(R.drawable.sweet_potato_design2)
@@ -254,6 +254,7 @@ class AddArticleActivity : AppCompatActivity() {
 
         imgRef.getFile(localfile).addOnSuccessListener {
             imgUri = localfile.toUri()
+            Log.d(TAG, imgUri.toString())
         }
     }
 

@@ -25,7 +25,7 @@
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/user_chat"
+            android:id="@+id/user_chat2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,7 +38,7 @@
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/user_edit"
+            android:id="@+id/user_edit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -58,7 +58,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/user_next"
+            android:id="@+id/user_next2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/user_delete"
+            android:id="@+id/user_delete2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
