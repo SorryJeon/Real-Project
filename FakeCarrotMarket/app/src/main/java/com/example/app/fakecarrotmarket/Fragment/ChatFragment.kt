@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.ListFragment
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
+import com.example.app.fakecarrotmarket.databinding.FragmentChatBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -31,30 +32,18 @@ val chatUserDB: DatabaseReference by lazy {
 
 class ChatFragment : ListFragment() {
 
+    private var binding: FragmentChatBinding? = null
     private var chatList: ListView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view: View = inflater.inflate(
-            R.layout.fragment_chat,
-            container,
-            false
-        )
         val extra = arguments
         if (extra != null) {
             currentAccount = extra.getString("currentAccount")
             marketAccount = currentAccount
         }
-        chatList = view.findViewById(android.R.id.list) as ListView
-        showChatList()
+
         val sharedPreference = this.requireActivity()
             .getSharedPreferences("temp record", AppCompatActivity.MODE_PRIVATE)
         val savedTemp = sharedPreference.getString("temp", "")
@@ -83,21 +72,39 @@ class ChatFragment : ListFragment() {
             uploadAccount(currentAccount!!, "고구마켓" + temp!!)
             Log.d(TAG, "고구마켓 DB에 계정 업로드가 성공적으로 수행되었습니다!")
         } // 어플에서 이미 저장된 temp값이 없을 경우 새로 생성하기
+    }
 
-        chatList!!.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val element = parent!!.getItemAtPosition(position) as String
-                val intent = Intent(activity, ChatActivity2::class.java)
-                intent.putExtra("chatName", element)
-                intent.putExtra("userName", "고구마켓$temp")
-                Log.d(TAG, "고구마켓$temp 유저가 $element 채팅방으로 이동합니다.")
-                Toast.makeText(requireContext(), "$element 채팅방으로 이동합니다.", Toast.LENGTH_SHORT)
-                    .show()
-                startActivity(intent)
-            }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view: View = inflater.inflate(
+            R.layout.fragment_chat,
+            container,
+            false
+        )
 
-        // Inflate the layout for this fragment
-        return view
+        chatList = view.findViewById(android.R.id.list) as ListView
+        showChatList()
+
+        return view // Inflate the layout for this fragment
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val fragmentChatBinding = FragmentChatBinding.bind(view)
+        binding = fragmentChatBinding
+
+        binding!!.list.setOnItemClickListener { parent, view, position, id ->
+            val element = parent!!.getItemAtPosition(position) as String
+            val intent = Intent(activity, ChatActivity2::class.java)
+            intent.putExtra("chatName", element)
+            intent.putExtra("userName", "고구마켓$temp")
+            Log.d(TAG, "고구마켓$temp 유저가 $element 채팅방으로 이동합니다.")
+            Toast.makeText(requireContext(), "$element 채팅방으로 이동합니다.", Toast.LENGTH_SHORT)
+                .show()
+            startActivity(intent)
+        }
     }
 
     private fun uploadAccount(userId: String, userTemp: String) {

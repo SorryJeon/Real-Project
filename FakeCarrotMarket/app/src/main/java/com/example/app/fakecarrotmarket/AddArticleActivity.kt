@@ -260,14 +260,6 @@ class AddArticleActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .apply {
-                replace(R.id.fragmentContainer, fragment)
-                commit()
-            }
-    }
-
     private fun clickSelect() {
         //사진을 선택할 수 있는 Gallery앱 실행
         val intent = Intent(Intent.ACTION_PICK)
