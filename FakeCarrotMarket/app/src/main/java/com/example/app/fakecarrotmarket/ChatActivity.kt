@@ -18,22 +18,17 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
-
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.HashSet
 
 
 class ChatActivity : AppCompatActivity() {
 
-    private val mContext: Context = this@ChatActivity
-    private val ACTIVITY_NUM = 1
     var first_time: Long = 0
     var second_time: Long = 0
     var auth: FirebaseAuth? = null
@@ -73,12 +68,6 @@ class ChatActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-//        setupBottomNavigationView()
-
-//        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-//        val databaseReference: DatabaseReference = database.getReference("message")
-//        databaseReference.setValue("Hello World!")
 
         user_next!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -233,37 +222,6 @@ class ChatActivity : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
-
-//    private fun setupBottomNavigationView() {
-//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-//        enableNavigation(mContext, bottomNavigationView)
-//        val menu: Menu = bottomNavigationView.menu
-//        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
-//        menuItem.isChecked = true
-//    }
-//
-//    private fun enableNavigation(context: Context, view: BottomNavigationView) {
-//        view.setOnNavigationItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.page_home -> {
-//                    val intent1 = Intent(context, MainActivity::class.java) // 0
-//                    context.startActivity(intent1)
-//
-//                }
-//                R.id.page_chat -> {
-//                    if (this@ChatActivity != this@ChatActivity) {
-//                        val intent2 = Intent(context, ChatActivity::class.java) // 1
-//                        context.startActivity(intent2)
-//                    }
-//                }
-//                R.id.page_setting -> {
-//                    val intent3 = Intent(context, SettingActivity::class.java) // 2
-//                    context.startActivity(intent3)
-//                }
-//            }
-//            false
-//        }
-//    }
 
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)

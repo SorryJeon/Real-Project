@@ -3,7 +3,6 @@ package com.example.app.fakecarrotmarket
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,8 +17,6 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DBKey.Companion.DB_ARTICLES
-import com.example.app.fakecarrotmarket.DBKey.Companion.DB_USERS
-import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
@@ -40,10 +37,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
-    private val mContext: Context = this@MainActivity
-    private val ACTIVITY_NUM = 0
-
     var first_time: Long = 0
     var second_time: Long = 0
     var temp: String? = "상품 종류"
@@ -68,11 +61,6 @@ class MainActivity : AppCompatActivity() {
         Firebase.database.reference.child(DB_ARTICLES)
     }
 
-    val chatUserDB: DatabaseReference by lazy {
-        Firebase.database.reference.child(DB_USERS)
-    }
-
-    private var temp2: String? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     lateinit var binding: ActivityMainBinding
 
@@ -136,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.page_setting -> {
                     replaceFragment(settingFragment)
-                    actionBar?.title = "유저목록"
+                    actionBar?.title = "유저설정"
                 }
             }
             true
@@ -208,42 +196,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val sharedPreference = getSharedPreferences("temp record", MODE_PRIVATE)
-        val editor = sharedPreference.edit()
-        val savedUID = sharedPreference.getString("id", "")
-        val savedTemp = sharedPreference.getString("temp", "")
-        val savedPreset = sharedPreference.getStringSet("preset", mutableSetOf())
-        temp2 = savedTemp
-
-        if (savedUID != "") {
-            if (auth?.currentUser!!.uid != savedUID) {
-                Log.d(TAG, "과거 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
-                val randomMath = Random()
-                var num = randomMath.nextInt(9999) + 1
-                while (num < 1000) {
-                    num = randomMath.nextInt(9999) + 1
-                }
-                temp2 = num.toString()
-
-                savedPreset!!.add("${auth?.currentUser!!.uid} : 고구마켓${temp2}")
-                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
-                editor.putString("id", auth?.currentUser!!.uid)
-                editor.putString("temp", temp2)
-                editor.putStringSet("preset", savedPreset)
-                editor.apply()
-                uploadAccount(auth?.currentUser!!.uid, "고구마켓" + temp2!!)
-                Log.d(TAG, "고구마켓 DB에 계정 업로드가 성공적으로 수행되었습니다!")
-            } else {
-                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
-            }
-        } else {
-            Log.d(TAG, "고구마켓 채팅방으로 들어가서 계정을 생성하세요.")
-        }
-
-        if (temp2 != "") {
-            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp2")
-        }
-
         Glide.with(this@MainActivity)
             .load(R.drawable.sweet_potato_design2)
             .into(iv!!)
@@ -257,16 +209,6 @@ class MainActivity : AppCompatActivity() {
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
-
-//        setupBottomNavigationView()
-
-    }
-
-    public override fun onStart() {
-        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
-        super.onStart()
-        Log.d(TAG, "MainActivity가 실행되었습니다.")
-        Log.d(TAG, "MainActivity - onStart() called")
     }
 
     public override fun onResume() {
@@ -301,37 +243,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-//    private fun setupBottomNavigationView() {
-//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-//        enableNavigation(mContext, bottomNavigationView)
-//        val menu: Menu = bottomNavigationView.menu
-//        val menuItem: MenuItem = menu.getItem(ACTIVITY_NUM)
-//        menuItem.isChecked = true
-//    }
-//
-//    private fun enableNavigation(context: Context, view: BottomNavigationView) {
-//        view.setOnNavigationItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.page_home -> {
-//                    if (this@MainActivity != this@MainActivity) {
-//                        val intent1 = Intent(context, MainActivity::class.java) // 0
-//                        context.startActivity(intent1)
-//                    }
-//                }
-//                R.id.page_chat -> {
-//                    val intent2 = Intent(context, ChatActivity::class.java) // 1
-//                    intent2.putExtra("currentAccount", auth?.currentUser!!.uid)
-//                    context.startActivity(intent2)
-//                }
-//                R.id.page_setting -> {
-//                    val intent3 = Intent(context, SettingActivity::class.java) // 2
-//                    context.startActivity(intent3)
-//                }
-//            }
-//            false
-//        }
-//    }
 
     private fun signOut2() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
@@ -388,11 +299,6 @@ class MainActivity : AppCompatActivity() {
     private fun uploadArticle(sellerId: String, title: String, price: String, imageUrl: String) {
         val model = ArticleModel(sellerId, title, System.currentTimeMillis(), price, imageUrl)
         articleDB.push().setValue(model)
-    }
-
-    private fun uploadAccount(userId: String, userTemp: String) {
-        val model = ChatUser(userId, userTemp)
-        chatUserDB.child(auth?.currentUser!!.uid).setValue(model)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

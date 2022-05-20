@@ -5,10 +5,113 @@
     android:layout_height="match_parent"
     tools:context=".SettingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_after2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nexon_gothic"
+            android:text="GoguMarket 계정 설정"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="23dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:adjustViewBounds="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_logout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/basic_radius"
+                android:backgroundTint="#308F4C"
+                android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
+                android:text="로그아웃"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_revoke2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/basic_radius"
+                android:backgroundTint="#308F4C"
+                android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
+                android:text="회원탈퇴"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_token2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/basic_radius"
+                android:backgroundTint="#308F4C"
+                android:fontFamily="@font/nexon_gothic"
+                android:minHeight="32dp"
+                android:text="토큰조회"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/input_id2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nexon_gothic"
+            android:gravity="center_vertical"
+            android:minHeight="32dp"
+            android:text="현재ID값"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/input_name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nexon_gothic"
+            android:gravity="center_vertical"
+            android:minHeight="32dp"
+            android:text="현재무작위이름"
+            android:textColor="@color/black" />
+    </LinearLayout>
 </FrameLayout>

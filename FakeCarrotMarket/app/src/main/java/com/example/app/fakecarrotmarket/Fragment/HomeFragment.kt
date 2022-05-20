@@ -1,22 +1,28 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.FragmentHomeBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 var auth: FirebaseAuth? = null
 
 class HomeFragment : Fragment() {
 
+    private var temp2: String? = null
     private var binding: FragmentHomeBinding? = null
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -30,6 +36,54 @@ class HomeFragment : Fragment() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        val sharedPreference = this.requireActivity()
+            .getSharedPreferences("temp record", AppCompatActivity.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        val savedUID = sharedPreference.getString("id", "")
+        val savedTemp = sharedPreference.getString("temp", "")
+        val savedPreset = sharedPreference.getStringSet("preset", mutableSetOf())
+        temp2 = savedTemp
+
+        if (savedUID != "") {
+            if (auth?.currentUser!!.uid != savedUID) {
+                Log.d(TAG, "과거 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
+                val randomMath = Random()
+                var num = randomMath.nextInt(9999) + 1
+                while (num < 1000) {
+                    num = randomMath.nextInt(9999) + 1
+                }
+                temp2 = num.toString()
+
+                savedPreset!!.add("${auth?.currentUser!!.uid} : 고구마켓${temp2}")
+                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
+                editor.putString("id", auth?.currentUser!!.uid)
+                editor.putString("temp", temp2)
+                editor.putStringSet("preset", savedPreset)
+                editor.apply()
+                uploadAccount(auth?.currentUser!!.uid, "고구마켓" + temp2!!)
+                Log.d(TAG, "고구마켓 DB에 계정 업로드가 성공적으로 수행되었습니다!")
+            } else {
+                Log.d(TAG, "현재 고구마켓 ID, 무작위 계정 현황 => $savedPreset")
+            }
+        } else {
+            Log.d(TAG, "고구마켓 채팅방으로 들어가서 계정을 생성하세요.")
+        }
+
+        if (temp2 != "") {
+            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp2")
+        }
+    }
+
+    override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(TAG, "HomeFragment가 실행되었습니다.")
+        Log.d(TAG, "HomeFragment - onStart() called")
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onCreateView(
@@ -55,23 +109,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment HomeFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            HomeFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    private fun uploadAccount(userId: String, userTemp: String) {
+        val model = ChatUser(userId, userTemp)
+        chatUserDB.child(auth?.currentUser!!.uid).setValue(model)
+    }
 }

@@ -90,6 +90,17 @@ class ChatFragment : ListFragment() {
         return view // Inflate the layout for this fragment
     }
 
+    override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(TAG, "ChatFragment가 실행되었습니다.")
+        Log.d(TAG, "ChatFragment - onStart() called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fragmentChatBinding = FragmentChatBinding.bind(view)

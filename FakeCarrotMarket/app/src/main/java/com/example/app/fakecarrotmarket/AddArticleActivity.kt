@@ -13,17 +13,13 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.ActivityAddArticleBinding
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore

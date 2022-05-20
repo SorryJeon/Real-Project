@@ -1,59 +1,83 @@
 package com.example.app.fakecarrotmarket
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private var temp: String? = null
+    private var inputId: TextView? = null
+    private var inputName: TextView? = null
+    private var iv: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        val sharedPreference = this.requireActivity()
+            .getSharedPreferences("temp record", AppCompatActivity.MODE_PRIVATE)
+        val savedTemp = sharedPreference.getString("temp", "")
+        temp = savedTemp.toString()
+        if (temp != "") {
+            Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
         }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
+        val view: View = inflater.inflate(
+            R.layout.fragment_setting,
+            container,
+            false
+        )
+
+        iv = view.findViewById(R.id.iv2) as ImageView
+        inputId = view.findViewById(R.id.input_id2) as TextView
+        inputName = view.findViewById(R.id.input_name2) as TextView
+
+        val tempName = "고구마켓$temp"
+        inputName!!.text = "무작위 닉네임 : $tempName"
+        inputId!!.text = "현재 접속중인 ID : ${auth?.currentUser!!.uid}"
+
+        Glide.with(this@SettingFragment)
+            .load(R.drawable.sweet_potato_design)
+            .into(iv!!)
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onStart() {
+        // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
+        super.onStart()
+        Log.d(TAG, "SettingFragment가 실행되었습니다.")
+        Log.d(TAG, "SettingFragment - onStart() called")
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }
