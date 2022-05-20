@@ -35,7 +35,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
-import com.twitter.sdk.android.core.models.TwitterCollection
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -129,6 +128,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.page_chat -> {
+                    val bundle = Bundle()
+                    bundle.putString("currentAccount", auth?.currentUser!!.uid)
+                    chatFragment.setArguments(bundle)
                     replaceFragment(chatFragment)
                     actionBar?.title = "채팅목록"
                 }

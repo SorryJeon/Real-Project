@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
 import com.example.app.fakecarrotmarket.databinding.ActivityAddArticleBinding
@@ -144,6 +145,7 @@ class AddArticleActivity : AppCompatActivity() {
                     "${auth?.currentUser.toString()}님의 닉네임이 ${auth?.currentUser!!.uid}로 설정되었습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 val intent = Intent(this@AddArticleActivity, ChatActivity2::class.java)
                 intent.putExtra("chatName", title)
                 intent.putExtra("userName", auth?.currentUser!!.uid)
@@ -256,6 +258,14 @@ class AddArticleActivity : AppCompatActivity() {
             imgUri = localfile.toUri()
             Log.d(TAG, imgUri.toString())
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .apply {
+                replace(R.id.fragmentContainer, fragment)
+                commit()
+            }
     }
 
     private fun clickSelect() {
