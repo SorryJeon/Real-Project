@@ -1,10 +1,11 @@
 package com.example.app.fakecarrotmarket
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
@@ -29,9 +30,8 @@ class ChatActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat2)
 
-        val backButton: Button? = findViewById(R.id.goBack)
         val actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
+        actionBar?.title = "GoguMarket 채팅방"
 
         // 위젯 ID 참조
         chat_view = findViewById<View>(R.id.chat_view) as ListView
@@ -69,23 +69,17 @@ class ChatActivity2 : AppCompatActivity() {
                 chat_edit!!.setText("") //입력창 초기화
             }
         })
-
-        backButton!!.setOnClickListener {
-            onBackPressed()
-            Toast.makeText(applicationContext, "$CHAT_NAME 채팅방에서 퇴장하셨습니다.", Toast.LENGTH_SHORT)
-                .show()
-        }
     }
 
     public override fun onStart() {
         // 어플을 실행할 때 마다 Logcat 시스템으로 알려줌
-
         super.onStart()
-        Log.d(ContentValues.TAG, "ChatActivity2가 실행되었습니다.")
-        Log.d(ContentValues.TAG, "ChatActivity2 - onStart() called")
+        Log.d(TAG, "ChatActivity2가 실행되었습니다.")
+        Log.d(TAG, "ChatActivity2 - onStart() called")
     }
 
     override fun onBackPressed() {
+        Toast.makeText(this, "$CHAT_NAME 채팅방에서 퇴장하셨습니다.", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "$USER_NAME 님이 $CHAT_NAME 채팅방에서 퇴장하셨습니다.")
         super.onBackPressed()
     }
@@ -122,5 +116,19 @@ class ChatActivity2 : AppCompatActivity() {
                 override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.chat_navigation_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val menuId = item.itemId
+        when (menuId) {
+            R.id.menu_goBack -> onBackPressed()
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

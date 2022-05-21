@@ -53,7 +53,8 @@
                 android:background="@drawable/android_button_padding"
                 android:fontFamily="@font/nexon_gothic"
                 android:text="뒤로 돌아가기"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
