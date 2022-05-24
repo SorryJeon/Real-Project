@@ -8,19 +8,96 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.fakecarrotmarket.Adapter.DBListViewAdapter
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
+import com.example.app.fakecarrotmarket.DataBase.GoguMarketDB
 import com.example.app.fakecarrotmarket.databinding.FragmentHomeBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
 import java.util.*
 
 var auth: FirebaseAuth? = null
+val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
 class HomeFragment : Fragment() {
+
+    private var DBListView: ListView? = null
+
+    var goguMarketDB = arrayListOf(
+        GoguMarketDB(
+            "닭강정세트",
+            "google_logo_design2",
+            "qwerty123",
+            "홍길동",
+            "서울특별시 서초구",
+            36.5,
+            "chicken001",
+            "치킨류",
+            timeStamp,
+            "닭강정 오리지날맛",
+            1,
+            8000
+        ), GoguMarketDB(
+            "거의 사용안한 계산기",
+            "facebook_logo_design2",
+            "hojunjeon2000",
+            "전호준",
+            "서울특별시 성동구",
+            36.5,
+            "junggo001",
+            "가전제품류",
+            timeStamp,
+            "계산기 거의 사용안한거니 구매하실분 귓말 주세요",
+            1,
+            6000
+        ), GoguMarketDB(
+            "광화문역 설렁탕 포장",
+            "github_logo_design2",
+            "notfakeProducter23",
+            "서영호",
+            "서울특별시 종로구",
+            36.5,
+            "chicken001",
+            "국물류",
+            timeStamp,
+            "닭강정 오리지날맛",
+            1,
+            8000
+        ), GoguMarketDB(
+            "푸짐한 샐러드",
+            "kakao_logo_design2",
+            "coinsuit002",
+            "이현민",
+            "서울특별시 강남구",
+            36.5,
+            "chicken001",
+            "샐러드류",
+            timeStamp,
+            "샐러드 푸짐한거 팝니다",
+            1,
+            5000
+        ),
+        GoguMarketDB(
+            "뼈해장국",
+            "twitter_logo_design2",
+            "젠지_Streamer_Cuvee",
+            "큐베",
+            "서울특별시 중랑구",
+            36.5,
+            "baedal001",
+            "배달음식류",
+            timeStamp,
+            "뼈해장국 큰 그릇",
+            1,
+            10000
+        )
+    )
 
     private var temp2: String? = null
     private var binding: FragmentHomeBinding? = null
@@ -89,9 +166,17 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        val view: View = inflater.inflate(
+            R.layout.fragment_home,
+            container,
+            false
+        )
+        DBListView = view.findViewById(R.id.DBListView) as ListView
+        val goguMarketAdapter = DBListViewAdapter(requireContext(), goguMarketDB)
+        DBListView!!.adapter = goguMarketAdapter
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
