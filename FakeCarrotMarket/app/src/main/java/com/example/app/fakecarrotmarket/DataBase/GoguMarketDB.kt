@@ -12,5 +12,6 @@ data class GoguMarketDB(
     val uploadTime: String? = null,
     val content: String? = null,
     val likeCount: Int? = null,
-    val price: Int? = null
+    val price: Int? = null,
+    val key: String? = null
 )

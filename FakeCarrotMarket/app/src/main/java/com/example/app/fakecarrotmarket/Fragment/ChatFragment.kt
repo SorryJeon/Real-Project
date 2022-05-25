@@ -23,8 +23,8 @@ var marketAccount: String? = null
 
 private var temp: String? = null
 
-private var firebaseDatabase = FirebaseDatabase.getInstance()
-private var databaseReference = firebaseDatabase.reference
+var firebaseDatabase = FirebaseDatabase.getInstance()
+var databaseReference = firebaseDatabase.reference
 
 val chatUserDB: DatabaseReference by lazy {
     Firebase.database.reference.child(DBKey.DB_USERS)

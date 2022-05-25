@@ -14,6 +14,7 @@ import com.example.app.fakecarrotmarket.R
 class DBListViewAdapter(val context: Context, val goguMarketDB: ArrayList<GoguMarketDB>) :
     BaseAdapter() {
     @SuppressLint("ViewHolder", "SetTextI18n")
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         /* LayoutInflater는 item을 Adapter에서 사용할 View로 부풀려주는(inflate) 역할을 한다. */
         val view: View = LayoutInflater.from(context).inflate(R.layout.gogumarket_listview, null)

@@ -54,10 +54,6 @@ class AddArticleActivity : AppCompatActivity() {
         Firebase.database.reference.child(DBKey.DB_ARTICLES)
     }
 
-    val chatUserDB: DatabaseReference by lazy {
-        Firebase.database.reference.child(DBKey.DB_USERS)
-    }
-
     private lateinit var googleSignInClient: GoogleSignInClient
     lateinit var binding: ActivityAddArticleBinding
 
