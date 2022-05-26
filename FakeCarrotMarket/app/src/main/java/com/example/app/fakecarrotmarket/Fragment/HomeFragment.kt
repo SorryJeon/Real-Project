@@ -30,7 +30,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 var auth: FirebaseAuth? = null
-val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
 val goguMarketDataBase: DatabaseReference by lazy {
     Firebase.database.reference.child(DBKey.DB_MAIN)

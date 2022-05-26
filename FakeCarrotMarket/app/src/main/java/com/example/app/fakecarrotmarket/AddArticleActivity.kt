@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.app.fakecarrotmarket.DataBase.GoguMarketDB
 import com.example.app.fakecarrotmarket.databinding.ActivityAddArticleBinding
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -47,6 +48,7 @@ class AddArticleActivity : AppCompatActivity() {
     var productType: TextView? = null
     var imgUri: Uri? = null
     var imgUrl: String = ""
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
 
@@ -121,6 +123,20 @@ class AddArticleActivity : AppCompatActivity() {
             val sellerId = auth?.currentUser?.uid.orEmpty()
             if (title != "" && price != "" && imgUrl != "") {
                 uploadArticle(sellerId, title, price, imgUrl)
+                uploadGoguMarketDB(
+                    title,
+                    imgUrl,
+                    auth?.currentUser.toString(),
+                    temp,
+                    temp,
+                    36.5,
+                    temp,
+                    productType!!.text.toString(),
+                    timeStamp,
+                    temp,
+                    1,
+                    price.toInt()
+                )
                 Log.d(TAG, "${auth?.currentUser.toString()}님이 ${title}을 ${price}에 등록하셨습니다.")
                 Log.d(TAG, "${auth?.currentUser.toString()}님이 ${imgUrl}을 업로드하였습니다.")
                 Toast.makeText(
@@ -277,6 +293,37 @@ class AddArticleActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun uploadGoguMarketDB(
+        productName: String?,
+        productImgUrl: String?,
+        userUid: String?,
+        userName: String?,
+        userAddress: String?,
+        userTemper: Double?,
+        productId: String?,
+        category: String?,
+        uploadTime: String?,
+        content: String?,
+        likeCount: Int?,
+        price: Int?
+    ) {
+        val model = GoguMarketDB(
+            productName,
+            productImgUrl,
+            userUid,
+            userName,
+            userAddress,
+            userTemper,
+            productId,
+            category,
+            uploadTime,
+            content,
+            likeCount,
+            price
+        )
+        goguMarketDataBase.child(productName!!).setValue(model)
     }
 
     private fun clickUpload() {
