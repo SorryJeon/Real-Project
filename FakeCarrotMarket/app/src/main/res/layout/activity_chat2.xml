@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#9bbbd4"
     android:orientation="vertical"
     tools:context=".ChatActivity2">
 
@@ -54,7 +55,7 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:text="뒤로 돌아가기"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
