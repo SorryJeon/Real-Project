@@ -4,9 +4,11 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -55,20 +57,36 @@ class ChatActivity2 : AppCompatActivity() {
         }
 
         // EditText 항목에 Enter Key 활성화 막기
-        chat_edit!!.setOnKeyListener { _, keyCode, _ ->
-            keyCode == KeyEvent.KEYCODE_ENTER
+        chat_edit!!.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(chat_edit!!.windowToken, 0)
+                // Toast Message
+                if (chat_edit!!.text != null) {
+                    showLogMessage(chat_edit!!.text.toString())
+                }
+                true
+            }
+
+            false
         }
 
         // 메시지 전송 버튼에 대한 클릭 리스너 지정
-        chat_send!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                if (chat_edit!!.text.toString() == "") return
-                val chat = ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
-                databaseReference.child("chat").child(CHAT_NAME!!).push().setValue(chat) // 데이터 푸쉬
-                Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
-                chat_edit!!.setText("") //입력창 초기화
-            }
-        })
+        chat_send!!.setOnClickListener(
+            object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    if (chat_edit!!.text.toString() == "") return
+                    val chat =
+                        ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
+                    databaseReference.child("chat").child(CHAT_NAME!!).push()
+                        .setValue(chat) // 데이터 푸쉬
+                    Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
+                    chat_edit!!.setText("") //입력창 초기화
+                }
+            })
     }
 
     public override fun onStart() {
@@ -130,5 +148,9 @@ class ChatActivity2 : AppCompatActivity() {
             else -> {}
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showLogMessage(msg: String?) {
+        Log.d(TAG, msg.toString())
     }
 }

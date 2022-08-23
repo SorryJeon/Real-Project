@@ -36,7 +36,8 @@
                 android:id="@+id/chat_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nexon_gothic" />
+                android:fontFamily="@font/nexon_gothic"
+                android:singleLine="true" />
 
             <Button
                 android:id="@+id/chat_sent"
