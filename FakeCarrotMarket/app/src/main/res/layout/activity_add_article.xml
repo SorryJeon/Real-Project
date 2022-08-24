@@ -42,7 +42,8 @@
                 android:backgroundTint="#DADADA"
                 android:fontFamily="@font/nexon_gothic"
                 android:hint="제목 (물건 소개 제목)"
-                android:minHeight="40dp" />
+                android:minHeight="40dp"
+                android:singleLine="true" />
 
             <EditText
                 android:id="@+id/priceEditText2"

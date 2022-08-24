@@ -6,9 +6,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
@@ -115,6 +117,40 @@ class AddArticleActivity : AppCompatActivity() {
 
         btnupload!!.setOnClickListener {
             clickUpload()
+        }
+
+        titleEditText!!.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(titleEditText!!.windowToken, 0)
+                // Toast Message
+                if (titleEditText!!.text != null) {
+                    showLogMessage(titleEditText!!.text.toString())
+                }
+                true
+            }
+
+            false
+        }
+
+        priceEditText!!.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(priceEditText!!.windowToken, 0)
+                // Toast Message
+                if (priceEditText!!.text != null) {
+                    showLogMessage(priceEditText!!.text.toString())
+                }
+                true
+            }
+
+            false
         }
 
         superbtn!!.setOnClickListener {
@@ -349,5 +385,9 @@ class AddArticleActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    private fun showLogMessage(msg: String?) {
+        Log.d(TAG, msg.toString())
     }
 }

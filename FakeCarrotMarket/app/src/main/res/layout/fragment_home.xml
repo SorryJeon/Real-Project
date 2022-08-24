@@ -21,6 +21,7 @@
         android:layout_margin="16dp"
         android:backgroundTint="#f27f35"
         android:src="@drawable/icon_add"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/white" />
