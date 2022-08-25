@@ -25,7 +25,7 @@ class DBListViewAdapter(val context: Context, val goguMarketDB: ArrayList<GoguMa
         val productId = view.findViewById<TextView>(R.id.userAddress)
         val price = view.findViewById<TextView>(R.id.productPrice)
 
-        /* ArrayList<Dog>의 변수 productArray의 이미지와 데이터를 ImageView와 TextView에 담는다. */
+        /* ArrayList<GoguMarketDB>의 변수 productArray의 이미지와 데이터를 ImageView와 TextView에 담는다. */
         val productArray = goguMarketDB[position]
         val resourceId = context.resources.getIdentifier(
             productArray.productImgUrl,
