@@ -13,15 +13,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerView
+import kr.co.prnd.YouTubePlayerView
 
-class ContentFragment : Fragment(), YouTubePlayer.OnInitializedListener {
+class ContentFragment : Fragment() {
 
-    private var playerView: YouTubePlayerView? = null
-    private var player: YouTubePlayer? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     private var binding: FragmentContentBinding? = null
-    private val API_KEY = "AIzaSyBZFm1gePlZTWd6Q-uYnOsK1Ya4cf_hVvQ"
     private val videoId = "hl-ii7W4ITg"
 
 //    private var firebaseDatabase = FirebaseDatabase.getInstance()
@@ -60,7 +57,13 @@ class ContentFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
         val fragmentContentBinding = FragmentContentBinding.bind(view)
         binding = fragmentContentBinding
-        initPlayer()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val youtubePlayerView = view?.findViewById<YouTubePlayerView>(R.id.youtubePlayerView)
+        youtubePlayerView?.play(videoId)
     }
 
 //    private fun playVideo() {
@@ -72,29 +75,4 @@ class ContentFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 //        }
 //    }
 
-    private fun initPlayer() {
-        playerView = view?.findViewById(R.id.youtubePlayerView)
-        playerView!!.initialize(API_KEY, this)
-    }
-
-    override fun onInitializationSuccess(
-        provider: YouTubePlayer.Provider?,
-        player: YouTubePlayer?,
-        wasRestored: Boolean
-    ) {
-        if (player == null) return
-        if (wasRestored) {
-            player.play()
-        } else {
-            player.cueVideo(videoId)
-            player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
-        }
-    }
-
-    override fun onInitializationFailure(
-        p0: YouTubePlayer.Provider?,
-        p1: YouTubeInitializationResult?
-    ) {
-        Log.d("Youtube Player", "Failed to initialize")
-    }
 }
