@@ -22,5 +22,4 @@
     <string name="fcm_message">Login Success</string>
     <string name="msg_token_fmt" translatable="false">토큰 : %s</string>
 
-
 </resources>

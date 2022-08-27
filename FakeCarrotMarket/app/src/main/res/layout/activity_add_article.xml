@@ -25,7 +25,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/nexon_gothic"
-                android:text="Welcome to GoguMarket"
+                android:text="GoguMarket 상품 등록"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="23dp" />
@@ -124,7 +124,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="DB"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_image2"
@@ -138,7 +139,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="로컬"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_upload2"
@@ -153,7 +155,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="업로드"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
         </LinearLayout>
 

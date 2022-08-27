@@ -1,5 +1,6 @@
 package com.example.app.fakecarrotmarket
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -40,8 +41,12 @@ import com.android.volley.Request
 import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import com.kakao.sdk.common.util.Utility
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLogin.mOAuthLoginHandler
+import com.nhn.android.naverlogin.OAuthLoginHandler
 
 class LoginActivity : AppCompatActivity() {
+    lateinit var mOAuthLoginModule: OAuthLogin
     lateinit var twitterAuthClient: TwitterAuthClient
     var loginstate = false
     var first_time: Long = 0
@@ -81,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
         val kakaoSignInBtn = findViewById<ImageButton>(R.id.kakaoSignInBtn)
         val twitterSignInBtn = findViewById<ImageButton>(R.id.twitterSignInBtn)
         val githubSignInBtn = findViewById<ImageButton>(R.id.githubSignInBtn)
+        val naverSignInBtn = findViewById<ImageButton>(R.id.naverSignInBtn)
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -115,6 +121,17 @@ class LoginActivity : AppCompatActivity() {
             githubLogin()
         }
 
+        naverSignInBtn.setOnClickListener {
+            mOAuthLoginModule = OAuthLogin.getInstance()
+            mOAuthLoginModule.init(
+                this,
+                "DwBxwh3RiYjsumNlQaEo" // 네이버에서 앱 등록후 받은 ID값
+                , "vCN3fiVqPQ" // 네이버에서 앱 등록후 받은 SECRET값
+                , "DwBxwh3RiYjsumNlQaEo" // // 네이버에서 앱 등록후 받은 ID값
+            )
+            mOAuthLoginModule.startOauthLoginActivity(this, mOAuthLoginHandler)
+        }
+
         // 로그인 버튼
         btn_login.setOnClickListener {
             //editText로부터 입력된 값을 받아온다
@@ -130,6 +147,34 @@ class LoginActivity : AppCompatActivity() {
 
         btn_passReset.setOnClickListener {
             sendPasswordReset()
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
+        override fun run(success: Boolean) {
+            if (success) {
+                val accessToken: String = mOAuthLoginModule.getAccessToken(baseContext)
+                val refreshToken: String = mOAuthLoginModule.getRefreshToken(baseContext)
+                val expiresAt: Long = mOAuthLoginModule.getExpiresAt(baseContext)
+                val tokenType: String = mOAuthLoginModule.getTokenType(baseContext)
+                Log.d(TAG, accessToken + "액세스 토큰")
+                Log.d(TAG, refreshToken + "새로고침 토큰")
+                Log.d(TAG, expiresAt.toString() + "만료 날짜")
+                Log.d(TAG, tokenType + "토큰 종류")
+                Log.d("MainActivity", "signInWithCredential:success")
+                Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                val user = auth!!.currentUser
+                loginSuccess(user)
+            } else {
+                val errorCode: String =
+                    mOAuthLoginModule.getLastErrorCode(baseContext).code
+                val errorDesc: String = mOAuthLoginModule.getLastErrorDesc(baseContext)
+                Toast.makeText(
+                    baseContext, "errorCode:" + errorCode
+                            + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
