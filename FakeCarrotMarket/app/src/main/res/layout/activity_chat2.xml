@@ -38,17 +38,20 @@
                 android:id="@+id/chat_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:fontFamily="@font/nexon_gothic"
+                android:minHeight="36dp"
                 android:singleLine="true" />
 
             <Button
                 android:id="@+id/chat_sent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="22dp"
+                android:layout_height="54dp"
                 android:background="@drawable/android_button_padding_2"
                 android:fontFamily="@font/nexon_gothic"
                 android:text="채팅 보내기"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/goBack"

@@ -56,37 +56,46 @@ class ChatActivity2 : AppCompatActivity() {
             Log.d(TAG, "현재 접속중인 무작위 회원 : 고구마켓$temp")
         }
 
-        // EditText 항목에 Enter Key 활성화 막기
+        // EditText 항목에 Enter Key 사용하면 채팅 입력 완료 (아무것도 안치면 채팅 적용 안됨)
         chat_edit!!.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN
-                && keyCode == KEYCODE_ENTER
-            ) {
-                // 키패드 내리기
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(chat_edit!!.windowToken, 0)
-                // Toast Message
-                if (chat_edit!!.text != null) {
-                    showLogMessage(chat_edit!!.text.toString())
+            if (chat_edit!!.text.toString() == "") {
+
+            } else {
+                if (event.action == KeyEvent.ACTION_DOWN
+                    && keyCode == KEYCODE_ENTER
+                ) {
+                    if (chat_edit!!.text != null) {
+                        val chat =
+                            ChatDTO(
+                                USER_NAME,
+                                chat_edit!!.text.toString()
+                            ) //ChatDTO를 이용하여 데이터를 묶는다.
+                        databaseReference.child("chat").child(CHAT_NAME!!).push()
+                            .setValue(chat) // 데이터 푸쉬
+                        Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
+                        chat_edit!!.setText("") //입력창 초기화
+
+                    }
                 }
-                true
             }
+            true
 
             false
         }
 
         // 메시지 전송 버튼에 대한 클릭 리스너 지정
-        chat_send!!.setOnClickListener(
-            object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    if (chat_edit!!.text.toString() == "") return
-                    val chat =
-                        ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
-                    databaseReference.child("chat").child(CHAT_NAME!!).push()
-                        .setValue(chat) // 데이터 푸쉬
-                    Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
-                    chat_edit!!.setText("") //입력창 초기화
-                }
-            })
+//        chat_send!!.setOnClickListener(
+//            object : View.OnClickListener {
+//                override fun onClick(v: View?) {
+//                    if (chat_edit!!.text.toString() == "") return
+//                    val chat =
+//                        ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
+//                    databaseReference.child("chat").child(CHAT_NAME!!).push()
+//                        .setValue(chat) // 데이터 푸쉬
+//                    Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
+//                    chat_edit!!.setText("") //입력창 초기화
+//                }
+//            })
     }
 
     public override fun onStart() {
@@ -148,9 +157,5 @@ class ChatActivity2 : AppCompatActivity() {
             else -> {}
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun showLogMessage(msg: String?) {
-        Log.d(TAG, msg.toString())
     }
 }
