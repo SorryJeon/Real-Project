@@ -8,7 +8,6 @@ import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +24,7 @@ class ChatActivity2 : AppCompatActivity() {
     private var chat_view: ListView? = null
     private var chat_edit: EditText? = null
     private var chat_send: Button? = null
+    private var back_Button: Button? = null
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
 
@@ -33,12 +33,14 @@ class ChatActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_chat2)
 
         val actionBar: ActionBar? = supportActionBar
-        actionBar?.title = "GoguMarket 채팅방"
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        actionBar?.hide()
 
         // 위젯 ID 참조
         chat_view = findViewById<View>(R.id.chat_view) as ListView
         chat_edit = findViewById<View>(R.id.chat_edit) as EditText
         chat_send = findViewById<View>(R.id.chat_sent) as Button
+        back_Button = findViewById<View>(R.id.backButton) as Button
 
         // 로그인 화면에서 받아온 채팅방 이름, 유저 이름 저장
         val intent = intent
@@ -81,6 +83,10 @@ class ChatActivity2 : AppCompatActivity() {
             true
 
             false
+        }
+
+        back_Button?.setOnClickListener {
+            onBackPressed()
         }
 
         // 메시지 전송 버튼에 대한 클릭 리스너 지정
@@ -150,12 +156,12 @@ class ChatActivity2 : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val menuId = item.itemId
-        when (menuId) {
-            R.id.menu_goBack -> onBackPressed()
-            else -> {}
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val menuId = item.itemId
+//        when (menuId) {
+//            R.id.menu_goBack -> onBackPressed()
+//            else -> {}
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
