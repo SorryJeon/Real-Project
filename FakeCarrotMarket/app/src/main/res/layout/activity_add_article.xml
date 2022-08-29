@@ -5,176 +5,199 @@
     android:layout_height="match_parent"
     tools:context=".AddArticleActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_after2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/nexon_gothic"
-                android:text="GoguMarket 상품 등록"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="23dp" />
-
-            <EditText
-                android:id="@+id/titleEditText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/basic_radius"
-                android:backgroundTint="#DADADA"
-                android:fontFamily="@font/nexon_gothic"
-                android:hint="제목 (물건 소개 제목)"
-                android:minHeight="40dp"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/priceEditText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/basic_radius"
-                android:backgroundTint="#DADADA"
-                android:fontFamily="@font/nexon_gothic"
-                android:hint="가격 (단위 상관 없음)"
-                android:inputType="numberDecimal"
-                android:minHeight="40dp"
-                android:textColor="@color/black" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/titleType2"
+                <TextView
+                    android:id="@+id/tv_after2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/nexon_gothic"
+                    android:text="GoguMarket 상품 등록"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="23dp" />
+
+                <EditText
+                    android:id="@+id/titleEditText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/basic_radius"
+                    android:backgroundTint="#DADADA"
+                    android:fontFamily="@font/nexon_gothic"
+                    android:hint="제목 (물건 소개 제목)"
+                    android:minHeight="40dp"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/priceEditText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp"
                     android:background="@drawable/basic_radius"
-                    android:backgroundTint="#2A9F10"
+                    android:backgroundTint="#DADADA"
                     android:fontFamily="@font/nexon_gothic"
-                    android:minHeight="32dp"
-                    android:text="상품 종류"
-                    android:textColor="@color/white" />
+                    android:hint="가격 (단위 상관 없음)"
+                    android:inputType="numberDecimal"
+                    android:minHeight="40dp"
+                    android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/product_type2"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/titleType2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/basic_radius"
+                        android:backgroundTint="#2A9F10"
+                        android:fontFamily="@font/nexon_gothic"
+                        android:minHeight="32dp"
+                        android:text="상품 종류"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/product_type2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nexon_gothic"
+                        android:text="상품 종류"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:adjustViewBounds="true" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_db2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/basic_radius"
+                    android:backgroundTint="@color/google"
+                    android:fontFamily="@font/nexon_gothic"
+                    android:minHeight="32dp"
+                    android:text="DB"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_upload2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
+                    android:background="@drawable/basic_radius"
+                    android:backgroundTint="@color/google"
                     android:fontFamily="@font/nexon_gothic"
-                    android:text="상품 종류"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
+                    android:minHeight="32dp"
+                    android:text="업로드"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv2"
+            <EditText
+                android:id="@+id/productIntroduce"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:adjustViewBounds="true" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_db2"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/basic_radius"
-                android:backgroundTint="@color/google"
-                android:fontFamily="@font/nexon_gothic"
-                android:minHeight="32dp"
-                android:text="DB"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_image2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/basic_radius"
-                android:backgroundTint="@color/google"
-                android:fontFamily="@font/nexon_gothic"
-                android:minHeight="32dp"
-                android:text="로컬"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_upload2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/basic_radius"
-                android:backgroundTint="@color/google"
-                android:fontFamily="@font/nexon_gothic"
-                android:minHeight="32dp"
-                android:text="업로드"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                android:gravity="top"
+                android:hint="상품 소개를 해주세요"
+                android:minHeight="100dp"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/basic_radius"
+                    android:backgroundTint="@color/google"
+                    android:fontFamily="@font/nexon_gothic"
+                    android:minHeight="32dp"
+                    android:text="이미지 등록"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_superUpload2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/basic_radius"
+                    android:backgroundTint="#308F4C"
+                    android:fontFamily="@font/nexon_gothic"
+                    android:minHeight="32dp"
+                    android:text="상품 등록"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_superUpload2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/basic_radius"
-            android:backgroundTint="#308F4C"
-            android:fontFamily="@font/nexon_gothic"
-            android:minHeight="32dp"
-            android:text="상품 등록"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>

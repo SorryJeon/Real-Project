@@ -87,7 +87,7 @@ class SettingFragment : Fragment() {
         settingListView = arrayListOf(
             SettingListView("로그아웃"), SettingListView("회원탈퇴"), SettingListView("회원정보수정")
         )
-        
+
         val settingAdapter = SettingListAdapter(requireActivity(), settingListView)
         settingMenu!!.adapter = settingAdapter
 
@@ -108,6 +108,15 @@ class SettingFragment : Fragment() {
 
         val fragmentSettingBinding = FragmentSettingBinding.bind(view)
         binding = fragmentSettingBinding
+
+        binding!!.settingMenu.setOnItemClickListener { parent, view, position, id ->
+            val element = parent!!.getItemAtPosition(position) as String
+            when (element) {
+                "로그아웃" -> signOut()
+                "회원탈퇴" -> revokeAccess()
+                "회원정보수정" -> tokenSearch()
+            }
+        }
 
         binding!!.btnLogout2.setOnClickListener {
             signOut()

@@ -154,6 +154,28 @@ class AddArticleActivity : AppCompatActivity() {
         }
 
         superbtn!!.setOnClickListener {
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val imgFileName = "IMAGE_" + timeStamp + "_.png"
+            val storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
+
+            if (imgUri != null) {
+                storageRef?.putFile(imgUri!!)?.addOnSuccessListener {
+                    Toast.makeText(baseContext, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        val userInfo = ModelUsers()
+                        userInfo.imageUrl = uri.toString()
+                        imgUrl = uri.toString()
+
+                        fbFireStore?.collection("users")?.document(auth?.uid.toString())
+                            ?.update("imageUrl", userInfo.imageUrl.toString())
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    baseContext, "이미지 업로드 실패!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             val title = titleEditText!!.text.toString()
             val price = priceEditText!!.text.toString()
             val sellerId = auth?.currentUser?.uid.orEmpty()
@@ -327,6 +349,7 @@ class AddArticleActivity : AppCompatActivity() {
                     baseContext, "파일 로컬에서 가져오기 성공!",
                     Toast.LENGTH_SHORT
                 ).show()
+
             }
         }
     }
