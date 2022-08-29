@@ -11,11 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.app.fakecarrotmarket.Adapter.SettingListAdapter
+import com.example.app.fakecarrotmarket.DataBase.SettingListView
 import com.example.app.fakecarrotmarket.databinding.FragmentSettingBinding
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -32,12 +35,14 @@ import com.twitter.sdk.android.core.TwitterCore
 class SettingFragment : Fragment() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
+    var settingListView = arrayListOf<SettingListView>()
     var fbFireStore: FirebaseFirestore? = null
     private var binding: FragmentSettingBinding? = null
     private var temp: String? = null
     private var inputId: TextView? = null
     private var inputName: TextView? = null
     private var iv: ImageView? = null
+    private var settingMenu: ListView? = null
 
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
@@ -77,6 +82,14 @@ class SettingFragment : Fragment() {
         iv = view.findViewById(R.id.iv2) as ImageView
         inputId = view.findViewById(R.id.input_id2) as TextView
         inputName = view.findViewById(R.id.input_name2) as TextView
+        settingMenu = view.findViewById(R.id.settingMenu) as ListView
+
+        settingListView = arrayListOf(
+            SettingListView("로그아웃"), SettingListView("회원탈퇴"), SettingListView("회원정보수정")
+        )
+        
+        val settingAdapter = SettingListAdapter(requireActivity(), settingListView)
+        settingMenu!!.adapter = settingAdapter
 
         val tempName = "고구마켓$temp"
         inputName!!.text = "무작위 닉네임 : $tempName"
@@ -107,18 +120,7 @@ class SettingFragment : Fragment() {
         }
 
         binding!!.btnToken2.setOnClickListener {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                val token = task.result
-
-                val msg = getString(R.string.msg_token_fmt, token)
-                Log.d(TAG, msg)
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-            })
+            tokenSearch()
         }
     }
 
@@ -210,5 +212,20 @@ class SettingFragment : Fragment() {
 
         alertdialog.setView(view)
         alertdialog.show()
+    }
+
+    private fun tokenSearch() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(TAG, msg)
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        })
     }
 }

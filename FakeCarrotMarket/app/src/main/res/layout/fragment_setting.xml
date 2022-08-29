@@ -43,6 +43,13 @@
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
+            <ListView
+                android:id="@+id/settingMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
+
             <Button
                 android:id="@+id/btn_logout2"
                 android:layout_width="wrap_content"
@@ -55,7 +62,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="로그아웃"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_revoke2"
@@ -69,7 +77,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="회원탈퇴"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_token2"
@@ -84,7 +93,8 @@
                 android:fontFamily="@font/nexon_gothic"
                 android:minHeight="32dp"
                 android:text="토큰조회"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
         </LinearLayout>
 

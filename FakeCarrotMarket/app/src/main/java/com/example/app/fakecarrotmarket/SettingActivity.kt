@@ -11,13 +11,12 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.example.app.fakecarrotmarket.Adapter.SettingListAdapter
+import com.example.app.fakecarrotmarket.DataBase.SettingListView
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,7 +33,6 @@ import com.twitter.sdk.android.core.TwitterCore
 class SettingActivity : AppCompatActivity() {
 
     val TAG: String = "안녕"
-
     private var temp: String? = null
     var first_time: Long = 0
     var second_time: Long = 0
