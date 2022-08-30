@@ -11,11 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.app.fakecarrotmarket.Adapter.SettingListAdapter
 import com.example.app.fakecarrotmarket.DataBase.SettingListView
@@ -42,7 +43,7 @@ class SettingFragment : Fragment() {
     private var inputId: TextView? = null
     private var inputName: TextView? = null
     private var iv: ImageView? = null
-    private var settingMenu: ListView? = null
+    private var settingMenu: RecyclerView? = null
 
     private var firebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseReference = firebaseDatabase.reference
@@ -82,7 +83,7 @@ class SettingFragment : Fragment() {
         iv = view.findViewById(R.id.iv2) as ImageView
         inputId = view.findViewById(R.id.input_id2) as TextView
         inputName = view.findViewById(R.id.input_name2) as TextView
-        settingMenu = view.findViewById(R.id.settingMenu) as ListView
+        settingMenu = view.findViewById(R.id.settingMenu) as RecyclerView
 
         settingListView = arrayListOf(
             SettingListView("로그아웃"), SettingListView("회원탈퇴"), SettingListView("회원정보수정")
@@ -90,6 +91,10 @@ class SettingFragment : Fragment() {
 
         val settingAdapter = SettingListAdapter(requireActivity(), settingListView)
         settingMenu!!.adapter = settingAdapter
+
+        val layout = LinearLayoutManager(requireActivity())
+        settingMenu!!.layoutManager = layout
+        settingMenu!!.setHasFixedSize(true)
 
         val tempName = "고구마켓$temp"
         inputName!!.text = "무작위 닉네임 : $tempName"
@@ -108,15 +113,6 @@ class SettingFragment : Fragment() {
 
         val fragmentSettingBinding = FragmentSettingBinding.bind(view)
         binding = fragmentSettingBinding
-
-        binding!!.settingMenu.setOnItemClickListener { parent, view, position, id ->
-            val element = parent!!.getItemAtPosition(position) as String
-            when (element) {
-                "로그아웃" -> signOut()
-                "회원탈퇴" -> revokeAccess()
-                "회원정보수정" -> tokenSearch()
-            }
-        }
 
         binding!!.btnLogout2.setOnClickListener {
             signOut()

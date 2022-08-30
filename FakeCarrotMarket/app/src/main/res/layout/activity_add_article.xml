@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,7 +46,7 @@
                     android:background="@drawable/basic_radius"
                     android:backgroundTint="#DADADA"
                     android:fontFamily="@font/nexon_gothic"
-                    android:hint="제목 (물건 소개 제목)"
+                    android:hint="제목 (물건 제목 작성)"
                     android:minHeight="40dp"
                     android:singleLine="true" />
 
@@ -59,7 +60,7 @@
                     android:background="@drawable/basic_radius"
                     android:backgroundTint="#DADADA"
                     android:fontFamily="@font/nexon_gothic"
-                    android:hint="가격 (단위 상관 없음)"
+                    android:hint="가격 (단위는 원입니다)"
                     android:inputType="numberDecimal"
                     android:minHeight="40dp"
                     android:textColor="@color/black" />
@@ -155,10 +156,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
                 android:gravity="top"
-                android:hint="상품 소개를 해주세요"
+                android:hint=" 상품 소개 (상품에 대해 소개하는 공간입니다)"
                 android:minHeight="100dp"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

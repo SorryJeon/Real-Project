@@ -154,6 +154,7 @@ class AddArticleActivity : AppCompatActivity() {
         }
 
         superbtn!!.setOnClickListener {
+
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val imgFileName = "IMAGE_" + timeStamp + "_.png"
             val storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)

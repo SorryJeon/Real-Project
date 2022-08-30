@@ -15,8 +15,6 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.example.app.fakecarrotmarket.Adapter.SettingListAdapter
-import com.example.app.fakecarrotmarket.DataBase.SettingListView
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
