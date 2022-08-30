@@ -90,6 +90,24 @@ class SettingFragment : Fragment() {
         )
 
         val settingAdapter = SettingListAdapter(requireActivity(), settingListView)
+
+        settingAdapter.setMyItemClickListener(object : SettingListAdapter.MyItemClickListener {
+            override fun onItemClick(position: Int) {
+                when (position) {
+                    0 -> {
+                        signOut()
+                    }
+                    1 -> {
+                        revokeAccess()
+                    }
+                    2 -> {
+                        tokenSearch()
+                    }
+                    else -> Log.d(TAG, "아이템이 클릭되었습니다.")
+                }
+            }
+        })
+
         settingMenu!!.adapter = settingAdapter
 
         val layout = LinearLayoutManager(requireActivity())

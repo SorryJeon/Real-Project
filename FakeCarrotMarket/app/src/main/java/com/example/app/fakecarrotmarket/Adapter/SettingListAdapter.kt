@@ -11,7 +11,23 @@ import com.example.app.fakecarrotmarket.R
 
 class SettingListAdapter(val context: Context, val menuList: ArrayList<SettingListView>) :
     RecyclerView.Adapter<SettingListAdapter.ItemViewHolder>() {
+    interface MyItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    private lateinit var mItemClickListener: MyItemClickListener
+
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener) {
+        mItemClickListener = itemClickListener
+    }
+
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+        }
+
         private val settingMenu = itemView.findViewById<TextView>(R.id.settingMenu)
 
         fun bind(settingListView: SettingListView, context: Context) {

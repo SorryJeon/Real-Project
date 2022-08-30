@@ -43,6 +43,7 @@ android {
 
 dependencies {
 
+    implementation 'com.android.support:cardview-v7:30.0.0'
     implementation 'com.android.support:design:30.0.0'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
