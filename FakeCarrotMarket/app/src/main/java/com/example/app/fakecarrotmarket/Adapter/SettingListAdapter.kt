@@ -48,26 +48,3 @@ class SettingListAdapter(val context: Context, val menuList: ArrayList<SettingLi
         return menuList.size
     }
 }
-
-//    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-//
-//        val view: View = LayoutInflater.from(context).inflate(R.layout.setting_listview, null)
-//        val settingMenu = view.findViewById<TextView>(R.id.settingMenu)
-//
-//        val menu = menuList[position]
-//        settingMenu.text = menu.settingMenu
-//
-//        return view
-//    }
-//
-//    override fun getItem(position: Int): Any {
-//        return menuList[position]
-//    }
-//
-//    override fun getItemId(position: Int): Long {
-//        return 0
-//    }
-//
-//    override fun getCount(): Int {
-//        return menuList.size
-//    }

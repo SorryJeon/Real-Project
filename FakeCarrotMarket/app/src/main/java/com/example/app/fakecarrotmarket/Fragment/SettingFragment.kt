@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -32,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.auth.Session
 import com.twitter.sdk.android.core.TwitterCore
+
 
 class SettingFragment : Fragment() {
 
@@ -113,6 +115,9 @@ class SettingFragment : Fragment() {
         val layout = LinearLayoutManager(requireActivity())
         settingMenu!!.layoutManager = layout
         settingMenu!!.setHasFixedSize(true)
+
+        val dividerItemDecoration = DividerItemDecoration(requireActivity(), layout.orientation)
+        settingMenu!!.addItemDecoration(dividerItemDecoration)
 
         val tempName = "고구마켓$temp"
         inputName!!.text = "무작위 닉네임 : $tempName"

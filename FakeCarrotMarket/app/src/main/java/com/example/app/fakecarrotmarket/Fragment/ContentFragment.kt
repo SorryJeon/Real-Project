@@ -10,6 +10,7 @@ import com.example.app.fakecarrotmarket.databinding.FragmentContentBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import kr.co.prnd.YouTubePlayerView
 
 class ContentFragment : Fragment() {
 
@@ -39,6 +40,9 @@ class ContentFragment : Fragment() {
             container,
             false
         )
+
+        val youTubePlayerView: YouTubePlayerView = view.findViewById(R.id.you_tube_player_view)
+        youTubePlayerView.play("06Uw0Nyjhh4")
 
         // Inflate the layout for this fragment
         return view
