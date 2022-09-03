@@ -1,0 +1,16 @@
+firebaseCustomTokenApi.create(FirebaseCustomTokenApi::class.java)
+                .getFirebaseNaverCustomToken(accessToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ i ->
+                    val auth = FirebaseAuth.getInstance()
+                    auth.signInWithCustomToken(i.firebaseToken)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.e("test", "성공")
+                            } else {
+                                Log.e("test", "실패")
+                            }
+                        }
+                }, { error ->
+                }).addTo(disposables)

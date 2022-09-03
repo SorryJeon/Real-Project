@@ -42,7 +42,6 @@ import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import com.kakao.sdk.common.util.Utility
 import com.nhn.android.naverlogin.OAuthLogin
-import com.nhn.android.naverlogin.OAuthLogin.mOAuthLoginHandler
 import com.nhn.android.naverlogin.OAuthLoginHandler
 
 class LoginActivity : AppCompatActivity() {
@@ -55,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
     var email: String? = null
+    var accessToken: String? = null
     var callbackManager: CallbackManager? = null
 
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -164,8 +164,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, tokenType + "토큰 종류")
                 Log.d("MainActivity", "signInWithCredential:success")
                 Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
-                val user = auth!!.currentUser
-                loginSuccess(user)
+                startSignIn()
             } else {
                 val errorCode: String =
                     mOAuthLoginModule.getLastErrorCode(baseContext).code
@@ -291,9 +290,30 @@ class LoginActivity : AppCompatActivity() {
         Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this)
     }
 
+    private fun startSignIn() {
+        accessToken?.let {
+            auth?.signInWithCustomToken(it)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCustomToken:success")
+                        val user = auth?.currentUser
+                        loginSuccess(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCustomToken:failure", task.exception)
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        loginSuccess(null)
+                    }
+                }
+        }
+    }
+
 
     private fun githubLogin() {
-
         val provider = OAuthProvider.newBuilder("github.com")
         provider.addCustomParameter("login", "your-email@gmail.com")
         auth!!
@@ -387,7 +407,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
 
     private fun handleFBToken(token: AccessToken?) {
         val credential = FacebookAuthProvider.getCredential(token?.token!!)

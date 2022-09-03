@@ -104,9 +104,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="40dp"
                     android:adjustViewBounds="true" />
             </LinearLayout>
 
