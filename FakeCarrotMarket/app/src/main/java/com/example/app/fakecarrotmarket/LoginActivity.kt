@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.facebook.*
@@ -22,27 +24,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.*
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.twitter.sdk.android.core.*
-import com.twitter.sdk.android.core.identity.TwitterAuthClient
-import kotlinx.android.synthetic.main.activity_login.*
-import com.google.firebase.auth.OAuthProvider
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.auth.AuthResult
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.TaskCompletionSource
-import com.google.firebase.auth.FirebaseUser
-import org.json.JSONObject
-import com.android.volley.Response
-import com.android.volley.Request
 import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import com.kakao.sdk.common.util.Utility
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
+import com.twitter.sdk.android.core.*
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
+import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
+
 
 class LoginActivity : AppCompatActivity() {
     lateinit var mOAuthLoginModule: OAuthLogin
@@ -154,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
     private val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
-                val accessToken: String = mOAuthLoginModule.getAccessToken(baseContext)
+                accessToken = mOAuthLoginModule.getAccessToken(baseContext)
                 val refreshToken: String = mOAuthLoginModule.getRefreshToken(baseContext)
                 val expiresAt: Long = mOAuthLoginModule.getExpiresAt(baseContext)
                 val tokenType: String = mOAuthLoginModule.getTokenType(baseContext)
@@ -292,12 +287,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun startSignIn() {
         accessToken?.let {
-            auth?.signInWithCustomToken(it)
-                ?.addOnCompleteListener(this) { task ->
+            auth!!.signInWithCustomToken(it)
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCustomToken:success")
-                        val user = auth?.currentUser
+                        val user = auth!!.currentUser
                         loginSuccess(user)
                     } else {
                         // If sign in fails, display a message to the user.
@@ -526,7 +521,6 @@ class LoginActivity : AppCompatActivity() {
             ).show()
         }
     }
-
 
     // 로그인 성공/실패 시 다이얼로그를 띄워주는 메소드
     fun dialog(type: String) {

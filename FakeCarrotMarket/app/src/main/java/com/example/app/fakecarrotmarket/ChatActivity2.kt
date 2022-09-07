@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
@@ -88,20 +87,6 @@ class ChatActivity2 : AppCompatActivity() {
         back_Button?.setOnClickListener {
             onBackPressed()
         }
-
-        // 메시지 전송 버튼에 대한 클릭 리스너 지정
-//        chat_send!!.setOnClickListener(
-//            object : View.OnClickListener {
-//                override fun onClick(v: View?) {
-//                    if (chat_edit!!.text.toString() == "") return
-//                    val chat =
-//                        ChatDTO(USER_NAME, chat_edit!!.text.toString()) //ChatDTO를 이용하여 데이터를 묶는다.
-//                    databaseReference.child("chat").child(CHAT_NAME!!).push()
-//                        .setValue(chat) // 데이터 푸쉬
-//                    Log.d(TAG, "$USER_NAME : ${chat_edit!!.text}")
-//                    chat_edit!!.setText("") //입력창 초기화
-//                }
-//            })
     }
 
     public override fun onStart() {
@@ -155,13 +140,4 @@ class ChatActivity2 : AppCompatActivity() {
         menuInflater.inflate(R.menu.chat_navigation_menu, menu)
         return true
     }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val menuId = item.itemId
-//        when (menuId) {
-//            R.id.menu_goBack -> onBackPressed()
-//            else -> {}
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 }
