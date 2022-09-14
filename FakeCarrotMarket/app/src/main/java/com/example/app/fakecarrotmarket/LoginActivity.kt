@@ -38,7 +38,6 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
-
 class LoginActivity : AppCompatActivity() {
     lateinit var mOAuthLoginModule: OAuthLogin
     lateinit var twitterAuthClient: TwitterAuthClient
@@ -80,7 +79,6 @@ class LoginActivity : AppCompatActivity() {
         val facebookSignInBtn = findViewById<ImageButton>(R.id.facebookSignInBtn)
         val kakaoSignInBtn = findViewById<ImageButton>(R.id.kakaoSignInBtn)
         val twitterSignInBtn = findViewById<ImageButton>(R.id.twitterSignInBtn)
-        val githubSignInBtn = findViewById<ImageButton>(R.id.githubSignInBtn)
         val naverSignInBtn = findViewById<ImageButton>(R.id.naverSignInBtn)
 
         auth = FirebaseAuth.getInstance()
@@ -110,10 +108,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 loginstate = !loginstate
             }
-        }
-
-        githubSignInBtn.setOnClickListener {
-            githubLogin()
         }
 
         naverSignInBtn.setOnClickListener {
@@ -305,30 +299,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         }
-    }
-
-
-    private fun githubLogin() {
-        val provider = OAuthProvider.newBuilder("github.com")
-        provider.addCustomParameter("login", "your-email@gmail.com")
-        auth!!
-            .startActivityForSignInWithProvider( /* activity= */this, provider.build())
-            .addOnSuccessListener(
-                OnSuccessListener<AuthResult?> {
-                    Toast.makeText(baseContext, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
-                    val user = auth!!.currentUser
-                    loginSuccess(user)
-                    // User is signed in.
-                    // IdP data available in
-                    // authResult.getAdditionalUserInfo().getProfile().
-                    // The OAuth access token can also be retrieved:
-                    // authResult.getCredential().getAccessToken().
-                })
-            .addOnFailureListener(
-                OnFailureListener {
-                    Toast.makeText(baseContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-                    // Handle failure.
-                })
     }
 
     private fun handleTwitterSession(session: TwitterSession) {

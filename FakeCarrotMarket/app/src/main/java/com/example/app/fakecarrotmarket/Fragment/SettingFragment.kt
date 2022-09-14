@@ -42,8 +42,6 @@ class SettingFragment : Fragment() {
     var fbFireStore: FirebaseFirestore? = null
     private var binding: FragmentSettingBinding? = null
     private var temp: String? = null
-    private var inputId: TextView? = null
-    private var inputName: TextView? = null
     private var iv: ImageView? = null
     private var settingMenu: RecyclerView? = null
 
@@ -83,8 +81,6 @@ class SettingFragment : Fragment() {
         )
 
         iv = view.findViewById(R.id.iv2) as ImageView
-        inputId = view.findViewById(R.id.input_id2) as TextView
-        inputName = view.findViewById(R.id.input_name2) as TextView
         settingMenu = view.findViewById(R.id.settingMenu) as RecyclerView
 
         settingListView = arrayListOf(
@@ -119,10 +115,6 @@ class SettingFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(requireActivity(), layout.orientation)
         settingMenu!!.addItemDecoration(dividerItemDecoration)
 
-        val tempName = "고구마켓$temp"
-        inputName!!.text = "무작위 닉네임 : $tempName"
-        inputId!!.text = "현재 접속중인 ID : ${auth?.currentUser!!.uid}"
-
         Glide.with(this@SettingFragment)
             .load(R.drawable.sweet_potato_design)
             .into(iv!!)
@@ -137,19 +129,6 @@ class SettingFragment : Fragment() {
         val fragmentSettingBinding = FragmentSettingBinding.bind(view)
         binding = fragmentSettingBinding
 
-        binding!!.btnLogout2.setOnClickListener {
-            signOut()
-            Log.d(TAG, "고구마켓이 종료되었습니다.")
-        }
-
-        binding!!.btnRevoke2.setOnClickListener {
-            revokeAccess()
-            Log.d(TAG, "고구마켓이 종료되었습니다.")
-        }
-
-        binding!!.btnToken2.setOnClickListener {
-            tokenSearch()
-        }
     }
 
     override fun onStart() {

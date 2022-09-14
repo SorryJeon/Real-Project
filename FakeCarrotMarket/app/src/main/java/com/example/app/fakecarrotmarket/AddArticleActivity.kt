@@ -177,6 +177,7 @@ class AddArticleActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
             val title = titleEditText!!.text.toString()
             val price = priceEditText!!.text.toString()
             val sellerId = auth?.currentUser?.uid.orEmpty()
