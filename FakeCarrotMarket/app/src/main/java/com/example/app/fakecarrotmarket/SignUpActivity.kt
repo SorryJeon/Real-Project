@@ -24,7 +24,8 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_signup)
 
-        val actionBar : ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.hide()
 
         val btn_register = findViewById<Button>(R.id.btn_register)
