@@ -29,7 +29,6 @@ class SignUpActivity : AppCompatActivity() {
         actionBar?.hide()
 
         val btn_register = findViewById<Button>(R.id.btn_register)
-        val btn_cancel = findViewById<Button>(R.id.btn_cancel)
         val edit_id = findViewById<EditText>(R.id.edit_id)
         val edit_pw = findViewById<EditText>(R.id.edit_pw)
         val edit_pw_re = findViewById<EditText>(R.id.edit_pw_re)
@@ -38,12 +37,14 @@ class SignUpActivity : AppCompatActivity() {
         val secondCheckBtn = findViewById<CheckBox>(R.id.secondcheckbtn)
         val button1 = findViewById<Button>(R.id.button1)
         val button2 = findViewById<Button>(R.id.button2)
+        val back_Button2 = findViewById<Button>(R.id.backButton2)
 
         allCheckBtn.setOnClickListener { onCheckChanged(allCheckBtn) }
         firstCheckBtn.setOnClickListener { onCheckChanged(firstCheckBtn) }
         secondCheckBtn.setOnClickListener { onCheckChanged(secondCheckBtn) }
         button1.setOnClickListener { clickButton1() }
         button2.setOnClickListener { clickButton2() }
+        back_Button2.setOnClickListener { onBackPressed() }
 
         btn_register.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
@@ -131,19 +132,6 @@ class SignUpActivity : AppCompatActivity() {
             }
 
         }
-
-        btn_cancel.setOnClickListener {
-            val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
-            val editor = sharedPreference.edit()
-            editor.clear()
-            editor.apply() // 초기화 작업 하고 뒤로 가기
-            Toast.makeText(
-                this, "이전 화면으로 돌아갑니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun onCheckChanged(compoundButton: CompoundButton) {
@@ -212,6 +200,10 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.clear()
+        editor.apply() // 초기화 작업 하고 뒤로 가기
         Toast.makeText(
             this, "이전 화면으로 돌아갑니다.",
             Toast.LENGTH_SHORT

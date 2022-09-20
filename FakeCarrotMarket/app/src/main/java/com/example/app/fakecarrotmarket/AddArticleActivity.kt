@@ -214,9 +214,7 @@ class AddArticleActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                val intent = Intent(this@AddArticleActivity, ChatActivity2::class.java)
-                intent.putExtra("chatName", title)
-                intent.putExtra("userName", auth?.currentUser!!.uid)
+                val intent = Intent(this@AddArticleActivity, HomeFragment::class.java)
                 startActivity(intent)
 
             } else {

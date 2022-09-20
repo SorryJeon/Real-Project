@@ -18,6 +18,13 @@
         android:theme="@style/Theme.FakeCarrotMarket"
         android:usesCleartextTraffic="false">
         <activity
+            android:name=".ProductActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddArticleActivity"
             android:exported="false" />
         <activity

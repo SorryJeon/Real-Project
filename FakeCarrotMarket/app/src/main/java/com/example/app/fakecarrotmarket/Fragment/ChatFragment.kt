@@ -21,7 +21,7 @@ import java.util.*
 var currentAccount: String? = null
 var marketAccount: String? = null
 
-private var temp: String? = null
+var temp: String? = null
 
 var firebaseDatabase = FirebaseDatabase.getInstance()
 var databaseReference = firebaseDatabase.reference

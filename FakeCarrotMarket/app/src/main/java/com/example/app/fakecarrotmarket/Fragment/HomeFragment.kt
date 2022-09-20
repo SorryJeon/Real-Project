@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.fakecarrotmarket.Adapter.DBListViewAdapter
 import com.example.app.fakecarrotmarket.DataBase.ChatUser
@@ -132,6 +133,16 @@ class HomeFragment : Fragment() {
             } else {
                 Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()
             }
+        }
+        binding!!.DBListView.setOnItemClickListener { parent, view, position, id ->
+            val element = parent!!.getItemAtPosition(position) as String
+            val intent = Intent(activity, ProductActivity::class.java)
+            intent.putExtra("productName", element)
+            intent.putExtra("userName", "")
+            Log.d(TAG, "고구마켓$temp 유저가 $element 상품방으로 이동합니다.")
+            Toast.makeText(requireContext(), "$element 상품방으로 이동합니다.", Toast.LENGTH_SHORT)
+                .show()
+            startActivity(intent)
         }
     }
 
