@@ -41,16 +41,15 @@ class AddArticleActivity : AppCompatActivity() {
     var btnupload: Button? = null
     var btndb: Button? = null
     var superbtn: Button? = null
+    var back_button: Button? = null
     var auth: FirebaseAuth? = null
     var iv: ImageView? = null
     var titleEditText: EditText? = null
     var priceEditText: EditText? = null
     var titleType: Button? = null
-    var tvafter: TextView? = null
     var productType: TextView? = null
     var imgUri: Uri? = null
     var imgUrl: String = ""
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     var fbStorage: FirebaseStorage? = null
     var fbFireStore: FirebaseFirestore? = null
 
@@ -74,13 +73,14 @@ class AddArticleActivity : AppCompatActivity() {
         titleEditText = findViewById<View>(R.id.titleEditText2) as EditText
         priceEditText = findViewById<View>(R.id.priceEditText2) as EditText
         titleType = findViewById<View>(R.id.titleType2) as Button
-        tvafter = findViewById<View>(R.id.tv_after2) as TextView
+        back_button = findViewById<View>(R.id.backButton4) as Button
         productType = findViewById<View>(R.id.product_type2) as TextView
         auth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
         fbFireStore = FirebaseFirestore.getInstance()
 
         val actionBar: ActionBar? = supportActionBar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.hide()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -215,6 +215,8 @@ class AddArticleActivity : AppCompatActivity() {
                 ).show()
 
                 val intent = Intent(this@AddArticleActivity, HomeFragment::class.java)
+                intent.putExtra("productName", title)
+                intent.putExtra("userName", auth?.currentUser.toString())
                 startActivity(intent)
 
             } else {
@@ -238,6 +240,10 @@ class AddArticleActivity : AppCompatActivity() {
             fbFireStore?.collection("users")?.document(auth?.uid.toString())?.set(userInfo)
 
         }
+
+        back_button!!.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     public override fun onStart() {
@@ -256,6 +262,11 @@ class AddArticleActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    override fun onBackPressed() {
+        Log.d(TAG, "상품 추가 페이지에서 나가셨습니다.")
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -278,20 +289,6 @@ class AddArticleActivity : AppCompatActivity() {
             else -> {}
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun signOut2() {
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-
-        TwitterCore.getInstance().sessionManager.clearActiveSession()
-        FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
-        Session.getCurrentSession().close()
-
-        if (account !== null) {
-            googleSignInClient.signOut().addOnCompleteListener(this) {
-            }
-        }
     }
 
     private fun clickLoad() {

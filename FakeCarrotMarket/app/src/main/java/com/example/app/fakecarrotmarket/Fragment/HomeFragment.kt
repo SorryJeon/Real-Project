@@ -134,11 +134,12 @@ class HomeFragment : Fragment() {
                 Snackbar.make(view, "로그인 후 사용해주세요", Snackbar.LENGTH_LONG).show()
             }
         }
+
         binding!!.DBListView.setOnItemClickListener { parent, view, position, id ->
             val element = parent!!.getItemAtPosition(position) as String
             val intent = Intent(activity, ProductActivity::class.java)
             intent.putExtra("productName", element)
-            intent.putExtra("userName", "")
+            intent.putExtra("userName", "고구마켓$temp")
             Log.d(TAG, "고구마켓$temp 유저가 $element 상품방으로 이동합니다.")
             Toast.makeText(requireContext(), "$element 상품방으로 이동합니다.", Toast.LENGTH_SHORT)
                 .show()
@@ -149,37 +150,6 @@ class HomeFragment : Fragment() {
     private fun uploadAccount(userId: String, userTemp: String) {
         val model = ChatUser(userId, userTemp)
         chatUserDB.child(auth?.currentUser!!.uid).setValue(model)
-    }
-
-    private fun uploadGoguMarketDB(
-        productName: String?,
-        productImgUrl: String?,
-        userUid: String?,
-        userName: String?,
-        userAddress: String?,
-        userTemper: Double?,
-        productId: String?,
-        category: String?,
-        uploadTime: String?,
-        content: String?,
-        likeCount: Int?,
-        price: Int?
-    ) {
-        val model = GoguMarketDB(
-            productName,
-            productImgUrl,
-            userUid,
-            userName,
-            userAddress,
-            userTemper,
-            productId,
-            category,
-            uploadTime,
-            content,
-            likeCount,
-            price
-        )
-        goguMarketDataBase.child(productName!!).setValue(model)
     }
 
     private fun showGoguMarketDB() {

@@ -1,10 +1,10 @@
 package com.example.app.fakecarrotmarket.DataBase
 
 data class GoguMarketDB(
-    val productName: String? = null,
+    var productName: String? = null,
     val productImgUrl: String? = null,
     val userUid: String? = null,
-    val userName: String? = null,
+    var userName: String? = null,
     val userAddress: String? = null,
     val userTemper: Double? = null,
     val productId: String? = null,
@@ -14,4 +14,16 @@ data class GoguMarketDB(
     val likeCount: Int? = null,
     val price: Int? = null,
     val key: String? = null
-)
+) {
+    constructor() : this("", "", "", "", "", 0.0, "", "", "", "", 0, 0, "")
+    constructor(
+        productName: String?,
+        userName: String?
+    ) : this() {
+        this.productName = productName
+        this.userName = userName
+    }
+}
+
+
+

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ProductActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,7 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Light">
 
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/backButton3"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="left"
@@ -29,6 +30,58 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/basic_radius"
+        android:backgroundTint="#DADADA"
+        android:fontFamily="@font/nexon_gothic"
+        android:gravity="center_vertical"
+        android:hint="작성한 제목"
+        android:minHeight="40dp"
+        android:singleLine="true" />
 
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/basic_radius"
+        android:backgroundTint="#DADADA"
+        android:fontFamily="@font/nexon_gothic"
+        android:gravity="center_vertical"
+        android:hint="작성한 가격"
+        android:minHeight="40dp"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/productImgIv"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/productIntroduce2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/custom_edittext"
+        android:gravity="top"
+        android:hint=" 작성한 상품 소개 페이지"
+        android:minHeight="100dp"
+        android:textSize="16sp" />
 
 </LinearLayout>
